@@ -1,0 +1,625 @@
+2). PROVISION A NEW VIRTUAL SERVER WITH SALT CLOUD
+==================================================
+
+[root@saltmaster-shankar ~]# salt-cloud -p sl_centos7_small shankar-test-vs
+[INFO    ] salt-cloud starting
+[INFO    ] POST https://api.softlayer.com/xmlrpc/v3.1/SoftLayer_Account
+[INFO    ] Creating Cloud VM shankar-test-vs
+[INFO    ] POST https://api.softlayer.com/xmlrpc/v3.1/SoftLayer_Virtual_Guest
+[INFO    ] POST https://api.softlayer.com/xmlrpc/v3.1/SoftLayer_Account
+[INFO    ] POST https://api.softlayer.com/xmlrpc/v3.1/SoftLayer_Account
+
+
+< LINES DELETED> 
+
+
+[INFO    ] POST https://api.softlayer.com/xmlrpc/v3.1/SoftLayer_Account
+[INFO    ] POST https://api.softlayer.com/xmlrpc/v3.1/SoftLayer_Account
+[INFO    ] POST https://api.softlayer.com/xmlrpc/v3.1/SoftLayer_Account
+[INFO    ] Rendering deploy script: /usr/lib/python2.7/site-packages/salt/cloud/deploy/bootstrap-salt.sh
+[INFO    ] Salt installed on shankar-test-vs
+[INFO    ] Created Cloud VM 'shankar-test-vs'
+
+
+
+shankar-test-vs:
+    ----------
+    accountId:
+        1187161
+    createDate:
+        2017-01-16T20:36:18-06:00
+    domain:
+        shankar.net
+    fullyQualifiedDomainName:
+        shankar-test-vs.shankar.net
+    globalIdentifier:
+        92023363-380a-42ef-a0c1-c9a0274f74b0
+    hostname:
+        shankar-test-vs
+    id:
+        27577531
+    lastPowerStateId:
+    lastVerifiedDate:
+    maxCpu:
+        1
+    maxCpuUnits:
+        CORE
+    maxMemory:
+        1024
+    metricPollDate:
+    modifyDate:
+    password:
+        CZtZp3xh
+    provisionDate:
+    public_ip:
+        169.45.10.2
+    startCpus:
+        1
+    statusId:
+        1001
+    username:
+        root
+    uuid:
+        6c5ce7ba-9f14-4546-9503-4e5bb054e383
+
+
+[root@saltmaster-shankar ~]# salt-key -L
+Accepted Keys:
+184.172.208.23
+184.172.208.235
+shankar-test-vs
+Denied Keys:
+Unaccepted Keys:
+Rejected Keys:
+
+
+
+
+
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' network.interface_ip eth1
+shankar-test-vs:
+    169.45.10.2
+
+
+[root@saltmaster-shankar ~]# ping 169.45.10.2
+PING 169.45.10.2 (169.45.10.2) 56(84) bytes of data.
+64 bytes from 169.45.10.2: icmp_seq=1 ttl=58 time=5.97 ms
+64 bytes from 169.45.10.2: icmp_seq=2 ttl=58 time=5.56 ms
+64 bytes from 169.45.10.2: icmp_seq=3 ttl=58 time=5.76 ms
+64 bytes from 169.45.10.2: icmp_seq=4 ttl=58 time=5.66 ms
+64 bytes from 169.45.10.2: icmp_seq=5 ttl=58 time=5.66 ms
+64 bytes from 169.45.10.2: icmp_seq=6 ttl=58 time=5.63 ms
+64 bytes from 169.45.10.2: icmp_seq=7 ttl=58 time=5.61 ms
+64 bytes from 169.45.10.2: icmp_seq=8 ttl=58 time=5.62 ms
+64 bytes from 169.45.10.2: icmp_seq=9 ttl=58 time=5.73 ms
+64 bytes from 169.45.10.2: icmp_seq=10 ttl=58 time=5.71 ms
+64 bytes from 169.45.10.2: icmp_seq=11 ttl=58 time=5.68 ms
+64 bytes from 169.45.10.2: icmp_seq=12 ttl=58 time=5.67 ms
+64 bytes from 169.45.10.2: icmp_seq=13 ttl=58 time=5.64 ms
+
+
+64 bytes from 169.45.10.2: icmp_seq=14 ttl=58 time=5.55 ms
+64 bytes from 169.45.10.2: icmp_seq=15 ttl=58 time=5.63 ms
+^C
+--- 169.45.10.2 ping statistics ---
+15 packets transmitted, 15 received, 0% packet loss, time 14024ms
+rtt min/avg/max/mdev = 5.555/5.677/5.973/0.100 ms
+[root@saltmaster-shankar ~]# 
+
+
+
+
+
+
+
+
+
+[root@saltmaster-shankar ~]# salt '*' status.netstats
+shankar-test-vs:
+    ----------
+    IpExt:
+        ----------
+        InBcastOctets:
+            0
+        InBcastPkts:
+            0
+        InCsumErrors:
+            0
+        InECT0Pkts:
+            0
+        InECT1Pkts:
+            0
+        InMcastOctets:
+            5286
+        InMcastPkts:
+            18
+        InNoECTPkts:
+            39690
+        InNoRoutes:
+            0
+        InOctets:
+            54965848
+        InTruncatedPkts:
+            0
+        OutBcastOctets:
+            0
+        OutBcastPkts:
+            0
+        OutMcastOctets:
+            5446
+        OutMcastPkts:
+            22
+        OutOctets:
+            1072135
+    TcpExt:
+        ----------
+        ArpFilter:
+            0
+        BusyPollRxPackets:
+            0
+        DelayedACKLocked:
+            0
+        DelayedACKLost:
+            1
+        DelayedACKs:
+            48
+        EmbryonicRsts:
+            0
+        IPReversePathFilter:
+            0
+        ListenDrops:
+            0
+        ListenOverflows:
+            0
+        LockDroppedIcmps:
+            0
+        OfoPruned:
+            0
+        OutOfWindowIcmps:
+            0
+        PAWSActive:
+            0
+        PAWSEstab:
+            0
+        PAWSPassive:
+            0
+        PruneCalled:
+            41
+        RcvPruned:
+            0
+        SyncookiesFailed:
+            0
+        SyncookiesRecv:
+            0
+        SyncookiesSent:
+            0
+        TCPACKSkippedFinWait2:
+            0
+        TCPACKSkippedPAWS:
+            0
+        TCPACKSkippedSeq:
+            0
+        TCPACKSkippedSynRecv:
+            0
+        TCPACKSkippedTimeWait:
+            0
+        TCPAbortFailed:
+            0
+        TCPAbortOnClose:
+            1
+        TCPAbortOnData:
+            6
+        TCPAbortOnLinger:
+            0
+        TCPAbortOnMemory:
+            0
+        TCPAbortOnTimeout:
+            0
+        TCPAutoCorking:
+            1
+        TCPBacklogDrop:
+            42
+        TCPChallengeACK:
+            0
+        TCPDSACKIgnoredNoUndo:
+            0
+        TCPDSACKIgnoredOld:
+            0
+        TCPDSACKOfoRecv:
+            0
+        TCPDSACKOfoSent:
+            0
+        TCPDSACKOldSent:
+            1
+        TCPDSACKRecv:
+            0
+        TCPDSACKUndo:
+            0
+        TCPDeferAcceptDrop:
+            0
+        TCPDirectCopyFromBacklog:
+            0
+        TCPDirectCopyFromPrequeue:
+            1244921
+        TCPFACKReorder:
+            0
+        TCPFastOpenActive:
+            0
+        TCPFastOpenActiveFail:
+            0
+        TCPFastOpenCookieReqd:
+            0
+        TCPFastOpenListenOverflow:
+            0
+        TCPFastOpenPassive:
+            0
+        TCPFastOpenPassiveFail:
+            0
+        TCPFastRetrans:
+            0
+        TCPForwardRetrans:
+            0
+        TCPFromZeroWindowAdv:
+            0
+        TCPFullUndo:
+            0
+        TCPHPAcks:
+            316
+        TCPHPHits:
+            27099
+        TCPHPHitsToUser:
+            915
+        TCPHystartDelayCwnd:
+            0
+        TCPHystartDelayDetect:
+            0
+        TCPHystartTrainCwnd:
+            0
+        TCPHystartTrainDetect:
+            0
+        TCPLossFailures:
+            0
+        TCPLossProbeRecovery:
+            0
+        TCPLossProbes:
+            0
+        TCPLossUndo:
+            0
+        TCPLostRetransmit:
+            0
+        TCPMD5NotFound:
+            0
+        TCPMD5Unexpected:
+            0
+        TCPMemoryPressures:
+            0
+        TCPMinTTLDrop:
+            0
+        TCPOFODrop:
+            0
+        TCPOFOMerge:
+            0
+        TCPOFOQueue:
+            249
+        TCPOrigDataSent:
+            1158
+        TCPPartialUndo:
+            0
+        TCPPrequeueDropped:
+            0
+        TCPPrequeued:
+            384
+        TCPPureAcks:
+            355
+        TCPRcvCoalesce:
+            32069
+        TCPRcvCollapsed:
+            3326
+        TCPRenoFailures:
+            0
+        TCPRenoRecovery:
+            0
+        TCPRenoRecoveryFail:
+            0
+        TCPRenoReorder:
+            0
+        TCPReqQFullDoCookies:
+            0
+        TCPReqQFullDrop:
+            0
+        TCPRetransFail:
+            0
+        TCPSACKDiscard:
+            0
+        TCPSACKReneging:
+            0
+        TCPSACKReorder:
+            0
+        TCPSYNChallenge:
+            0
+        TCPSackFailures:
+            0
+        TCPSackMerged:
+            0
+        TCPSackRecovery:
+            0
+        TCPSackRecoveryFail:
+            0
+        TCPSackShiftFallback:
+            0
+        TCPSackShifted:
+            0
+        TCPSchedulerFailed:
+            0
+        TCPSlowStartRetrans:
+            0
+        TCPSpuriousRTOs:
+            0
+        TCPSpuriousRtxHostQueues:
+            0
+        TCPSynRetrans:
+            3
+        TCPTSReorder:
+            0
+        TCPTimeWaitOverflow:
+            0
+        TCPTimeouts:
+            3
+        TCPToZeroWindowAdv:
+            0
+        TCPWantZeroWindowAdv:
+            48
+        TW:
+            245
+        TWKilled:
+            0
+        TWRecycled:
+            0
+
+
+
+
+[root@saltmaster-shankar ~]# salt shankar-test-vs dnsutil.A www.google.com
+shankar-test-vs:
+    - 172.217.29.4
+[root@saltmaster-shankar ~]#
+
+
+
+
+
+
+[root@saltmaster-shankar ~]# salt-cp '*' test_file.txt ~/test_file.txt
+{'shankar-test-vs': {'/root/test_file.txt': True}}
+[root@saltmaster-shankar ~]# 
+
+
+
+
+
+
+[root@saltmaster-shankar ~]# salt '*' cmd.run 'ulimit -n'
+shankar-test-vs:
+    8192
+[root@saltmaster-shankar ~]# 
+
+
+
+
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' cmd.run 'ulimit -n 1288'
+shankar-test-vs:
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' cmd.run 'ulimit -n'
+shankar-test-vs:
+    8192
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' cmd.run 'sysctl -w fs.file-max=10888'
+shankar-test-vs:
+    fs.file-max = 10888
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' cmd.run 'ulimit -n'
+shankar-test-vs:
+    8192
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' cmd.run 'sysctl fs.file-max'
+shankar-test-vs:
+    fs.file-max = 10888
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' cmd.run 'ulimit'
+shankar-test-vs:
+    unlimited
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' cmd.run 'ulimit -n 8241'
+shankar-test-vs:
+[root@saltmaster-shankar ~]# salt 'shankar-test-vs' cmd.run 'ulimit -n'
+shankar-test-vs:
+    8192
+[root@saltmaster-shankar ~]# 
+
+
+
+
+
+iMac:.ssh NatarajanShankar$ curl 'https://SL1187161:3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f@api.softlayer.com/rest/v3/SoftLayer_Account/VirtualGuests.json?objectMask=id;hostname;fullyQualifiedDomainName;primaryIpAddress;operatingSystem.passwords' | jq -r '.[] | select(.hostname == "<my_vms_hostname>") | {fullyQualifiedDomainName,id, root_password: .operatingSystem.passwords[] | select(.username == "root").password, primaryIpAddress}'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1569  100  1569    0     0   3020      0 --:--:-- --:--:-- --:--:--  3040
+iMac:.ssh NatarajanShankar$ curl 'https://SL1187161:3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f@api.softlayer.com/rest/v3.1/SoftLayer_Product_Order/placeOrder' --data @- | jq -r '.placedOrder.items[] | select(.itemId == 4069) | {id}'
+{"parameters" : [
+  {
+    "complexType": "SoftLayer_Container_Product_Order_Network_Storage_Hub",
+    "quantity": 1,
+    "packageId": 0,
+    "prices": [{ "id": 16984}]
+   }
+]}
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  4866  100  4698  100   168   1108     39  0:00:04  0:00:04 --:--:--  1114
+{
+  "id": 173473299
+}
+
+
+
+
+
+iMac:.ssh NatarajanShankar$ curl 'https://SL1187161:3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f@api.softlayer.com/rest/v3.1/SoftLayer_Account/getHubNetworkStorage.json?objectMask=id;username;billingItem.id;billingItem.orderItemId' | jq -r '.[] | select(.billingItem.orderItemId == 173473299) | {username}'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    99  100    99    0     0     95      0  0:00:01  0:00:01 --:--:--    95
+{
+  "username": "SLOS1187161-2"
+}
+
+
+
+iMac:.ssh NatarajanShankar$ curl -i -H "X-Auth-User:SLOS1187161-2:SL1187161" -H "X-Auth-Key:3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f" https://dal05.objectstorage.softlayer.net/auth/v1.0
+HTTP/1.1 200 OK
+Content-Length: 1472
+X-Auth-Token-Expires: 85774
+X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87
+X-Storage-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87
+X-Storage-Url: https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7
+Content-Type: application/json
+X-Trans-Id: tx987ad45a55a844329ac0f-00587e4bf5
+Date: Tue, 17 Jan 2017 16:53:09 GMT
+
+{"clusters": {"lon02": "https://lon02.objectstorage.softlayer.net/auth/v1.0", "syd01": "https://syd01.objectstorage.softlayer.net/auth/v1.0", "mon01": "https://mon01.objectstorage.softlayer.net/auth/v1.0", "dal05": "https://dal05.objectstorage.softlayer.net/auth/v1.0", "ams01": "https://ams01.objectstorage.softlayer.net/auth/v1.0", "tor01": "https://tor01.objectstorage.softlayer.net/auth/v1.0", "hkg02": "https://hkg02.objectstorage.softlayer.net/auth/v1.0", "mex01": "https://mex01.objectstorage.softlayer.net/auth/v1.0", "par01": "https://par01.objectstorage.softlayer.net/auth/v1.0", "sjc01": "https://sjc01.objectstorage.softlayer.net/auth/v1.0", "mil01": "https://mil01.objectstorage.softlayer.net/auth/v1.0", "wdc": "https://wdc.objectstorage.softlayer.net/auth/v1.0", "fra02": "https://fra02.objectstorage.softlayer.net/auth/v1.0", "sng01": "https://sng01.objectstorage.softlayer.net/auth/v1.0", "seo01": "https://seo01.objectstorage.softlayer.net/auth/v1.0", "che01": "https://che01.objectstorage.softlayer.net/auth/v1.0", "sao01": "https://sao01.objectstorage.softlayer.net/auth/v1.0", "mel01": "https://mel01.objectstorage.softlayer.net/auth/v1.0", "tok02": "https://tok02.objectstorage.softlayer.net/auth/v1.0"}, "storage": {"default": "public", "public": "https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7", "private": "https://dal05.objectstorage.service.networklayer.com/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7"}}iMac:.ssh NatarajanShankar$ 
+
+
+
+iMac:.ssh NatarajanShankar$ curl -i -X PUT -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7/shankar
+HTTP/1.1 201 Created
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+X-Trans-Id: tx30f31a9c2e6244a699311-00587e4d5c
+Date: Tue, 17 Jan 2017 16:59:08 GMT
+
+
+
+
+iMac:.ssh NatarajanShankar$ curl -i -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7
+HTTP/1.1 200 OK
+Content-Length: 8
+X-Account-Meta-Nas-Id: 18754589
+X-Account-Object-Count: 0
+X-Account-Storage-Policy-Standard-Container-Count: 1
+X-Timestamp: 1484671308.91860
+X-Account-Meta-Cdn-Id: 87827
+X-Account-Storage-Policy-Standard-Object-Count: 0
+X-Account-Bytes-Used: 0
+X-Account-Container-Count: 1
+Content-Type: text/plain; charset=utf-8
+Accept-Ranges: bytes
+X-Account-Storage-Policy-Standard-Bytes-Used: 0
+X-Trans-Id: tx30bde2ca831143a0af03f-00587e4e1f
+Date: Tue, 17 Jan 2017 17:02:23 GMT
+
+shankar
+iMac:.ssh NatarajanShankar$ 
+
+
+
+
+iMac:.ssh NatarajanShankar$ curl -i -X PUT -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7/test_file_shankar_2.txt --data-binary "3dw@#$^^dw"
+HTTP/1.1 202 Accepted
+Content-Length: 76
+Content-Type: text/html; charset=UTF-8
+X-Trans-Id: txc978933926734ecc8c287-00587e500f
+Date: Tue, 17 Jan 2017 17:10:39 GMT
+
+<html><h1>Accepted</h1><p>Thcurl -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7/test_file_shankar.txt
+
+
+
+iMac:.ssh NatarajanShankar$ curl -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7/test_file_shankar_2.txt
+
+
+
+
+iMac:junk NatarajanShankar$ curl -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7/test_file_shankar_2.txt | less
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0iMac:junk NatarajanShankar$ 
+
+
+
+iMac:junk NatarajanShankar$ curl -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7/test_file_shankar_2.txt > output
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+
+
+
+
+iMac:junk NatarajanShankar$ curl -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7/test_file_shankar.txt > output
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+
+
+
+
+
+iMac:junk NatarajanShankar$ sudo pip install python-swiftclient
+Password:
+The directory '/Users/NatarajanShankar/Library/Caches/pip/http' or its parent directory is not owned by the current user and the cache has been disabled. Please check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
+The directory '/Users/NatarajanShankar/Library/Caches/pip' or its parent directory is not owned by the current user and caching wheels has been disabled. check the permissions and owner of that directory. If executing pip with sudo, you may want sudo's -H flag.
+Collecting python-swiftclient
+  Downloading python_swiftclient-3.2.0-py2.py3-none-any.whl (72kB)
+    100% |████████████████████████████████| 81kB 1.2MB/s 
+Requirement already satisfied: requests>=1.1 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from python-swiftclient)
+Requirement already satisfied: six>=1.5.2 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from python-swiftclient)
+Installing collected packages: python-swiftclient
+Successfully installed python-swiftclient-3.2.0
+iMac:junk NatarajanShankar$ 
+
+
+
+
+iMac:junk NatarajanShankar$ export ST_AUTH=https://dal05.objectstorage.softlayer.net/auth/v1.0
+
+
+iMac:junk NatarajanShankar$ export ST_KEY=3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f
+
+
+iMac:.ssh NatarajanShankar$ curl -i -X PUT -H "X-Auth-Token: AUTH_tk6f89567b3b54419ca2b446fa6c1c7a87" https://dal05.objectstorage.softlayer.net/v1/AUTH_dc393f9f-f698-4ac2-888e-538e43eb7aa7/shankar/test_file_shankar_2.txt --data-binary "3dw@#$^^dw"
+HTTP/1.1 201 Created
+Last-Modified: Tue, 17 Jan 2017 17:24:42 GMT
+Content-Length: 0
+Etag: 3a95e964c63bcc984f79c52ed87004d7
+Content-Type: text/html; charset=UTF-8
+X-Trans-Id: tx252ed375676341aaaa269-00587e5359
+Date: Tue, 17 Jan 2017 17:24:41 GMT
+
+
+
+
+iMac:.ssh NatarajanShankar$ swift list shankar
+test_file_shankar_2.txt
+
+
+
+iMac:.ssh NatarajanShankar$ swift download shankar test_file_shankar_2.txt
+test_file_shankar_2.txt [auth 0.320s, headers 0.651s, total 0.651s, 0.000 MB/s]
+iMac:.ssh NatarajanShankar$ ls -la
+total 80
+drwx------   11 NatarajanShankar  staff    374 Jan 17 09:12 .
+drwxr-xr-x+ 109 NatarajanShankar  staff   3706 Jan 17 09:10 ..
+-rw-------    1 NatarajanShankar  staff   1766 Feb 17  2015 github_rsa
+-rw-r--r--    1 NatarajanShankar  staff    409 Feb 17  2015 github_rsa.pub
+-rw-------    1 NatarajanShankar  staff   3326 Sep  2 09:09 id_rsa
+-rw-r--r--    1 NatarajanShankar  staff    748 Sep  2 09:09 id_rsa.pub
+drwxr-xr-x    3 NatarajanShankar  staff    102 Jan 17 09:16 junk
+-rw-r--r--    1 NatarajanShankar  staff  13645 Jan 16 20:55 known_hosts
+drwxr-xr-x    3 NatarajanShankar  staff    102 Jan 17 09:09 myfiles
+-rw-r--r--    1 NatarajanShankar  staff     18 Jan 17 09:05 test_file_shankar.txt
+-rw-r--r--    1 NatarajanShankar  staff     10 Jan 17 09:25 test_file_shankar_2.txt
+iMac:.ssh NatarajanShankar$ 
+
+
+
+
+
+iMac:.ssh NatarajanShankar$ echo "more test content" > /tmp/another_test_file.txt
+iMac:.ssh NatarajanShankar$ swift upload more_files /tmp/another_test_file.txt
+tmp/another_test_file.txt
+
+
+
+iMac:.ssh NatarajanShankar$ 

@@ -1,0 +1,100 @@
+iMac:~ NatarajanShankar$ slcli config setup
+Username [shankarz@berkeley.edu]: SL1187161
+API Key or Password [None]: 
+Endpoint (public|private|custom) [public]: 
+Timeout [0]: 
+:..............:..................................................................:
+:         name : value                                                            :
+:..............:..................................................................:
+:     Username : SL1187161                                                        :
+:      API Key : 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f :
+: Endpoint URL : https://api.softlayer.com/xmlrpc/v3.1/                           :
+:      Timeout : not set                                                          :
+:..............:..................................................................:
+Are you sure you want to write settings to "/Users/NatarajanShankar/.softlayer"? [Y/n]: Y
+Configuration Updated Successfully
+iMac:~ NatarajanShankar$ slcli vs create --datacenter=dal09 --domain=berkeley.edu  --hostname=shankarz --os=CENTOS_7_64 --cpu=1 --memory=1024 --billing=hourly
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 27565897                             :
+: created : 2017-01-16T12:18:58-06:00            :
+:    guid : 921a7f9b-8925-4d86-b075-17e23646b05d :
+:.........:......................................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:..........:...............:................:............:...............................:
+:    id    : hostname :   primary_ip  :   backend_ip   : datacenter :             action            :
+:..........:..........:...............:................:............:...............................:
+: 27565897 : shankarz : 169.53.12.187 : 10.121.143.181 :   dal09    : Setup provision configuration :
+:..........:..........:...............:................:............:...............................:
+iMac:~ NatarajanShankar$ slcli vs credentials 27565897
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : UDl3AcfH :
+:..........:..........:
+iMac:~ NatarajanShankar$ ssh root@169.53.12.187
+The authenticity of host '169.53.12.187 (169.53.12.187)' can't be established.
+ECDSA key fingerprint is SHA256:lzA+SMUUuScgRqsgqcHU3z7v6DlCw32X299PxVHtLS4.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '169.53.12.187' (ECDSA) to the list of known hosts.
+root@169.53.12.187's password: 
+Permission denied, please try again.
+root@169.53.12.187's password: 
+Last failed login: Mon Jan 16 12:23:04 CST 2017 from c-73-223-185-251.hsd1.ca.comcast.net on ssh:notty
+There was 1 failed login attempt since the last successful login.
+[root@shankarz ~]# 
+[root@shankarz ~]# 
+[root@shankarz ~]# 
+[root@shankarz ~]# ?
+-bash: ?: command not found
+[root@shankarz ~]# help
+GNU bash, version 4.2.46(1)-release (x86_64-redhat-linux-gnu)
+These shell commands are defined internally.  Type `help' to see this list.
+Type `help name' to find out more about the function `name'.
+Use `info bash' to find out more about the shell in general.
+Use `man -k' or `info' to find out more about commands not in this list.
+
+A star (*) next to a name means that the command is disabled.
+
+ job_spec [&]                                                  history [-c] [-d offset] [n] or history -anrw [filename] o>
+ (( expression ))                                              if COMMANDS; then COMMANDS; [ elif COMMANDS; then COMMANDS>
+ . filename [arguments]                                        jobs [-lnprs] [jobspec ...] or jobs -x command [args]
+ :                                                             kill [-s sigspec | -n signum | -sigspec] pid | jobspec ...>
+ [ arg... ]                                                    let arg [arg ...]
+ [[ expression ]]                                              local [option] name[=value] ...
+ alias [-p] [name[=value] ... ]                                logout [n]
+ bg [job_spec ...]                                             mapfile [-n count] [-O origin] [-s count] [-t] [-u fd] [-C>
+ bind [-lpvsPVS] [-m keymap] [-f filename] [-q name] [-u nam>  popd [-n] [+N | -N]
+ break [n]                                                     printf [-v var] format [arguments]
+ builtin [shell-builtin [arg ...]]                             pushd [-n] [+N | -N | dir]
+ caller [expr]                                                 pwd [-LP]
+ case WORD in [PATTERN [| PATTERN]...) COMMANDS ;;]... esac    read [-ers] [-a array] [-d delim] [-i text] [-n nchars] [->
+ cd [-L|[-P [-e]]] [dir]                                       readarray [-n count] [-O origin] [-s count] [-t] [-u fd] [>
+ command [-pVv] command [arg ...]                              readonly [-aAf] [name[=value] ...] or readonly -p
+ compgen [-abcdefgjksuv] [-o option]  [-A action] [-G globpa>  return [n]
+ complete [-abcdefgjksuv] [-pr] [-DE] [-o option] [-A action>  select NAME [in WORDS ... ;] do COMMANDS; done
+ compopt [-o|+o option] [-DE] [name ...]                       set [-abefhkmnptuvxBCHP] [-o option-name] [--] [arg ...]
+ continue [n]                                                  shift [n]
+ coproc [NAME] command [redirections]                          shopt [-pqsu] [-o] [optname ...]
+ declare [-aAfFgilrtux] [-p] [name[=value] ...]                source filename [arguments]
+ dirs [-clpv] [+N] [-N]                                        suspend [-f]
+ disown [-h] [-ar] [jobspec ...]                               test [expr]
+ echo [-neE] [arg ...]                                         time [-p] pipeline
+ enable [-a] [-dnps] [-f filename] [name ...]                  times
+ eval [arg ...]                                                trap [-lp] [[arg] signal_spec ...]
+ exec [-cl] [-a name] [command [arguments ...]] [redirection>  true
+ exit [n]                                                      type [-afptP] name [name ...]
+ export [-fn] [name[=value] ...] or export -p                  typeset [-aAfFgilrtux] [-p] name[=value] ...
+ false                                                         ulimit [-SHacdefilmnpqrstuvx] [limit]
+ fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [com>  umask [-p] [-S] [mode]
+ fg [job_spec]                                                 unalias [-a] name [name ...]
+ for NAME [in WORDS ... ] ; do COMMANDS; done                  unset [-f] [-v] [name ...]
+ for (( exp1; exp2; exp3 )); do COMMANDS; done                 until COMMANDS; do COMMANDS; done
+ function name { COMMANDS ; } or name () { COMMANDS ; }        variables - Names and meanings of some shell variables
+ getopts optstring name [arg]                                  wait [id]
+ hash [-lr] [-p pathname] [-dt] [name ...]                     while COMMANDS; do COMMANDS; done
+ help [-dms] [pattern ...]                                     { COMMANDS ; }
+[root@shankarz ~]# 
+
