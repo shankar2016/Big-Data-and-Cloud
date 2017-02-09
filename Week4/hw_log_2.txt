@@ -1,0 +1,185 @@
+Last login: Mon Jan 30 18:08:22 on ttys006
+iMac:~ NatarajanShankar$ slcli vs create -d sjc02 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs1-shankar --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+SoftLayerAPIError(SoftLayer_Exception_NotFound): A datacenter could not be found with the name sjc02.
+iMac:~ NatarajanShankar$ slcli vs create -d sjc01 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs1-shankar --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 27930727                             :
+: created : 2017-01-30T23:55:43-06:00            :
+:    guid : e4485446-e058-4f45-a46a-e433e067709f :
+:.........:......................................:
+iMac:~ NatarajanShankar$ slcli vs create -d sjc01 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs2-shankar --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 27930747                             :
+: created : 2017-01-30T23:57:20-06:00            :
+:    guid : 7a6c55dc-6be6-4482-8e37-fcbe27aa0f14 :
+:.........:......................................:
+iMac:~ NatarajanShankar$ slcli vs create -d sjc01 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs3-shankar --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 27930751                             :
+: created : 2017-01-30T23:57:44-06:00            :
+:    guid : 36741913-bc87-4465-9a67-25dade9176fb :
+:.........:......................................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.............:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :    action   :
+:..........:...............:................:................:............:.............:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    : Assign Host :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    : Assign Host :
+: 27930751 : gpfs3-shankar :       -        :       -        :     -      : Assign Host :
+:..........:...............:................:................:............:.............:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:...............................:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :             action            :
+:..........:...............:................:................:............:...............................:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    :          Assign Host          :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :        Power on server        :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    : Setup provision configuration :
+:..........:...............:................:................:............:...............................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.................:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :      action     :
+:..........:...............:................:................:............:.................:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    :   Assign Host   :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    : Power on server :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    : Power on server :
+:..........:...............:................:................:............:.................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.................:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :      action     :
+:..........:...............:................:................:............:.................:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    :   Assign Host   :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    : Power on server :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    : Power on server :
+:..........:...............:................:................:............:.................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.................:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :      action     :
+:..........:...............:................:................:............:.................:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    :   Assign Host   :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    : Power on server :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    : Power on server :
+:..........:...............:................:................:............:.................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.............:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :    action   :
+:..........:...............:................:................:............:.............:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    : Assign Host :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :      -      :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :      -      :
+:..........:...............:................:................:............:.............:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.............:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :    action   :
+:..........:...............:................:................:............:.............:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    : Assign Host :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :      -      :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :      -      :
+:..........:...............:................:................:............:.............:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.............:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :    action   :
+:..........:...............:................:................:............:.............:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    : Assign Host :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :      -      :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :      -      :
+:..........:...............:................:................:............:.............:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.............:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :    action   :
+:..........:...............:................:................:............:.............:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    : Assign Host :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :      -      :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :      -      :
+:..........:...............:................:................:............:.............:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.............:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :    action   :
+:..........:...............:................:................:............:.............:
+: 27930727 : gpfs1-shankar : 169.53.128.117 :       -        :   sjc01    : Assign Host :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :      -      :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :      -      :
+:..........:...............:................:................:............:.............:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:.................:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :      action     :
+:..........:...............:................:................:............:.................:
+: 27930727 : gpfs1-shankar : 169.53.128.115 : 10.122.149.199 :   sjc01    : Power on server :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :        -        :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :        -        :
+:..........:...............:................:................:............:.................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:........:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter : action :
+:..........:...............:................:................:............:........:
+: 27930727 : gpfs1-shankar : 169.53.128.115 : 10.122.149.199 :   sjc01    :   -    :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :   -    :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :   -    :
+:..........:...............:................:................:............:........:
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ 
+iMac:~ NatarajanShankar$ slcli vs credentials
+Usage: slcli vs credentials [OPTIONS] IDENTIFIER
+
+Error: Missing argument "identifier".
+iMac:~ NatarajanShankar$ slcli vs credentials 27930727 27930747 27930751
+Usage: slcli vs credentials [OPTIONS] IDENTIFIER
+
+Error: Got unexpected extra arguments (27930747 27930751)
+iMac:~ NatarajanShankar$ slcli vs credentials 27930727
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : PgKl46sm :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 27930747
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : MbQkm8pK :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 27930751
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : XsPvzD7L :
+:..........:..........:
+iMac:~ NatarajanShankar$ cd ~/.ssh
+iMac:.ssh NatarajanShankar$ ls -la
+total 96
+drwx------   13 NatarajanShankar  staff    442 Jan 30 22:23 .
+drwxr-xr-x+ 110 NatarajanShankar  staff   3740 Jan 30 22:23 ..
+-rw-------    1 NatarajanShankar  staff   1766 Feb 17  2015 github_rsa
+-rw-r--r--    1 NatarajanShankar  staff    409 Feb 17  2015 github_rsa.pub
+-rw-------    1 NatarajanShankar  staff   3326 Sep  2 09:09 id_rsa
+-rw-r--r--    1 NatarajanShankar  staff    748 Sep  2 09:09 id_rsa.pub
+-rw-------    1 NatarajanShankar  staff   1675 Jan 27 11:28 id_rsa_sl
+-rw-r--r--    1 NatarajanShankar  staff    388 Jan 27 11:28 id_rsa_sl.pub
+drwxr-xr-x    3 NatarajanShankar  staff    102 Jan 17 09:16 junk
+-rw-r--r--    1 NatarajanShankar  staff  15010 Jan 30 22:23 known_hosts
+drwxr-xr-x    3 NatarajanShankar  staff    102 Jan 17 09:09 myfiles
+-rw-r--r--    1 NatarajanShankar  staff     18 Jan 17 09:05 test_file_shankar.txt
+-rw-r--r--    1 NatarajanShankar  staff     10 Jan 17 09:25 test_file_shankar_2.txt
+iMac:.ssh NatarajanShankar$ vi id_rsa_sl
+iMac:.ssh NatarajanShankar$ 
+

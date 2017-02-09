@@ -1,0 +1,1532 @@
+iMac:.ssh NatarajanShankar$ ssh-keygen -f ~/.ssh/id_rsa_sl -b 2048 -t rsa -C 'SL Key'
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/NatarajanShankar/.ssh/id_rsa_sl.
+Your public key has been saved in /Users/NatarajanShankar/.ssh/id_rsa_sl.pub.
+The key fingerprint is:
+SHA256:cd0pT6VbiiHotTIRtXRITcpYKTgR++H2EbjU2J2qS58 SL Key
+The key's randomart image is:
++---[RSA 2048]----+
+|      o+.o==o   .|
+|      o..%o*.o + |
+|      ..X.@ * = .|
+|       = B = * + |
+|        S + . +  |
+|       . = .     |
+|        o .      |
+|       . o .     |
+|        . E      |
++----[SHA256]-----+
+iMac:.ssh NatarajanShankar$ 
+
+
+
+
+iMac:.ssh NatarajanShankar$ ls -la
+total 96
+drwx------   13 NatarajanShankar  staff    442 Jan 27 11:28 .
+drwxr-xr-x+ 109 NatarajanShankar  staff   3706 Jan 27 11:29 ..
+-rw-------    1 NatarajanShankar  staff   1675 Jan 27 11:28 id_rsa_sl
+-rw-r--r--    1 NatarajanShankar  staff    388 Jan 27 11:28 id_rsa_sl.pub
+iMac:.ssh NatarajanShankar$ 
+
+
+
+iMac:.ssh NatarajanShankar$ slcli sshkey add -f ~/.ssh/id_rsa_sl.pub --note 'added during HW4' RSASL
+SSH key added: ed:48:4e:b5:66:ab:7b:df:b7:6c:00:ba:9c:8a:33:94
+iMac:.ssh NatarajanShankar$ 
+
+
+slcli vs create -d sjc02 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs1-shankar --domain shankar.net --key RSASL
+
+
+
+
+iMac:.ssh NatarajanShankar$ slcli vs create -d sjc02 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs1-shankar --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+SoftLayerAPIError(SoftLayer_Exception_NotFound): A datacenter could not be found with the name sjc02.
+iMac:.ssh NatarajanShankar$ slcli vs create -d sjc01 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs1-shankar --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 27868721                             :
+: created : 2017-01-27T17:56:24-06:00            :
+:    guid : 085a412e-5509-45db-9c8e-d6d30901c137 :
+:.........:......................................:
+iMac:.ssh NatarajanShankar$ slcli vs create -d sjc01 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs2-shankar --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 27868727                             :
+: created : 2017-01-27T17:56:47-06:00            :
+:    guid : 2c2bcb6e-2617-45b8-babb-92fbb179cda8 :
+:.........:......................................:
+iMac:.ssh NatarajanShankar$ slcli vs create -d sjc01 --os REDHAT_6_64 --cpu 2 --memory 4096 --disk 25 --disk 25 --hostname gpfs3-shankar --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 27868735                             :
+: created : 2017-01-27T17:57:02-06:00            :
+:    guid : c5c55677-7579-42b5-8864-0d7122261cb5 :
+:.........:......................................:
+iMac:.ssh NatarajanShankar$ 
+
+iMac:.ssh NatarajanShankar$ slcli vs list
+:..........:...............:................:...............:............:....................................:
+:    id    :    hostname   :   primary_ip   :   backend_ip  : datacenter :               action               :
+:..........:...............:................:...............:............:....................................:
+: 27868721 : gpfs1-shankar : 169.53.128.114 : 10.122.122.68 :   sjc01    : Check Cloud Disk Template Transfer :
+: 27868727 : gpfs2-shankar : 169.53.128.116 : 10.122.122.70 :   sjc01    : Check Cloud Disk Template Transfer :
+: 27868735 : gpfs3-shankar : 169.53.128.117 : 10.122.122.73 :   sjc01    : Check Cloud Disk Template Transfer :
+:..........:...............:................:...............:............:....................................:
+iMac:.ssh NatarajanShankar$ 
+
+iMac:.ssh NatarajanShankar$ slcli vs list
+:..........:...............:................:...............:............:........:
+:    id    :    hostname   :   primary_ip   :   backend_ip  : datacenter : action :
+:..........:...............:................:...............:............:........:
+: 27868721 : gpfs1-shankar : 169.53.128.114 : 10.122.122.68 :   sjc01    :   -    :
+: 27868727 : gpfs2-shankar : 169.53.128.116 : 10.122.122.70 :   sjc01    :   -    :
+: 27868735 : gpfs3-shankar : 169.53.128.117 : 10.122.122.73 :   sjc01    :   -    :
+:..........:...............:................:...............:............:........:
+iMac:.ssh NatarajanShankar$ 
+
+
+
+
+iMac:.ssh NatarajanShankar$ slcli vs credentials 27868721
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : YE3BgH6e :
+:..........:..........:
+iMac:.ssh NatarajanShankar$ slcli vs credentials 27868727
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : Gbctm3X5 :
+:..........:..........:
+iMac:.ssh NatarajanShankar$ slcli vs credentials 27868735
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : LayBu9pj :
+:..........:..........:
+iMac:.ssh NatarajanShankar$ 
+
+
+
+
+MACHINE 1
+=========
+
+iMac:.ssh NatarajanShankar$ ssh root@169.53.128.114
+The authenticity of host '169.53.128.114 (169.53.128.114)' can't be established.
+RSA key fingerprint is SHA256:pyBpwr46Ej0UEaeWmAmnCvZNrUfqn5di4z4tfr96k7s.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '169.53.128.114' (RSA) to the list of known hosts.
+root@169.53.128.114's password: 
+[root@gpfs1-shankar ~]# 
+[root@gpfs1-shankar ~]# 
+[root@gpfs1-shankar ~]# pwd
+/root
+[root@gpfs1-shankar ~]# vi .bash_profile
+[root@gpfs1-shankar ~]# source ./.bash_profile
+[root@gpfs1-shankar ~]# cd ~
+[root@gpfs1-shankar ~]# pwd
+/root
+[root@gpfs1-shankar ~]# cd .ssh
+[root@gpfs1-shankar .ssh]# ls -la
+total 12
+drwxr-xr-x. 2 root root 4096 Jan 27 17:59 .
+dr-xr-x---. 3 root root 4096 Jan 27 18:14 ..
+-rw-------. 1 root root  504 Jan 27 17:59 authorized_keys
+[root@gpfs1-shankar .ssh]# vi id_rsa_sl
+[root@gpfs1-shankar .ssh]# ls -la
+total 16
+drwxr-xr-x. 2 root root 4096 Jan 27 18:17 .
+dr-xr-x---. 3 root root 4096 Jan 27 18:14 ..
+-rw-------. 1 root root  504 Jan 27 17:59 authorized_keys
+-rw-r--r--. 1 root root 1675 Jan 27 18:17 id_rsa_sl
+[root@gpfs1-shankar .ssh]# chmod 600 id_rsa_sl
+[root@gpfs1-shankar .ssh]# ls -la
+total 16
+drwxr-xr-x. 2 root root 4096 Jan 27 18:17 .
+dr-xr-x---. 3 root root 4096 Jan 27 18:14 ..
+-rw-------. 1 root root  504 Jan 27 17:59 authorized_keys
+-rw-------. 1 root root 1675 Jan 27 18:17 id_rsa_sl
+[root@gpfs1-shankar .ssh]# 
+
+
+127.0.0.1 localhost.localdomain localhost
+169.53.128.114 gpfs1-shankar.shankar.net gpfs1-shankar
+169.53.128.116 gpfs2-shankar.shankar.net gpfs2-shankar
+169.53.128.117 gpfs3-shankar.shankar.net gpfs3-shankar
+
+
+[root@gpfs1-shankar .ssh]# ping gpfs1-shankar
+PING gpfs1-shankar.shankar.net (169.53.128.114) 56(84) bytes of data.
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=1 ttl=64 time=0.029 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=2 ttl=64 time=0.029 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=3 ttl=64 time=0.024 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=4 ttl=64 time=0.031 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=5 ttl=64 time=0.040 ms
+^C
+--- gpfs1-shankar.shankar.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4645ms
+rtt min/avg/max/mdev = 0.024/0.030/0.040/0.008 ms
+[root@gpfs1-shankar .ssh]# ping gpfs2-shankar
+PING gpfs2-shankar.shankar.net (169.53.128.116) 56(84) bytes of data.
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=1 ttl=64 time=3.18 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=2 ttl=64 time=0.864 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=3 ttl=64 time=0.519 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=4 ttl=64 time=0.434 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=5 ttl=64 time=0.538 ms
+^C
+--- gpfs2-shankar.shankar.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4497ms
+rtt min/avg/max/mdev = 0.434/1.107/3.184/1.049 ms
+[root@gpfs1-shankar .ssh]# ping gpfs3-shankar
+PING gpfs3-shankar.shankar.net (169.53.128.117) 56(84) bytes of data.
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=1 ttl=64 time=2.84 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=2 ttl=64 time=0.335 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=3 ttl=64 time=0.313 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=4 ttl=64 time=0.345 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=5 ttl=64 time=0.328 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=6 ttl=64 time=0.230 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=7 ttl=64 time=0.341 ms
+^C
+--- gpfs3-shankar.shankar.net ping statistics ---
+7 packets transmitted, 7 received, 0% packet loss, time 6564ms
+rtt min/avg/max/mdev = 0.230/0.676/2.846/0.886 ms
+[root@gpfs1-shankar .ssh]#
+
+
+
+vi /root/nodefile
+
+gpfs1:quorum:
+gpfs2::
+gpfs3::
+
+
+
+
+
+MACHINE 2
+=========
+
+Last login: Fri Jan 27 16:15:50 on ttys004
+iMac:~ NatarajanShankar$ ssh root@169.53.128.116
+The authenticity of host '169.53.128.116 (169.53.128.116)' can't be established.
+RSA key fingerprint is SHA256:mm9yAIo3YP272XsOzFBV/3LSL8dhXjijJzFXl9gfGcc.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '169.53.128.116' (RSA) to the list of known hosts.
+root@169.53.128.116's password: 
+[root@gpfs2-shankar ~]# cd ~
+[root@gpfs2-shankar ~]# pwd
+/root
+[root@gpfs2-shankar ~]# ls -la
+total 36
+dr-xr-x---.  3 root root 4096 Jan 27 18:01 .
+dr-xr-xr-x. 22 root root 4096 Jan 27 17:59 ..
+-rw-r--r--.  1 root root   18 May 20  2009 .bash_logout
+-rw-r--r--.  1 root root  176 May 20  2009 .bash_profile
+-rw-r--r--.  1 root root  176 Sep 22  2004 .bashrc
+-rw-r--r--.  1 root root  100 Sep 22  2004 .cshrc
+drwxr-xr-x.  2 root root 4096 Jan 27 17:59 .ssh
+-rw-r--r--.  1 root root  129 Dec  3  2004 .tcshrc
+[root@gpfs2-shankar ~]# vi .bash_profile
+[root@gpfs2-shankar ~]# !vi
+vi .bash_profile
+[root@gpfs2-shankar ~]# cd ~
+[root@gpfs2-shankar ~]# cd .ssh
+[root@gpfs2-shankar .ssh]# vi id_rsa_sl
+[root@gpfs2-shankar .ssh]# ls -la
+total 16
+drwxr-xr-x. 2 root root 4096 Jan 27 18:21 .
+dr-xr-x---. 3 root root 4096 Jan 27 18:20 ..
+-rw-------. 1 root root  504 Jan 27 17:59 authorized_keys
+-rw-r--r--. 1 root root 1675 Jan 27 18:21 id_rsa_sl
+[root@gpfs2-shankar .ssh]# chmod 600 id_rsa_sl
+[root@gpfs2-shankar .ssh]# ls -la
+total 16
+drwxr-xr-x. 2 root root 4096 Jan 27 18:21 .
+dr-xr-x---. 3 root root 4096 Jan 27 18:20 ..
+-rw-------. 1 root root  504 Jan 27 17:59 authorized_keys
+-rw-------. 1 root root 1675 Jan 27 18:21 id_rsa_sl
+[root@gpfs2-shankar .ssh]# 
+
+127.0.0.1 localhost.localdomain localhost
+169.53.128.114 gpfs1-shankar.shankar.net gpfs1-shankar
+169.53.128.116 gpfs2-shankar.shankar.net gpfs2-shankar
+169.53.128.117 gpfs3-shankar.shankar.net gpfs3-shankar
+
+[root@gpfs2-shankar .ssh]# ping gpfs1-shankar
+PING gpfs1-shankar.shankar.net (169.53.128.114) 56(84) bytes of data.
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=1 ttl=64 time=1.10 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=2 ttl=64 time=0.581 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=3 ttl=64 time=0.548 ms
+^C
+--- gpfs1-shankar.shankar.net ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2961ms
+rtt min/avg/max/mdev = 0.548/0.745/1.108/0.258 ms
+[root@gpfs2-shankar .ssh]# ping gpfs2-shankar
+PING gpfs2-shankar.shankar.net (169.53.128.116) 56(84) bytes of data.
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=1 ttl=64 time=0.026 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=2 ttl=64 time=0.026 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=3 ttl=64 time=0.025 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=4 ttl=64 time=0.027 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=5 ttl=64 time=0.027 ms
+^C
+--- gpfs2-shankar.shankar.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4141ms
+rtt min/avg/max/mdev = 0.025/0.026/0.027/0.003 ms
+[root@gpfs2-shankar .ssh]# ping gpfs3-shankar
+PING gpfs3-shankar.shankar.net (169.53.128.117) 56(84) bytes of data.
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=1 ttl=64 time=3.46 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=2 ttl=64 time=0.702 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=3 ttl=64 time=0.603 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=4 ttl=64 time=0.551 ms
+^C
+--- gpfs3-shankar.shankar.net ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3841ms
+rtt min/avg/max/mdev = 0.551/1.329/3.460/1.231 ms
+[root@gpfs2-shankar .ssh]# 
+
+
+vi /root/nodefile
+
+gpfs1:quorum:
+gpfs2::
+gpfs3::
+
+
+
+
+
+
+
+MACHINE 3
+=========
+
+Last login: Fri Jan 27 16:18:46 on ttys005
+iMac:~ NatarajanShankar$ ssh root@169.53.128.117
+The authenticity of host '169.53.128.117 (169.53.128.117)' can't be established.
+RSA key fingerprint is SHA256:ydfmRaARPs3AYmk94WiRQbWJ+QyXesIjQRLSIYA0p20.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '169.53.128.117' (RSA) to the list of known hosts.
+root@169.53.128.117's password: 
+[root@gpfs3-shankar ~]# cd ~
+[root@gpfs3-shankar ~]# vi ~/.bash_profile
+[root@gpfs3-shankar ~]# cd ~
+[root@gpfs3-shankar ~]# cd .ssh
+[root@gpfs3-shankar .ssh]# ls -la
+total 12
+drwxr-xr-x. 2 root root 4096 Jan 27 17:59 .
+dr-xr-x---. 3 root root 4096 Jan 27 18:24 ..
+-rw-------. 1 root root  504 Jan 27 17:59 authorized_keys
+[root@gpfs3-shankar .ssh]# vi id_rsa_sl
+
+
+
+127.0.0.1 localhost.localdomain localhost
+169.53.128.114 gpfs1-shankar.shankar.net gpfs1-shankar
+169.53.128.116 gpfs2-shankar.shankar.net gpfs2-shankar
+169.53.128.117 gpfs3-shankar.shankar.net gpfs3-shankar
+
+
+[root@gpfs3-shankar .ssh]# ping gpfs1-shankar
+PING gpfs1-shankar.shankar.net (169.53.128.114) 56(84) bytes of data.
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=1 ttl=64 time=0.624 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=2 ttl=64 time=0.274 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=3 ttl=64 time=0.241 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=4 ttl=64 time=0.342 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=5 ttl=64 time=0.268 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=6 ttl=64 time=0.228 ms
+^C
+--- gpfs1-shankar.shankar.net ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5350ms
+rtt min/avg/max/mdev = 0.228/0.329/0.624/0.137 ms
+[root@gpfs3-shankar .ssh]# ping gpfs2-shankar
+PING gpfs2-shankar.shankar.net (169.53.128.116) 56(84) bytes of data.
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=1 ttl=64 time=1.17 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=2 ttl=64 time=0.529 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=3 ttl=64 time=0.630 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=4 ttl=64 time=0.588 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=5 ttl=64 time=0.814 ms
+64 bytes from gpfs2-shankar.shankar.net (169.53.128.116): icmp_seq=6 ttl=64 time=0.568 ms
+^C
+--- gpfs2-shankar.shankar.net ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5157ms
+rtt min/avg/max/mdev = 0.529/0.716/1.170/0.223 ms
+[root@gpfs3-shankar .ssh]# ping gpfs3-shankar
+PING gpfs3-shankar.shankar.net (169.53.128.117) 56(84) bytes of data.
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=1 ttl=64 time=0.032 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=2 ttl=64 time=0.034 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=3 ttl=64 time=0.018 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=4 ttl=64 time=0.026 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=5 ttl=64 time=0.026 ms
+64 bytes from gpfs3-shankar.shankar.net (169.53.128.117): icmp_seq=6 ttl=64 time=0.027 ms
+^C
+--- gpfs3-shankar.shankar.net ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5287ms
+rtt min/avg/max/mdev = 0.018/0.027/0.034/0.006 ms
+[root@gpfs3-shankar .ssh]# 
+
+
+
+
+gpfs1:quorum:
+gpfs2::
+gpfs3::
+
+
+
+
+
+GPFS
+=====
+Link to GPFS (for homework 4):
+http://B0A3.http.dal05.cdn.softlayer.net/brad-impact-demo-test/SaharaImage/GPFS_4.1_STD_LSX_QSG.tar
+
+
+
+
+
+[root@gpfs1-shankar ~]# wget "http://B0A3.http.dal05.cdn.softlayer.net/brad-impact-demo-test/SaharaImage/GPFS_4.1_STD_LSX_QSG.tar"
+--2017-01-27 18:48:17--  http://b0a3.http.dal05.cdn.softlayer.net/brad-impact-demo-test/SaharaImage/GPFS_4.1_STD_LSX_QSG.tar
+Resolving b0a3.http.dal05.cdn.softlayer.net... 72.21.81.253
+Connecting to b0a3.http.dal05.cdn.softlayer.net|72.21.81.253|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 114503680 (109M) [application/x-tar]
+Saving to: “GPFS_4.1_STD_LSX_QSG.tar”
+
+100%[==============================================================================>] 114,503,680  227M/s   in 0.5s    
+
+2017-01-27 18:48:17 (227 MB/s) - “GPFS_4.1_STD_LSX_QSG.tar” saved [114503680/114503680]
+
+[root@gpfs1-shankar ~]# ls -la
+total 111976
+dr-xr-x---.  3 root root      4096 Jan 27 18:48 .
+dr-xr-xr-x. 22 root root      4096 Jan 27 17:59 ..
+-rw-r--r--.  1 root root        18 May 20  2009 .bash_logout
+-rw-r--r--.  1 root root       213 Jan 27 18:14 .bash_profile
+-rw-r--r--.  1 root root       176 Sep 22  2004 .bashrc
+-rw-r--r--.  1 root root       100 Sep 22  2004 .cshrc
+-rw-r--r--.  1 root root 114503680 Jan 29  2016 GPFS_4.1_STD_LSX_QSG.tar
+-rw-r--r--.  1 root root        30 Jan 27 18:38 nodefile
+drwxr-xr-x.  2 root root      4096 Jan 27 18:17 .ssh
+-rw-r--r--.  1 root root       129 Dec  3  2004 .tcshrc
+[root@gpfs1-shankar ~]# 
+
+
+
+
+[root@gpfs1-shankar ~]# tar -xvf GPFS_4.1_STD_LSX_QSG.tar
+gpfs.base.README.Linux
+gpfs_install-4.1.0-0_x86_64
+[root@gpfs1-shankar ~]# ./gpfs_install-4.1.0-0_x86_64 --silent
+
+Extracting License Acceptance Process Tool to /usr/lpp/mmfs/4.1 ...
+tail -n +456 ./gpfs_install-4.1.0-0_x86_64 | /bin/tar -C /usr/lpp/mmfs/4.1 -xvz --exclude=*rpm --exclude=*tgz --exclude=*deb 2> /dev/null 1> /dev/null
+
+Installing JRE ...
+tail -n +456 ./gpfs_install-4.1.0-0_x86_64 | /bin/tar -C /usr/lpp/mmfs/4.1 --wildcards -xvz  ./ibm-java*tgz 2> /dev/null 1> /dev/null
+
+Invoking License Acceptance Process Tool ...
+/usr/lpp/mmfs/4.1/ibm-java-x86_64-60/jre/bin/java -cp /usr/lpp/mmfs/4.1/LAP_HOME/LAPApp.jar com.ibm.lex.lapapp.LAP -l /usr/lpp/mmfs/4.1/LA_HOME -m /usr/lpp/mmfs/4.1 -s /usr/lpp/mmfs/4.1 -t 5 
+
+License Agreement Terms accepted.
+
+Extracting Product RPMs to /usr/lpp/mmfs/4.1 ...
+tail -n +456 ./gpfs_install-4.1.0-0_x86_64 | /bin/tar -C /usr/lpp/mmfs/4.1 --wildcards -xvz  ./gpfs.base-4.1.0-0.x86_64.rpm ./gpfs.base_4.1.0-0_amd64.deb ./gpfs.docs-4.1.0-0.noarch.rpm ./gpfs.docs_4.1.0-0_all.deb ./gpfs.ext-4.1.0-0.x86_64.rpm ./gpfs.ext_4.1.0-0_amd64.deb ./gpfs.gpl-4.1.0-0.noarch.rpm ./gpfs.gpl_4.1.0-0_all.deb ./gpfs.gskit-8.0.50-16.x86_64.rpm ./gpfs.gskit_8.0.50-16_amd64.deb ./gpfs.msg.en-us_4.1.0-0_all.deb ./gpfs.msg.en_US-4.1.0-0.noarch.rpm 2> /dev/null 1> /dev/null
+
+   - gpfs.base-4.1.0-0.x86_64.rpm
+   - gpfs.base_4.1.0-0_amd64.deb
+   - gpfs.docs-4.1.0-0.noarch.rpm
+   - gpfs.docs_4.1.0-0_all.deb
+   - gpfs.ext-4.1.0-0.x86_64.rpm
+   - gpfs.ext_4.1.0-0_amd64.deb
+   - gpfs.gpl-4.1.0-0.noarch.rpm
+   - gpfs.gpl_4.1.0-0_all.deb
+   - gpfs.gskit-8.0.50-16.x86_64.rpm
+   - gpfs.gskit_8.0.50-16_amd64.deb
+   - gpfs.msg.en-us_4.1.0-0_all.deb
+   - gpfs.msg.en_US-4.1.0-0.noarch.rpm
+
+Removing License Acceptance Process Tool from /usr/lpp/mmfs/4.1 ...
+
+rm -rf  /usr/lpp/mmfs/4.1/LAP_HOME /usr/lpp/mmfs/4.1/LA_HOME
+
+Removing JRE from /usr/lpp/mmfs/4.1 ...
+
+rm -rf /usr/lpp/mmfs/4.1/ibm-java*tgz
+[root@gpfs1-shankar ~]# cd /usr/lpp/mmfs/4.1
+[root@gpfs1-shankar 4.1]# ls -la
+total 41492
+drwxr-xr-x. 3 root root     4096 Jan 27 18:49 .
+drwxr-xr-x. 3 root root     4096 Jan 27 18:49 ..
+-rw-r--r--. 1 root root 14215820 Apr 25  2014 gpfs.base_4.1.0-0_amd64.deb
+-rw-r--r--. 1 root root 14482662 Apr 25  2014 gpfs.base-4.1.0-0.x86_64.rpm
+-rw-r--r--. 1 root root   271026 Apr 25  2014 gpfs.docs_4.1.0-0_all.deb
+-rw-r--r--. 1 root root   292465 Apr 25  2014 gpfs.docs-4.1.0-0.noarch.rpm
+-rw-r--r--. 1 root root  1541376 Apr 25  2014 gpfs.ext_4.1.0-0_amd64.deb
+-rw-r--r--. 1 root root  1548454 Apr 25  2014 gpfs.ext-4.1.0-0.x86_64.rpm
+-rw-r--r--. 1 root root   546506 Apr 25  2014 gpfs.gpl_4.1.0-0_all.deb
+-rw-r--r--. 1 root root   573838 Apr 25  2014 gpfs.gpl-4.1.0-0.noarch.rpm
+-rw-r--r--. 1 root root  4287554 Apr 25  2014 gpfs.gskit_8.0.50-16_amd64.deb
+-rw-r--r--. 1 root root  4328387 Apr 25  2014 gpfs.gskit-8.0.50-16.x86_64.rpm
+-rw-r--r--. 1 root root   128728 Apr 25  2014 gpfs.msg.en-us_4.1.0-0_all.deb
+-rw-r--r--. 1 root root   131514 Apr 25  2014 gpfs.msg.en_US-4.1.0-0.noarch.rpm
+drwxr-xr-x. 3 root root     4096 Jan 27 18:49 license
+[root@gpfs1-shankar 4.1]# 
+
+
+
+
+
+
+
+
+
+
+
+[root@gpfs1-shankar 4.1]# pwd
+/usr/lpp/mmfs/4.1
+[root@gpfs1-shankar 4.1]# yum install -y kernel
+Loaded plugins: product-id, search-disabled-repos, security, subscription-manager
+Setting up Install Process
+rhel-6-server-optional-rpms                                                                      | 2.0 kB     00:00     
+rhel-6-server-optional-rpms/primary                                                              | 1.4 MB     00:00     
+rhel-6-server-optional-rpms                                                                                 10493/10493
+rhel-6-server-rpms                                                                               | 2.0 kB     00:00     
+rhel-6-server-supplementary-rpms                                                                 | 2.0 kB     00:00     
+rhel-6-server-supplementary-rpms/primary                                                         | 132 kB     00:00     
+rhel-6-server-supplementary-rpms                                                                                682/682
+Package kernel-2.6.32-642.13.1.el6.x86_64 already installed and latest version
+Nothing to do
+[root@gpfs1-shankar 4.1]# reboot
+
+Broadcast message from root@gpfs1-shankar.shankar.net
+	(/dev/pts/0) at 18:54 ...
+
+The system is going down for reboot NOW!
+[root@gpfs1-shankar 4.1]# Connection to 169.53.128.114 closed by remote host.
+Connection to 169.53.128.114 closed.
+iMac:.ssh NatarajanShankar$ ssh root@169.53.128.114
+root@169.53.128.114's password: 
+Last login: Fri Jan 27 18:13:41 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@gpfs1-shankar ~]# yum -y install ksh gcc-c++ compat-libstdc++-33 kernel-devel redhat-lsb net-tools libaio
+Loaded plugins: product-id, search-disabled-repos, security, subscription-manager
+Setting up Install Process
+rhel-6-server-optional-rpms                                                                      | 2.0 kB     00:00     
+rhel-6-server-rpms                                                                               | 2.0 kB     00:00     
+rhel-6-server-supplementary-rpms                                                                 | 2.0 kB     00:00     
+Package net-tools-1.60-110.el6_2.x86_64 already installed and latest version
+Package libaio-0.3.107-10.el6.x86_64 already installed and latest version
+Resolving Dependencies
+--> Running transaction check
+---> Package compat-libstdc++-33.x86_64 0:3.2.3-69.el6 will be installed
+---> Package gcc-c++.x86_64 0:4.4.7-17.el6 will be installed
+--> Processing Dependency: libstdc++-devel = 4.4.7-17.el6 for package: gcc-c++-4.4.7-17.el6.x86_64
+--> Processing Dependency: gcc = 4.4.7-17.el6 for package: gcc-c++-4.4.7-17.el6.x86_64
+--> Processing Dependency: libmpfr.so.1()(64bit) for package: gcc-c++-4.4.7-17.el6.x86_64
+---> Package kernel-devel.x86_64 0:2.6.32-642.13.1.el6 will be installed
+---> Package ksh.x86_64 0:20120801-33.el6 will be installed
+---> Package redhat-lsb.x86_64 0:4.0-7.el6 will be installed
+--> Processing Dependency: redhat-lsb-printing(x86-64) = 4.0-7.el6 for package: redhat-lsb-4.0-7.el6.x86_64
+--> Processing Dependency: redhat-lsb-graphics(x86-64) = 4.0-7.el6 for package: redhat-lsb-4.0-7.el6.x86_64
+--> Processing Dependency: redhat-lsb-core(x86-64) = 4.0-7.el6 for package: redhat-lsb-4.0-7.el6.x86_64
+--> Processing Dependency: redhat-lsb-compat(x86-64) = 4.0-7.el6 for package: redhat-lsb-4.0-7.el6.x86_64
+--> Running transaction check
+---> Package gcc.x86_64 0:4.4.7-17.el6 will be installed
+--> Processing Dependency: libgomp = 4.4.7-17.el6 for package: gcc-4.4.7-17.el6.x86_64
+--> Processing Dependency: cpp = 4.4.7-17.el6 for package: gcc-4.4.7-17.el6.x86_64
+--> Processing Dependency: glibc-devel >= 2.2.90-12 for package: gcc-4.4.7-17.el6.x86_64
+--> Processing Dependency: cloog-ppl >= 0.15 for package: gcc-4.4.7-17.el6.x86_64
+--> Processing Dependency: libgomp.so.1()(64bit) for package: gcc-4.4.7-17.el6.x86_64
+---> Package libstdc++-devel.x86_64 0:4.4.7-17.el6 will be installed
+---> Package mpfr.x86_64 0:2.4.1-6.el6 will be installed
+---> Package redhat-lsb-compat.x86_64 0:4.0-7.el6 will be installed
+---> Package redhat-lsb-core.x86_64 0:4.0-7.el6 will be installed
+--> Processing Dependency: perl-Test-Simple for package: redhat-lsb-core-4.0-7.el6.x86_64
+--> Processing Dependency: perl-Test-Harness for package: redhat-lsb-core-4.0-7.el6.x86_64
+--> Processing Dependency: perl-ExtUtils-MakeMaker for package: redhat-lsb-core-4.0-7.el6.x86_64
+--> Processing Dependency: perl-CGI for package: redhat-lsb-core-4.0-7.el6.x86_64
+--> Processing Dependency: /usr/bin/pax for package: redhat-lsb-core-4.0-7.el6.x86_64
+--> Processing Dependency: /usr/bin/patch for package: redhat-lsb-core-4.0-7.el6.x86_64
+--> Processing Dependency: /usr/bin/msgfmt for package: redhat-lsb-core-4.0-7.el6.x86_64
+--> Processing Dependency: /bin/gettext for package: redhat-lsb-core-4.0-7.el6.x86_64
+---> Package redhat-lsb-graphics.x86_64 0:4.0-7.el6 will be installed
+--> Processing Dependency: libqt-mt.so.3()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libXtst.so.6()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libXt.so.6()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libSM.so.6()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libQtXml.so.4()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libQtSvg.so.4()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libQtSql.so.4()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libQtOpenGL.so.4()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libQtNetwork.so.4()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libQtGui.so.4()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libQtCore.so.4()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libICE.so.6()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libGLU.so.1()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+--> Processing Dependency: libGL.so.1()(64bit) for package: redhat-lsb-graphics-4.0-7.el6.x86_64
+---> Package redhat-lsb-printing.x86_64 0:4.0-7.el6 will be installed
+--> Processing Dependency: /usr/bin/lpr for package: redhat-lsb-printing-4.0-7.el6.x86_64
+--> Processing Dependency: /usr/bin/lp for package: redhat-lsb-printing-4.0-7.el6.x86_64
+--> Processing Dependency: /usr/bin/gs for package: redhat-lsb-printing-4.0-7.el6.x86_64
+--> Processing Dependency: /usr/bin/foomatic-rip for package: redhat-lsb-printing-4.0-7.el6.x86_64
+--> Running transaction check
+---> Package cloog-ppl.x86_64 0:0.15.7-1.2.el6 will be installed
+--> Processing Dependency: libppl_c.so.2()(64bit) for package: cloog-ppl-0.15.7-1.2.el6.x86_64
+--> Processing Dependency: libppl.so.7()(64bit) for package: cloog-ppl-0.15.7-1.2.el6.x86_64
+---> Package cpp.x86_64 0:4.4.7-17.el6 will be installed
+---> Package cups.x86_64 1:1.4.2-74.el6 will be installed
+--> Processing Dependency: portreserve for package: 1:cups-1.4.2-74.el6.x86_64
+--> Processing Dependency: poppler-utils for package: 1:cups-1.4.2-74.el6.x86_64
+---> Package foomatic.x86_64 0:4.0.4-5.el6_7 will be installed
+--> Processing Dependency: foomatic-db for package: foomatic-4.0.4-5.el6_7.x86_64
+---> Package gettext.x86_64 0:0.17-18.el6 will be installed
+--> Processing Dependency: cvs for package: gettext-0.17-18.el6.x86_64
+---> Package ghostscript.x86_64 0:8.70-21.el6_8.1 will be installed
+--> Processing Dependency: urw-fonts >= 1.1 for package: ghostscript-8.70-21.el6_8.1.x86_64
+--> Processing Dependency: ghostscript-fonts for package: ghostscript-8.70-21.el6_8.1.x86_64
+---> Package glibc-devel.x86_64 0:2.12-1.192.el6 will be installed
+--> Processing Dependency: glibc-headers = 2.12-1.192.el6 for package: glibc-devel-2.12-1.192.el6.x86_64
+--> Processing Dependency: glibc-headers for package: glibc-devel-2.12-1.192.el6.x86_64
+---> Package libICE.x86_64 0:1.0.6-1.el6 will be installed
+---> Package libSM.x86_64 0:1.2.1-2.el6 will be installed
+---> Package libXt.x86_64 0:1.1.4-6.1.el6 will be installed
+---> Package libXtst.x86_64 0:1.2.2-2.1.el6 will be installed
+---> Package libgomp.x86_64 0:4.4.7-17.el6 will be installed
+---> Package mesa-libGL.x86_64 0:11.0.7-4.el6 will be installed
+--> Processing Dependency: mesa-dri-drivers(x86-64) = 11.0.7-4.el6 for package: mesa-libGL-11.0.7-4.el6.x86_64
+--> Processing Dependency: libglapi.so.0()(64bit) for package: mesa-libGL-11.0.7-4.el6.x86_64
+--> Processing Dependency: libXxf86vm.so.1()(64bit) for package: mesa-libGL-11.0.7-4.el6.x86_64
+---> Package mesa-libGLU.x86_64 0:11.0.7-4.el6 will be installed
+---> Package patch.x86_64 0:2.6-6.el6 will be installed
+---> Package pax.x86_64 0:3.4-10.1.el6 will be installed
+---> Package perl-CGI.x86_64 0:3.51-141.el6_7.1 will be installed
+---> Package perl-ExtUtils-MakeMaker.x86_64 0:6.55-141.el6_7.1 will be installed
+--> Processing Dependency: perl-devel for package: perl-ExtUtils-MakeMaker-6.55-141.el6_7.1.x86_64
+---> Package perl-Test-Harness.x86_64 0:3.17-141.el6_7.1 will be installed
+---> Package perl-Test-Simple.x86_64 0:0.92-141.el6_7.1 will be installed
+---> Package qt.x86_64 1:4.6.2-28.el6_5 will be installed
+---> Package qt-x11.x86_64 1:4.6.2-28.el6_5 will be installed
+--> Processing Dependency: qt-sqlite(x86-64) = 1:4.6.2-28.el6_5 for package: 1:qt-x11-4.6.2-28.el6_5.x86_64
+--> Processing Dependency: phonon-backend(x86-64) >= 4.3 for package: 1:qt-x11-4.6.2-28.el6_5.x86_64
+--> Processing Dependency: libmng.so.1()(64bit) for package: 1:qt-x11-4.6.2-28.el6_5.x86_64
+--> Processing Dependency: libgstvideo-0.10.so.0()(64bit) for package: 1:qt-x11-4.6.2-28.el6_5.x86_64
+--> Processing Dependency: libgstreamer-0.10.so.0()(64bit) for package: 1:qt-x11-4.6.2-28.el6_5.x86_64
+--> Processing Dependency: libgstinterfaces-0.10.so.0()(64bit) for package: 1:qt-x11-4.6.2-28.el6_5.x86_64
+--> Processing Dependency: libgstbase-0.10.so.0()(64bit) for package: 1:qt-x11-4.6.2-28.el6_5.x86_64
+---> Package qt3.x86_64 0:3.3.8b-30.el6 will be installed
+--> Running transaction check
+---> Package cvs.x86_64 0:1.11.23-16.el6 will be installed
+---> Package foomatic-db.noarch 0:4.0-7.20091126.el6 will be installed
+--> Processing Dependency: foomatic-db-ppds = 4.0-7.20091126.el6 for package: foomatic-db-4.0-7.20091126.el6.noarch
+--> Processing Dependency: foomatic-db-filesystem = 4.0-7.20091126.el6 for package: foomatic-db-4.0-7.20091126.el6.noarch
+---> Package ghostscript-fonts.noarch 0:5.50-23.2.el6 will be installed
+--> Processing Dependency: xorg-x11-font-utils for package: ghostscript-fonts-5.50-23.2.el6.noarch
+---> Package glibc-headers.x86_64 0:2.12-1.192.el6 will be installed
+--> Processing Dependency: kernel-headers >= 2.2.1 for package: glibc-headers-2.12-1.192.el6.x86_64
+--> Processing Dependency: kernel-headers for package: glibc-headers-2.12-1.192.el6.x86_64
+---> Package gstreamer.x86_64 0:0.10.29-1.el6 will be installed
+--> Processing Dependency: gstreamer-tools >= 0.10.29 for package: gstreamer-0.10.29-1.el6.x86_64
+---> Package gstreamer-plugins-base.x86_64 0:0.10.29-2.el6 will be installed
+--> Processing Dependency: liboil >= 0.3.12-9 for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libtheoraenc.so.1(libtheoraenc_1.0)(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libtheoradec.so.1(libtheoradec_1.0)(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: iso-codes for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libvorbisenc.so.2()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libvorbis.so.0()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libvisual-0.4.so.0()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libtheoraenc.so.1()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libtheoradec.so.1()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: liboil-0.3.so.0()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libogg.so.0()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libcdda_paranoia.so.0()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libcdda_interface.so.0()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+--> Processing Dependency: libXv.so.1()(64bit) for package: gstreamer-plugins-base-0.10.29-2.el6.x86_64
+---> Package libXxf86vm.x86_64 0:1.1.3-2.1.el6 will be installed
+---> Package libmng.x86_64 0:1.0.10-4.1.el6 will be installed
+--> Processing Dependency: liblcms.so.1()(64bit) for package: libmng-1.0.10-4.1.el6.x86_64
+---> Package mesa-dri-drivers.x86_64 0:11.0.7-4.el6 will be installed
+--> Processing Dependency: mesa-dri1-drivers >= 7.11-6 for package: mesa-dri-drivers-11.0.7-4.el6.x86_64
+--> Processing Dependency: mesa-dri-filesystem(x86-64) for package: mesa-dri-drivers-11.0.7-4.el6.x86_64
+--> Processing Dependency: libLLVM-3.6-mesa.so(libLLVM-3.6-mesa.so)(64bit) for package: mesa-dri-drivers-11.0.7-4.el6.x86_64
+--> Processing Dependency: libLLVM-3.6-mesa.so()(64bit) for package: mesa-dri-drivers-11.0.7-4.el6.x86_64
+---> Package perl-devel.x86_64 4:5.10.1-141.el6_7.1 will be installed
+--> Processing Dependency: perl(ExtUtils::ParseXS) for package: 4:perl-devel-5.10.1-141.el6_7.1.x86_64
+--> Processing Dependency: gdbm-devel for package: 4:perl-devel-5.10.1-141.el6_7.1.x86_64
+--> Processing Dependency: db4-devel for package: 4:perl-devel-5.10.1-141.el6_7.1.x86_64
+---> Package phonon-backend-gstreamer.x86_64 1:4.6.2-28.el6_5 will be installed
+---> Package poppler-utils.x86_64 0:0.12.4-10.el6 will be installed
+--> Processing Dependency: poppler = 0.12.4-10.el6 for package: poppler-utils-0.12.4-10.el6.x86_64
+--> Processing Dependency: libpoppler.so.5()(64bit) for package: poppler-utils-0.12.4-10.el6.x86_64
+--> Processing Dependency: libopenjpeg.so.2()(64bit) for package: poppler-utils-0.12.4-10.el6.x86_64
+---> Package portreserve.x86_64 0:0.0.4-11.el6 will be installed
+---> Package ppl.x86_64 0:0.10.2-11.el6 will be installed
+---> Package qt-sqlite.x86_64 1:4.6.2-28.el6_5 will be installed
+---> Package urw-fonts.noarch 0:2.4-11.el6 will be installed
+--> Running transaction check
+---> Package cdparanoia-libs.x86_64 0:10.2-5.1.el6 will be installed
+---> Package db4-devel.x86_64 0:4.7.25-20.el6_8.1 will be installed
+--> Processing Dependency: db4-cxx = 4.7.25-20.el6_8.1 for package: db4-devel-4.7.25-20.el6_8.1.x86_64
+--> Processing Dependency: libdb_cxx-4.7.so()(64bit) for package: db4-devel-4.7.25-20.el6_8.1.x86_64
+---> Package foomatic-db-filesystem.noarch 0:4.0-7.20091126.el6 will be installed
+---> Package foomatic-db-ppds.noarch 0:4.0-7.20091126.el6 will be installed
+---> Package gdbm-devel.x86_64 0:1.8.0-39.el6 will be installed
+---> Package gstreamer-tools.x86_64 0:0.10.29-1.el6 will be installed
+---> Package iso-codes.noarch 0:3.16-2.el6 will be installed
+--> Processing Dependency: xml-common for package: iso-codes-3.16-2.el6.noarch
+---> Package kernel-headers.x86_64 0:2.6.32-642.13.1.el6 will be installed
+---> Package lcms-libs.x86_64 0:1.19-1.el6 will be installed
+---> Package libXv.x86_64 0:1.0.9-2.1.el6 will be installed
+---> Package libogg.x86_64 2:1.1.4-2.1.el6 will be installed
+---> Package liboil.x86_64 0:0.3.16-4.1.el6 will be installed
+---> Package libtheora.x86_64 1:1.1.0-2.el6 will be installed
+---> Package libvisual.x86_64 0:0.4.0-10.el6 will be installed
+---> Package libvorbis.x86_64 1:1.2.3-4.el6_2.1 will be installed
+---> Package mesa-dri-filesystem.x86_64 0:11.0.7-4.el6 will be installed
+---> Package mesa-dri1-drivers.x86_64 0:7.11-8.el6 will be installed
+---> Package mesa-private-llvm.x86_64 0:3.6.2-1.el6 will be installed
+---> Package openjpeg-libs.x86_64 0:1.3-11.el6 will be installed
+---> Package perl-ExtUtils-ParseXS.x86_64 1:2.2003.0-141.el6_7.1 will be installed
+---> Package poppler.x86_64 0:0.12.4-10.el6 will be installed
+--> Processing Dependency: poppler-data >= 0.4.0 for package: poppler-0.12.4-10.el6.x86_64
+---> Package xorg-x11-font-utils.x86_64 1:7.2-11.el6 will be installed
+--> Processing Dependency: libfontenc.so.1()(64bit) for package: 1:xorg-x11-font-utils-7.2-11.el6.x86_64
+--> Processing Dependency: libXfont.so.1()(64bit) for package: 1:xorg-x11-font-utils-7.2-11.el6.x86_64
+--> Running transaction check
+---> Package db4-cxx.x86_64 0:4.7.25-20.el6_8.1 will be installed
+---> Package libXfont.x86_64 0:1.5.1-2.el6 will be installed
+---> Package libfontenc.x86_64 0:1.1.2-3.el6 will be installed
+---> Package poppler-data.noarch 0:0.4.0-1.el6 will be installed
+---> Package xml-common.noarch 0:0.6.3-33.el6 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+========================================================================================================================
+ Package                           Arch            Version                            Repository                   Size
+========================================================================================================================
+Installing:
+ compat-libstdc++-33               x86_64          3.2.3-69.el6                       rhel-6-server-rpms          183 k
+ gcc-c++                           x86_64          4.4.7-17.el6                       rhel-6-server-rpms          4.7 M
+ kernel-devel                      x86_64          2.6.32-642.13.1.el6                rhel-6-server-rpms           11 M
+ ksh                               x86_64          20120801-33.el6                    rhel-6-server-rpms          761 k
+ redhat-lsb                        x86_64          4.0-7.el6                          rhel-6-server-rpms           11 k
+Installing for dependencies:
+ cdparanoia-libs                   x86_64          10.2-5.1.el6                       rhel-6-server-rpms           47 k
+ cloog-ppl                         x86_64          0.15.7-1.2.el6                     rhel-6-server-rpms           93 k
+ cpp                               x86_64          4.4.7-17.el6                       rhel-6-server-rpms          3.7 M
+ cups                              x86_64          1:1.4.2-74.el6                     rhel-6-server-rpms          2.3 M
+ cvs                               x86_64          1.11.23-16.el6                     rhel-6-server-rpms          712 k
+ db4-cxx                           x86_64          4.7.25-20.el6_8.1                  rhel-6-server-rpms          589 k
+ db4-devel                         x86_64          4.7.25-20.el6_8.1                  rhel-6-server-rpms          6.6 M
+ foomatic                          x86_64          4.0.4-5.el6_7                      rhel-6-server-rpms          251 k
+ foomatic-db                       noarch          4.0-7.20091126.el6                 rhel-6-server-rpms          980 k
+ foomatic-db-filesystem            noarch          4.0-7.20091126.el6                 rhel-6-server-rpms          4.3 k
+ foomatic-db-ppds                  noarch          4.0-7.20091126.el6                 rhel-6-server-rpms           19 M
+ gcc                               x86_64          4.4.7-17.el6                       rhel-6-server-rpms           10 M
+ gdbm-devel                        x86_64          1.8.0-39.el6                       rhel-6-server-rpms           26 k
+ gettext                           x86_64          0.17-18.el6                        rhel-6-server-rpms          1.8 M
+ ghostscript                       x86_64          8.70-21.el6_8.1                    rhel-6-server-rpms          4.4 M
+ ghostscript-fonts                 noarch          5.50-23.2.el6                      rhel-6-server-rpms          590 k
+ glibc-devel                       x86_64          2.12-1.192.el6                     rhel-6-server-rpms          989 k
+ glibc-headers                     x86_64          2.12-1.192.el6                     rhel-6-server-rpms          617 k
+ gstreamer                         x86_64          0.10.29-1.el6                      rhel-6-server-rpms          764 k
+ gstreamer-plugins-base            x86_64          0.10.29-2.el6                      rhel-6-server-rpms          940 k
+ gstreamer-tools                   x86_64          0.10.29-1.el6                      rhel-6-server-rpms           23 k
+ iso-codes                         noarch          3.16-2.el6                         rhel-6-server-rpms          2.5 M
+ kernel-headers                    x86_64          2.6.32-642.13.1.el6                rhel-6-server-rpms          4.4 M
+ lcms-libs                         x86_64          1.19-1.el6                         rhel-6-server-rpms          100 k
+ libICE                            x86_64          1.0.6-1.el6                        rhel-6-server-rpms           53 k
+ libSM                             x86_64          1.2.1-2.el6                        rhel-6-server-rpms           37 k
+ libXfont                          x86_64          1.5.1-2.el6                        rhel-6-server-rpms          145 k
+ libXt                             x86_64          1.1.4-6.1.el6                      rhel-6-server-rpms          165 k
+ libXtst                           x86_64          1.2.2-2.1.el6                      rhel-6-server-rpms           19 k
+ libXv                             x86_64          1.0.9-2.1.el6                      rhel-6-server-rpms           17 k
+ libXxf86vm                        x86_64          1.1.3-2.1.el6                      rhel-6-server-rpms           16 k
+ libfontenc                        x86_64          1.1.2-3.el6                        rhel-6-server-rpms           29 k
+ libgomp                           x86_64          4.4.7-17.el6                       rhel-6-server-rpms          134 k
+ libmng                            x86_64          1.0.10-4.1.el6                     rhel-6-server-rpms          164 k
+ libogg                            x86_64          2:1.1.4-2.1.el6                    rhel-6-server-rpms           21 k
+ liboil                            x86_64          0.3.16-4.1.el6                     rhel-6-server-rpms          122 k
+ libstdc++-devel                   x86_64          4.4.7-17.el6                       rhel-6-server-rpms          1.6 M
+ libtheora                         x86_64          1:1.1.0-2.el6                      rhel-6-server-rpms          129 k
+ libvisual                         x86_64          0.4.0-10.el6                       rhel-6-server-rpms          135 k
+ libvorbis                         x86_64          1:1.2.3-4.el6_2.1                  rhel-6-server-rpms          168 k
+ mesa-dri-drivers                  x86_64          11.0.7-4.el6                       rhel-6-server-rpms          4.1 M
+ mesa-dri-filesystem               x86_64          11.0.7-4.el6                       rhel-6-server-rpms           17 k
+ mesa-dri1-drivers                 x86_64          7.11-8.el6                         rhel-6-server-rpms          3.8 M
+ mesa-libGL                        x86_64          11.0.7-4.el6                       rhel-6-server-rpms          142 k
+ mesa-libGLU                       x86_64          11.0.7-4.el6                       rhel-6-server-rpms          198 k
+ mesa-private-llvm                 x86_64          3.6.2-1.el6                        rhel-6-server-rpms          6.5 M
+ mpfr                              x86_64          2.4.1-6.el6                        rhel-6-server-rpms          156 k
+ openjpeg-libs                     x86_64          1.3-11.el6                         rhel-6-server-rpms           60 k
+ patch                             x86_64          2.6-6.el6                          rhel-6-server-rpms           91 k
+ pax                               x86_64          3.4-10.1.el6                       rhel-6-server-rpms           69 k
+ perl-CGI                          x86_64          3.51-141.el6_7.1                   rhel-6-server-rpms          210 k
+ perl-ExtUtils-MakeMaker           x86_64          6.55-141.el6_7.1                   rhel-6-server-rpms          294 k
+ perl-ExtUtils-ParseXS             x86_64          1:2.2003.0-141.el6_7.1             rhel-6-server-rpms           46 k
+ perl-Test-Harness                 x86_64          3.17-141.el6_7.1                   rhel-6-server-rpms          232 k
+ perl-Test-Simple                  x86_64          0.92-141.el6_7.1                   rhel-6-server-rpms          113 k
+ perl-devel                        x86_64          4:5.10.1-141.el6_7.1               rhel-6-server-rpms          424 k
+ phonon-backend-gstreamer          x86_64          1:4.6.2-28.el6_5                   rhel-6-server-rpms          127 k
+ poppler                           x86_64          0.12.4-10.el6                      rhel-6-server-rpms          558 k
+ poppler-data                      noarch          0.4.0-1.el6                        rhel-6-server-rpms          2.2 M
+ poppler-utils                     x86_64          0.12.4-10.el6                      rhel-6-server-rpms           74 k
+ portreserve                       x86_64          0.0.4-11.el6                       rhel-6-server-rpms           23 k
+ ppl                               x86_64          0.10.2-11.el6                      rhel-6-server-rpms          1.3 M
+ qt                                x86_64          1:4.6.2-28.el6_5                   rhel-6-server-rpms          3.9 M
+ qt-sqlite                         x86_64          1:4.6.2-28.el6_5                   rhel-6-server-rpms           51 k
+ qt-x11                            x86_64          1:4.6.2-28.el6_5                   rhel-6-server-rpms           12 M
+ qt3                               x86_64          3.3.8b-30.el6                      rhel-6-server-rpms          3.5 M
+ redhat-lsb-compat                 x86_64          4.0-7.el6                          rhel-6-server-rpms           10 k
+ redhat-lsb-core                   x86_64          4.0-7.el6                          rhel-6-server-rpms           25 k
+ redhat-lsb-graphics               x86_64          4.0-7.el6                          rhel-6-server-rpms           13 k
+ redhat-lsb-printing               x86_64          4.0-7.el6                          rhel-6-server-rpms           11 k
+ urw-fonts                         noarch          2.4-11.el6                         rhel-6-server-rpms          3.1 M
+ xml-common                        noarch          0.6.3-33.el6                       rhel-6-server-rpms           18 k
+ xorg-x11-font-utils               x86_64          1:7.2-11.el6                       rhel-6-server-rpms           75 k
+
+Transaction Summary
+========================================================================================================================
+Install      78 Package(s)
+
+Total download size: 124 M
+Installed size: 333 M
+Downloading Packages:
+(1/78): cdparanoia-libs-10.2-5.1.el6.x86_64.rpm                                                  |  47 kB     00:00     
+(2/78): cloog-ppl-0.15.7-1.2.el6.x86_64.rpm                                                      |  93 kB     00:00     
+(3/78): compat-libstdc++-33-3.2.3-69.el6.x86_64.rpm                                              | 183 kB     00:00     
+(4/78): cpp-4.4.7-17.el6.x86_64.rpm                                                              | 3.7 MB     00:00     
+(5/78): cups-1.4.2-74.el6.x86_64.rpm                                                             | 2.3 MB     00:00     
+(6/78): cvs-1.11.23-16.el6.x86_64.rpm                                                            | 712 kB     00:00     
+(7/78): db4-cxx-4.7.25-20.el6_8.1.x86_64.rpm                                                     | 589 kB     00:00     
+(8/78): db4-devel-4.7.25-20.el6_8.1.x86_64.rpm                                                   | 6.6 MB     00:00     
+(9/78): foomatic-4.0.4-5.el6_7.x86_64.rpm                                                        | 251 kB     00:00     
+(10/78): foomatic-db-4.0-7.20091126.el6.noarch.rpm                                               | 980 kB     00:00     
+(11/78): foomatic-db-filesystem-4.0-7.20091126.el6.noarch.rpm                                    | 4.3 kB     00:00     
+(12/78): foomatic-db-ppds-4.0-7.20091126.el6.noarch.rpm                                          |  19 MB     00:00     
+(13/78): gcc-4.4.7-17.el6.x86_64.rpm                                                             |  10 MB     00:00     
+(14/78): gcc-c++-4.4.7-17.el6.x86_64.rpm                                                         | 4.7 MB     00:00     
+(15/78): gdbm-devel-1.8.0-39.el6.x86_64.rpm                                                      |  26 kB     00:00     
+(16/78): gettext-0.17-18.el6.x86_64.rpm                                                          | 1.8 MB     00:00     
+(17/78): ghostscript-8.70-21.el6_8.1.x86_64.rpm                                                  | 4.4 MB     00:00     
+(18/78): ghostscript-fonts-5.50-23.2.el6.noarch.rpm                                              | 590 kB     00:00     
+(19/78): glibc-devel-2.12-1.192.el6.x86_64.rpm                                                   | 989 kB     00:00     
+(20/78): glibc-headers-2.12-1.192.el6.x86_64.rpm                                                 | 617 kB     00:00     
+(21/78): gstreamer-0.10.29-1.el6.x86_64.rpm                                                      | 764 kB     00:00     
+(22/78): gstreamer-plugins-base-0.10.29-2.el6.x86_64.rpm                                         | 940 kB     00:00     
+(23/78): gstreamer-tools-0.10.29-1.el6.x86_64.rpm                                                |  23 kB     00:00     
+(24/78): iso-codes-3.16-2.el6.noarch.rpm                                                         | 2.5 MB     00:00     
+(25/78): kernel-devel-2.6.32-642.13.1.el6.x86_64.rpm                                             |  11 MB     00:00     
+(26/78): kernel-headers-2.6.32-642.13.1.el6.x86_64.rpm                                           | 4.4 MB     00:00     
+(27/78): ksh-20120801-33.el6.x86_64.rpm                                                          | 761 kB     00:00     
+(28/78): lcms-libs-1.19-1.el6.x86_64.rpm                                                         | 100 kB     00:00     
+(29/78): libICE-1.0.6-1.el6.x86_64.rpm                                                           |  53 kB     00:00     
+(30/78): libSM-1.2.1-2.el6.x86_64.rpm                                                            |  37 kB     00:00     
+(31/78): libXfont-1.5.1-2.el6.x86_64.rpm                                                         | 145 kB     00:00     
+(32/78): libXt-1.1.4-6.1.el6.x86_64.rpm                                                          | 165 kB     00:00     
+(33/78): libXtst-1.2.2-2.1.el6.x86_64.rpm                                                        |  19 kB     00:00     
+(34/78): libXv-1.0.9-2.1.el6.x86_64.rpm                                                          |  17 kB     00:00     
+(35/78): libXxf86vm-1.1.3-2.1.el6.x86_64.rpm                                                     |  16 kB     00:00     
+(36/78): libfontenc-1.1.2-3.el6.x86_64.rpm                                                       |  29 kB     00:00     
+(37/78): libgomp-4.4.7-17.el6.x86_64.rpm                                                         | 134 kB     00:00     
+(38/78): libmng-1.0.10-4.1.el6.x86_64.rpm                                                        | 164 kB     00:00     
+(39/78): libogg-1.1.4-2.1.el6.x86_64.rpm                                                         |  21 kB     00:00     
+(40/78): liboil-0.3.16-4.1.el6.x86_64.rpm                                                        | 122 kB     00:00     
+(41/78): libstdc++-devel-4.4.7-17.el6.x86_64.rpm                                                 | 1.6 MB     00:00     
+(42/78): libtheora-1.1.0-2.el6.x86_64.rpm                                                        | 129 kB     00:00     
+(43/78): libvisual-0.4.0-10.el6.x86_64.rpm                                                       | 135 kB     00:00     
+(44/78): libvorbis-1.2.3-4.el6_2.1.x86_64.rpm                                                    | 168 kB     00:00     
+(45/78): mesa-dri-drivers-11.0.7-4.el6.x86_64.rpm                                                | 4.1 MB     00:00     
+(46/78): mesa-dri-filesystem-11.0.7-4.el6.x86_64.rpm                                             |  17 kB     00:00     
+(47/78): mesa-dri1-drivers-7.11-8.el6.x86_64.rpm                                                 | 3.8 MB     00:00     
+(48/78): mesa-libGL-11.0.7-4.el6.x86_64.rpm                                                      | 142 kB     00:00     
+(49/78): mesa-libGLU-11.0.7-4.el6.x86_64.rpm                                                     | 198 kB     00:00     
+(50/78): mesa-private-llvm-3.6.2-1.el6.x86_64.rpm                                                | 6.5 MB     00:00     
+(51/78): mpfr-2.4.1-6.el6.x86_64.rpm                                                             | 156 kB     00:00     
+(52/78): openjpeg-libs-1.3-11.el6.x86_64.rpm                                                     |  60 kB     00:00     
+(53/78): patch-2.6-6.el6.x86_64.rpm                                                              |  91 kB     00:00     
+(54/78): pax-3.4-10.1.el6.x86_64.rpm                                                             |  69 kB     00:00     
+(55/78): perl-CGI-3.51-141.el6_7.1.x86_64.rpm                                                    | 210 kB     00:00     
+(56/78): perl-ExtUtils-MakeMaker-6.55-141.el6_7.1.x86_64.rpm                                     | 294 kB     00:00     
+(57/78): perl-ExtUtils-ParseXS-2.2003.0-141.el6_7.1.x86_64.rpm                                   |  46 kB     00:00     
+(58/78): perl-Test-Harness-3.17-141.el6_7.1.x86_64.rpm                                           | 232 kB     00:00     
+(59/78): perl-Test-Simple-0.92-141.el6_7.1.x86_64.rpm                                            | 113 kB     00:00     
+(60/78): perl-devel-5.10.1-141.el6_7.1.x86_64.rpm                                                | 424 kB     00:00     
+(61/78): phonon-backend-gstreamer-4.6.2-28.el6_5.x86_64.rpm                                      | 127 kB     00:00     
+(62/78): poppler-0.12.4-10.el6.x86_64.rpm                                                        | 558 kB     00:00     
+(63/78): poppler-data-0.4.0-1.el6.noarch.rpm                                                     | 2.2 MB     00:00     
+(64/78): poppler-utils-0.12.4-10.el6.x86_64.rpm                                                  |  74 kB     00:00     
+(65/78): portreserve-0.0.4-11.el6.x86_64.rpm                                                     |  23 kB     00:00     
+(66/78): ppl-0.10.2-11.el6.x86_64.rpm                                                            | 1.3 MB     00:00     
+(67/78): qt-4.6.2-28.el6_5.x86_64.rpm                                                            | 3.9 MB     00:00     
+(68/78): qt-sqlite-4.6.2-28.el6_5.x86_64.rpm                                                     |  51 kB     00:00     
+(69/78): qt-x11-4.6.2-28.el6_5.x86_64.rpm                                                        |  12 MB     00:00     
+(70/78): qt3-3.3.8b-30.el6.x86_64.rpm                                                            | 3.5 MB     00:00     
+(71/78): redhat-lsb-4.0-7.el6.x86_64.rpm                                                         |  11 kB     00:00     
+(72/78): redhat-lsb-compat-4.0-7.el6.x86_64.rpm                                                  |  10 kB     00:00     
+(73/78): redhat-lsb-core-4.0-7.el6.x86_64.rpm                                                    |  25 kB     00:00     
+(74/78): redhat-lsb-graphics-4.0-7.el6.x86_64.rpm                                                |  13 kB     00:00     
+(75/78): redhat-lsb-printing-4.0-7.el6.x86_64.rpm                                                |  11 kB     00:00     
+(76/78): urw-fonts-2.4-11.el6.noarch.rpm                                                         | 3.1 MB     00:00     
+(77/78): xml-common-0.6.3-33.el6.noarch.rpm                                                      |  18 kB     00:00     
+(78/78): xorg-x11-font-utils-7.2-11.el6.x86_64.rpm                                               |  75 kB     00:00     
+------------------------------------------------------------------------------------------------------------------------
+Total                                                                                    16 MB/s | 124 MB     00:07     
+Running rpm_check_debug
+Running Transaction Test
+Transaction Test Succeeded
+Running Transaction
+Warning: RPMDB altered outside of yum.
+  Installing : libICE-1.0.6-1.el6.x86_64                                                                           1/78 
+  Installing : libSM-1.2.1-2.el6.x86_64                                                                            2/78 
+  Installing : 1:qt-4.6.2-28.el6_5.x86_64                                                                          3/78 
+  Installing : 2:libogg-1.1.4-2.1.el6.x86_64                                                                       4/78 
+  Installing : lcms-libs-1.19-1.el6.x86_64                                                                         5/78 
+  Installing : libmng-1.0.10-4.1.el6.x86_64                                                                        6/78 
+  Installing : libXt-1.1.4-6.1.el6.x86_64                                                                          7/78 
+  Installing : libfontenc-1.1.2-3.el6.x86_64                                                                       8/78 
+  Installing : libgomp-4.4.7-17.el6.x86_64                                                                         9/78 
+  Installing : openjpeg-libs-1.3-11.el6.x86_64                                                                    10/78 
+  Installing : mpfr-2.4.1-6.el6.x86_64                                                                            11/78 
+  Installing : foomatic-db-filesystem-4.0-7.20091126.el6.noarch                                                   12/78 
+  Installing : mesa-dri-filesystem-11.0.7-4.el6.x86_64                                                            13/78 
+  Installing : cpp-4.4.7-17.el6.x86_64                                                                            14/78 
+  Installing : libXfont-1.5.1-2.el6.x86_64                                                                        15/78 
+  Installing : 1:xorg-x11-font-utils-7.2-11.el6.x86_64                                                            16/78 
+  Installing : ghostscript-fonts-5.50-23.2.el6.noarch                                                             17/78 
+  Installing : urw-fonts-2.4-11.el6.noarch                                                                        18/78 
+  Installing : ghostscript-8.70-21.el6_8.1.x86_64                                                                 19/78 
+  Installing : qt3-3.3.8b-30.el6.x86_64                                                                           20/78 
+  Installing : 1:libtheora-1.1.0-2.el6.x86_64                                                                     21/78 
+  Installing : 1:libvorbis-1.2.3-4.el6_2.1.x86_64                                                                 22/78 
+  Installing : 1:qt-sqlite-4.6.2-28.el6_5.x86_64                                                                  23/78 
+  Installing : poppler-data-0.4.0-1.el6.noarch                                                                    24/78 
+  Installing : poppler-0.12.4-10.el6.x86_64                                                                       25/78 
+  Installing : poppler-utils-0.12.4-10.el6.x86_64                                                                 26/78 
+  Installing : cvs-1.11.23-16.el6.x86_64                                                                          27/78 
+  Installing : gettext-0.17-18.el6.x86_64                                                                         28/78 
+  Installing : patch-2.6-6.el6.x86_64                                                                             29/78 
+  Installing : perl-CGI-3.51-141.el6_7.1.x86_64                                                                   30/78 
+  Installing : gstreamer-tools-0.10.29-1.el6.x86_64                                                               31/78 
+  Installing : gstreamer-0.10.29-1.el6.x86_64                                                                     32/78 
+  Installing : cdparanoia-libs-10.2-5.1.el6.x86_64                                                                33/78 
+  Installing : libXtst-1.2.2-2.1.el6.x86_64                                                                       34/78 
+  Installing : libstdc++-devel-4.4.7-17.el6.x86_64                                                                35/78 
+  Installing : libXxf86vm-1.1.3-2.1.el6.x86_64                                                                    36/78 
+  Installing : db4-cxx-4.7.25-20.el6_8.1.x86_64                                                                   37/78 
+  Installing : db4-devel-4.7.25-20.el6_8.1.x86_64                                                                 38/78 
+  Installing : mesa-private-llvm-3.6.2-1.el6.x86_64                                                               39/78 
+  Installing : mesa-libGL-11.0.7-4.el6.x86_64                                                                     40/78 
+  Installing : mesa-dri1-drivers-7.11-8.el6.x86_64                                                                41/78 
+  Installing : mesa-dri-drivers-11.0.7-4.el6.x86_64                                                               42/78 
+  Installing : mesa-libGLU-11.0.7-4.el6.x86_64                                                                    43/78 
+  Installing : gdbm-devel-1.8.0-39.el6.x86_64                                                                     44/78 
+  Installing : portreserve-0.0.4-11.el6.x86_64                                                                    45/78 
+  Installing : 1:cups-1.4.2-74.el6.x86_64                                                                         46/78 
+  Installing : foomatic-db-ppds-4.0-7.20091126.el6.noarch                                                         47/78 
+  Installing : foomatic-db-4.0-7.20091126.el6.noarch                                                              48/78 
+  Installing : foomatic-4.0.4-5.el6_7.x86_64                                                                      49/78 
+  Installing : ppl-0.10.2-11.el6.x86_64                                                                           50/78 
+  Installing : cloog-ppl-0.15.7-1.2.el6.x86_64                                                                    51/78 
+  Installing : libvisual-0.4.0-10.el6.x86_64                                                                      52/78 
+  Installing : libXv-1.0.9-2.1.el6.x86_64                                                                         53/78 
+  Installing : kernel-headers-2.6.32-642.13.1.el6.x86_64                                                          54/78 
+  Installing : glibc-headers-2.12-1.192.el6.x86_64                                                                55/78 
+  Installing : glibc-devel-2.12-1.192.el6.x86_64                                                                  56/78 
+  Installing : 1:perl-ExtUtils-ParseXS-2.2003.0-141.el6_7.1.x86_64                                                57/78 
+  Installing : perl-ExtUtils-MakeMaker-6.55-141.el6_7.1.x86_64                                                    58/78 
+  Installing : 4:perl-devel-5.10.1-141.el6_7.1.x86_64                                                             59/78 
+  Installing : perl-Test-Harness-3.17-141.el6_7.1.x86_64                                                          60/78 
+  Installing : perl-Test-Simple-0.92-141.el6_7.1.x86_64                                                           61/78 
+  Installing : gcc-4.4.7-17.el6.x86_64                                                                            62/78 
+  Installing : pax-3.4-10.1.el6.x86_64                                                                            63/78 
+  Installing : redhat-lsb-core-4.0-7.el6.x86_64                                                                   64/78 
+  Installing : redhat-lsb-printing-4.0-7.el6.x86_64                                                               65/78 
+  Installing : xml-common-0.6.3-33.el6.noarch                                                                     66/78 
+  Installing : iso-codes-3.16-2.el6.noarch                                                                        67/78 
+  Installing : liboil-0.3.16-4.1.el6.x86_64                                                                       68/78 
+  Installing : gstreamer-plugins-base-0.10.29-2.el6.x86_64                                                        69/78 
+  Installing : 1:qt-x11-4.6.2-28.el6_5.x86_64                                                                     70/78 
+  Installing : 1:phonon-backend-gstreamer-4.6.2-28.el6_5.x86_64                                                   71/78 
+  Installing : redhat-lsb-graphics-4.0-7.el6.x86_64                                                               72/78 
+  Installing : redhat-lsb-compat-4.0-7.el6.x86_64                                                                 73/78 
+  Installing : redhat-lsb-4.0-7.el6.x86_64                                                                        74/78 
+  Installing : gcc-c++-4.4.7-17.el6.x86_64                                                                        75/78 
+  Installing : kernel-devel-2.6.32-642.13.1.el6.x86_64                                                            76/78 
+  Installing : compat-libstdc++-33-3.2.3-69.el6.x86_64                                                            77/78 
+  Installing : ksh-20120801-33.el6.x86_64                                                                         78/78 
+rhel-6-server-optional-rpms/productid                                                            | 2.1 kB     00:00     
+rhel-6-server-rpms/productid                                                                     | 2.1 kB     00:00     
+rhel-6-server-supplementary-rpms/productid                                                       | 2.1 kB     00:00     
+  Verifying  : libXt-1.1.4-6.1.el6.x86_64                                                                          1/78 
+  Verifying  : redhat-lsb-graphics-4.0-7.el6.x86_64                                                                2/78 
+  Verifying  : liboil-0.3.16-4.1.el6.x86_64                                                                        3/78 
+  Verifying  : xml-common-0.6.3-33.el6.noarch                                                                      4/78 
+  Verifying  : foomatic-4.0.4-5.el6_7.x86_64                                                                       5/78 
+  Verifying  : mesa-dri1-drivers-7.11-8.el6.x86_64                                                                 6/78 
+  Verifying  : libXfont-1.5.1-2.el6.x86_64                                                                         7/78 
+  Verifying  : db4-devel-4.7.25-20.el6_8.1.x86_64                                                                  8/78 
+  Verifying  : gcc-c++-4.4.7-17.el6.x86_64                                                                         9/78 
+  Verifying  : 4:perl-devel-5.10.1-141.el6_7.1.x86_64                                                             10/78 
+  Verifying  : pax-3.4-10.1.el6.x86_64                                                                            11/78 
+  Verifying  : mesa-dri-filesystem-11.0.7-4.el6.x86_64                                                            12/78 
+  Verifying  : libSM-1.2.1-2.el6.x86_64                                                                           13/78 
+  Verifying  : lcms-libs-1.19-1.el6.x86_64                                                                        14/78 
+  Verifying  : 1:libtheora-1.1.0-2.el6.x86_64                                                                     15/78 
+  Verifying  : kernel-headers-2.6.32-642.13.1.el6.x86_64                                                          16/78 
+  Verifying  : cpp-4.4.7-17.el6.x86_64                                                                            17/78 
+  Verifying  : ghostscript-fonts-5.50-23.2.el6.noarch                                                             18/78 
+  Verifying  : 1:qt-x11-4.6.2-28.el6_5.x86_64                                                                     19/78 
+  Verifying  : 1:cups-1.4.2-74.el6.x86_64                                                                         20/78 
+  Verifying  : libXv-1.0.9-2.1.el6.x86_64                                                                         21/78 
+  Verifying  : foomatic-db-filesystem-4.0-7.20091126.el6.noarch                                                   22/78 
+  Verifying  : ksh-20120801-33.el6.x86_64                                                                         23/78 
+  Verifying  : libvisual-0.4.0-10.el6.x86_64                                                                      24/78 
+  Verifying  : ppl-0.10.2-11.el6.x86_64                                                                           25/78 
+  Verifying  : redhat-lsb-printing-4.0-7.el6.x86_64                                                               26/78 
+  Verifying  : poppler-utils-0.12.4-10.el6.x86_64                                                                 27/78 
+  Verifying  : qt3-3.3.8b-30.el6.x86_64                                                                           28/78 
+  Verifying  : mpfr-2.4.1-6.el6.x86_64                                                                            29/78 
+  Verifying  : redhat-lsb-core-4.0-7.el6.x86_64                                                                   30/78 
+  Verifying  : 1:xorg-x11-font-utils-7.2-11.el6.x86_64                                                            31/78 
+  Verifying  : compat-libstdc++-33-3.2.3-69.el6.x86_64                                                            32/78 
+  Verifying  : mesa-libGLU-11.0.7-4.el6.x86_64                                                                    33/78 
+  Verifying  : foomatic-db-ppds-4.0-7.20091126.el6.noarch                                                         34/78 
+  Verifying  : perl-Test-Simple-0.92-141.el6_7.1.x86_64                                                           35/78 
+  Verifying  : portreserve-0.0.4-11.el6.x86_64                                                                    36/78 
+  Verifying  : openjpeg-libs-1.3-11.el6.x86_64                                                                    37/78 
+  Verifying  : urw-fonts-2.4-11.el6.noarch                                                                        38/78 
+  Verifying  : 1:perl-ExtUtils-ParseXS-2.2003.0-141.el6_7.1.x86_64                                                39/78 
+  Verifying  : cloog-ppl-0.15.7-1.2.el6.x86_64                                                                    40/78 
+  Verifying  : gstreamer-0.10.29-1.el6.x86_64                                                                     41/78 
+  Verifying  : 1:qt-4.6.2-28.el6_5.x86_64                                                                         42/78 
+  Verifying  : redhat-lsb-4.0-7.el6.x86_64                                                                        43/78 
+  Verifying  : glibc-devel-2.12-1.192.el6.x86_64                                                                  44/78 
+  Verifying  : gdbm-devel-1.8.0-39.el6.x86_64                                                                     45/78 
+  Verifying  : mesa-private-llvm-3.6.2-1.el6.x86_64                                                               46/78 
+  Verifying  : db4-cxx-4.7.25-20.el6_8.1.x86_64                                                                   47/78 
+  Verifying  : mesa-libGL-11.0.7-4.el6.x86_64                                                                     48/78 
+  Verifying  : ghostscript-8.70-21.el6_8.1.x86_64                                                                 49/78 
+  Verifying  : iso-codes-3.16-2.el6.noarch                                                                        50/78 
+  Verifying  : perl-ExtUtils-MakeMaker-6.55-141.el6_7.1.x86_64                                                    51/78 
+  Verifying  : libXxf86vm-1.1.3-2.1.el6.x86_64                                                                    52/78 
+  Verifying  : libstdc++-devel-4.4.7-17.el6.x86_64                                                                53/78 
+  Verifying  : libXtst-1.2.2-2.1.el6.x86_64                                                                       54/78 
+  Verifying  : 2:libogg-1.1.4-2.1.el6.x86_64                                                                      55/78 
+  Verifying  : cdparanoia-libs-10.2-5.1.el6.x86_64                                                                56/78 
+  Verifying  : gstreamer-tools-0.10.29-1.el6.x86_64                                                               57/78 
+  Verifying  : 1:qt-sqlite-4.6.2-28.el6_5.x86_64                                                                  58/78 
+  Verifying  : perl-CGI-3.51-141.el6_7.1.x86_64                                                                   59/78 
+  Verifying  : gettext-0.17-18.el6.x86_64                                                                         60/78 
+  Verifying  : 1:libvorbis-1.2.3-4.el6_2.1.x86_64                                                                 61/78 
+  Verifying  : kernel-devel-2.6.32-642.13.1.el6.x86_64                                                            62/78 
+  Verifying  : glibc-headers-2.12-1.192.el6.x86_64                                                                63/78 
+  Verifying  : poppler-0.12.4-10.el6.x86_64                                                                       64/78 
+  Verifying  : mesa-dri-drivers-11.0.7-4.el6.x86_64                                                               65/78 
+  Verifying  : redhat-lsb-compat-4.0-7.el6.x86_64                                                                 66/78 
+  Verifying  : perl-Test-Harness-3.17-141.el6_7.1.x86_64                                                          67/78 
+  Verifying  : patch-2.6-6.el6.x86_64                                                                             68/78 
+  Verifying  : libICE-1.0.6-1.el6.x86_64                                                                          69/78 
+  Verifying  : gstreamer-plugins-base-0.10.29-2.el6.x86_64                                                        70/78 
+  Verifying  : 1:phonon-backend-gstreamer-4.6.2-28.el6_5.x86_64                                                   71/78 
+  Verifying  : gcc-4.4.7-17.el6.x86_64                                                                            72/78 
+  Verifying  : cvs-1.11.23-16.el6.x86_64                                                                          73/78 
+  Verifying  : libgomp-4.4.7-17.el6.x86_64                                                                        74/78 
+  Verifying  : libfontenc-1.1.2-3.el6.x86_64                                                                      75/78 
+  Verifying  : poppler-data-0.4.0-1.el6.noarch                                                                    76/78 
+  Verifying  : foomatic-db-4.0-7.20091126.el6.noarch                                                              77/78 
+  Verifying  : libmng-1.0.10-4.1.el6.x86_64                                                                       78/78 
+
+Installed:
+  compat-libstdc++-33.x86_64 0:3.2.3-69.el6  gcc-c++.x86_64 0:4.4.7-17.el6  kernel-devel.x86_64 0:2.6.32-642.13.1.el6 
+  ksh.x86_64 0:20120801-33.el6               redhat-lsb.x86_64 0:4.0-7.el6 
+
+Dependency Installed:
+  cdparanoia-libs.x86_64 0:10.2-5.1.el6                       cloog-ppl.x86_64 0:0.15.7-1.2.el6                         
+  cpp.x86_64 0:4.4.7-17.el6                                   cups.x86_64 1:1.4.2-74.el6                                
+  cvs.x86_64 0:1.11.23-16.el6                                 db4-cxx.x86_64 0:4.7.25-20.el6_8.1                        
+  db4-devel.x86_64 0:4.7.25-20.el6_8.1                        foomatic.x86_64 0:4.0.4-5.el6_7                           
+  foomatic-db.noarch 0:4.0-7.20091126.el6                     foomatic-db-filesystem.noarch 0:4.0-7.20091126.el6        
+  foomatic-db-ppds.noarch 0:4.0-7.20091126.el6                gcc.x86_64 0:4.4.7-17.el6                                 
+  gdbm-devel.x86_64 0:1.8.0-39.el6                            gettext.x86_64 0:0.17-18.el6                              
+  ghostscript.x86_64 0:8.70-21.el6_8.1                        ghostscript-fonts.noarch 0:5.50-23.2.el6                  
+  glibc-devel.x86_64 0:2.12-1.192.el6                         glibc-headers.x86_64 0:2.12-1.192.el6                     
+  gstreamer.x86_64 0:0.10.29-1.el6                            gstreamer-plugins-base.x86_64 0:0.10.29-2.el6             
+  gstreamer-tools.x86_64 0:0.10.29-1.el6                      iso-codes.noarch 0:3.16-2.el6                             
+  kernel-headers.x86_64 0:2.6.32-642.13.1.el6                 lcms-libs.x86_64 0:1.19-1.el6                             
+  libICE.x86_64 0:1.0.6-1.el6                                 libSM.x86_64 0:1.2.1-2.el6                                
+  libXfont.x86_64 0:1.5.1-2.el6                               libXt.x86_64 0:1.1.4-6.1.el6                              
+  libXtst.x86_64 0:1.2.2-2.1.el6                              libXv.x86_64 0:1.0.9-2.1.el6                              
+  libXxf86vm.x86_64 0:1.1.3-2.1.el6                           libfontenc.x86_64 0:1.1.2-3.el6                           
+  libgomp.x86_64 0:4.4.7-17.el6                               libmng.x86_64 0:1.0.10-4.1.el6                            
+  libogg.x86_64 2:1.1.4-2.1.el6                               liboil.x86_64 0:0.3.16-4.1.el6                            
+  libstdc++-devel.x86_64 0:4.4.7-17.el6                       libtheora.x86_64 1:1.1.0-2.el6                            
+  libvisual.x86_64 0:0.4.0-10.el6                             libvorbis.x86_64 1:1.2.3-4.el6_2.1                        
+  mesa-dri-drivers.x86_64 0:11.0.7-4.el6                      mesa-dri-filesystem.x86_64 0:11.0.7-4.el6                 
+  mesa-dri1-drivers.x86_64 0:7.11-8.el6                       mesa-libGL.x86_64 0:11.0.7-4.el6                          
+  mesa-libGLU.x86_64 0:11.0.7-4.el6                           mesa-private-llvm.x86_64 0:3.6.2-1.el6                    
+  mpfr.x86_64 0:2.4.1-6.el6                                   openjpeg-libs.x86_64 0:1.3-11.el6                         
+  patch.x86_64 0:2.6-6.el6                                    pax.x86_64 0:3.4-10.1.el6                                 
+  perl-CGI.x86_64 0:3.51-141.el6_7.1                          perl-ExtUtils-MakeMaker.x86_64 0:6.55-141.el6_7.1         
+  perl-ExtUtils-ParseXS.x86_64 1:2.2003.0-141.el6_7.1         perl-Test-Harness.x86_64 0:3.17-141.el6_7.1               
+  perl-Test-Simple.x86_64 0:0.92-141.el6_7.1                  perl-devel.x86_64 4:5.10.1-141.el6_7.1                    
+  phonon-backend-gstreamer.x86_64 1:4.6.2-28.el6_5            poppler.x86_64 0:0.12.4-10.el6                            
+  poppler-data.noarch 0:0.4.0-1.el6                           poppler-utils.x86_64 0:0.12.4-10.el6                      
+  portreserve.x86_64 0:0.0.4-11.el6                           ppl.x86_64 0:0.10.2-11.el6                                
+  qt.x86_64 1:4.6.2-28.el6_5                                  qt-sqlite.x86_64 1:4.6.2-28.el6_5                         
+  qt-x11.x86_64 1:4.6.2-28.el6_5                              qt3.x86_64 0:3.3.8b-30.el6                                
+  redhat-lsb-compat.x86_64 0:4.0-7.el6                        redhat-lsb-core.x86_64 0:4.0-7.el6                        
+  redhat-lsb-graphics.x86_64 0:4.0-7.el6                      redhat-lsb-printing.x86_64 0:4.0-7.el6                    
+  urw-fonts.noarch 0:2.4-11.el6                               xml-common.noarch 0:0.6.3-33.el6                          
+  xorg-x11-font-utils.x86_64 1:7.2-11.el6                    
+
+Complete!
+[root@gpfs1-shankar ~]# 
+
+
+
+
+
+
+[root@gpfs1-shankar ~]# uname -r
+2.6.32-642.13.1.el6.x86_64
+[root@gpfs1-shankar ~]# 
+
+
+
+
+
+
+[root@gpfs3-shankar src]# vi /etc/hosts
+[root@gpfs3-shankar src]# ping gpfs1-shankar.shankar.net
+PING gpfs1-shankar.shankar.net (169.53.128.114) 56(84) bytes of data.
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=1 ttl=64 time=1.30 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=2 ttl=64 time=0.274 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=3 ttl=64 time=0.264 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=4 ttl=64 time=0.271 ms
+^C
+--- gpfs1-shankar.shankar.net ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3896ms
+rtt min/avg/max/mdev = 0.264/0.528/1.304/0.448 ms
+[root@gpfs3-shankar src]# ping gpfs1-shankar
+PING gpfs1-shankar.shankar.net (169.53.128.114) 56(84) bytes of data.
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=1 ttl=64 time=0.634 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=2 ttl=64 time=0.281 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=3 ttl=64 time=0.293 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=4 ttl=64 time=0.327 ms
+64 bytes from gpfs1-shankar.shankar.net (169.53.128.114): icmp_seq=5 ttl=64 time=0.287 ms
+^C
+--- gpfs1-shankar.shankar.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4675ms
+rtt min/avg/max/mdev = 0.281/0.364/0.634/0.136 ms
+[root@gpfs3-shankar src]# ssh root@gpfs1-shankar.shankar.net
+root@gpfs1-shankar.shankar.net's password: 
+Last login: Fri Jan 27 21:36:18 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@gpfs1-shankar ~]# exit
+logout
+Connection to gpfs1-shankar.shankar.net closed.
+[root@gpfs3-shankar src]# ssh root@gpfs1-shankar
+The authenticity of host 'gpfs1-shankar (169.53.128.114)' can't be established.
+RSA key fingerprint is 16:5b:81:01:f3:e3:ca:72:07:78:5a:6a:29:95:d4:25.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'gpfs1-shankar' (RSA) to the list of known hosts.
+root@gpfs1-shankar's password: 
+Last login: Fri Jan 27 21:44:16 2017 from gpfs3-shankar.shankar.net
+[root@gpfs1-shankar ~]# exit
+logout
+Connection to gpfs1-shankar closed.
+[root@gpfs3-shankar src]# pwd
+/usr/lpp/mmfs/src
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# mmcrcluster -C hw4  -p gpfs3-shankar -s gpfs2-shankar -R /usr/bin/scp -r /usr/bin/ssh -N /root/nodefile
+mmcrcluster: Performing preliminary node verification ...
+The authenticity of host 'gpfs3-shankar.shankar.net (169.53.128.117)' can't be established.
+RSA key fingerprint is aa:05:29:3d:1e:e3:01:a2:d4:6e:f5:d3:a2:97:90:a2.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'gpfs3-shankar.shankar.net,169.53.128.117' (RSA) to the list of known hosts.
+root@gpfs3-shankar.shankar.net's password: 
+root@gpfs3-shankar.shankar.net's password: 
+root@gpfs3-shankar.shankar.net's password: 
+root@gpfs3-shankar.shankar.net's password: 
+root@gpfs3-shankar.shankar.net's password: 
+Permission denied, please try again.
+Permission denied, please try again.
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).
+mmcrcluster: Remote copy file command "/usr/bin/scp" failed (pull operation).
+             Return code is 1.
+mmcrcluster: Command failed. Examine previous error messages to determine cause.
+[root@gpfs3-shankar src]# cd ~
+[root@gpfs3-shankar ~]# ls -la
+total 223916
+dr-xr-x---.  4 root root      4096 Jan 27 21:42 .
+dr-xr-xr-x. 22 root root      4096 Jan 27 18:55 ..
+-rw-------.  1 root root       439 Jan 27 18:54 .bash_history
+-rw-r--r--.  1 root root        18 May 20  2009 .bash_logout
+-rw-r--r--.  1 root root       200 Jan 27 18:24 .bash_profile
+-rw-r--r--.  1 root root       176 Sep 22  2004 .bashrc
+-rw-r--r--.  1 root root       100 Sep 22  2004 .cshrc
+-rw-r--r--.  1 root root 114503680 Jan 29  2016 GPFS_4.1_STD_LSX_QSG.tar
+-rw-r--r--.  1 root root      3072 Apr 26  2014 gpfs.base.README.Linux
+-rwxr-xr-x.  1 root root 114495444 Apr 26  2014 gpfs_install-4.1.0-0_x86_64
+-rw-r--r--.  1 root root        54 Jan 27 21:42 nodefile
+drwxr-----.  3 root root      4096 Jan 27 18:54 .pki
+drwxr-xr-x.  2 root root      4096 Jan 27 21:21 .ssh
+-rw-r--r--.  1 root root       129 Dec  3  2004 .tcshrc
+[root@gpfs3-shankar ~]# cd .ssh
+[root@gpfs3-shankar .ssh]# ls -la
+total 20
+drwxr-xr-x. 2 root root 4096 Jan 27 21:21 .
+dr-xr-x---. 4 root root 4096 Jan 27 21:42 ..
+-rw-------. 1 root root  504 Jan 27 17:59 authorized_keys
+-rw-r--r--. 1 root root 1675 Jan 27 18:24 id_rsa_sl
+-rw-r--r--. 1 root root 1239 Jan 27 21:46 known_hosts
+[root@gpfs3-shankar .ssh]# cp id_rsa_sl id_rsa
+[root@gpfs3-shankar .ssh]# cd /usr/lpp/mmfs/src
+[root@gpfs3-shankar src]# mmcrcluster -C hw4  -p gpfs3-shankar -s gpfs2-shankar -R /usr/bin/scp -r /usr/bin/ssh -N /root/nodefile
+mmcrcluster: Performing preliminary node verification ...
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0644 for '/root/.ssh/id_rsa' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+bad permissions: ignore key: /root/.ssh/id_rsa
+root@gpfs3-shankar.shankar.net's password: 
+Permission denied, please try again.
+root@gpfs3-shankar.shankar.net's password: 
+Permission denied, please try again.
+root@gpfs3-shankar.shankar.net's password: 
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).
+mmcrcluster: Remote shell command "/usr/bin/ssh" failed.
+             Return code is 255.
+mmcrcluster: Command failed. Examine previous error messages to determine cause.
+[root@gpfs3-shankar src]# chmod 600 ~/.ssh/id_rsa
+[root@gpfs3-shankar src]# mmcrcluster -C hw4  -p gpfs3-shankar -s gpfs2-shankar -R /usr/bin/scp -r /usr/bin/ssh -N /root/nodefile
+mmcrcluster: Performing preliminary node verification ...
+mmcrcluster: Processing quorum and other critical nodes ...
+mmcrcluster: Processing the rest of the nodes ...
+The authenticity of host 'gpfs2-shankar.shankar.net (169.53.128.116)' can't be established.
+RSA key fingerprint is 9f:95:35:c7:f0:bf:f0:3e:52:8d:a6:07:6b:ec:ab:be.
+Are you sure you want to continue connecting (yes/no)? yes
+mmcrcluster: Finalizing the cluster data structures ...
+mmcrcluster: Command successfully completed
+mmcrcluster: Warning: Not all nodes have proper GPFS license designations.
+    Use the mmchlicense command to designate licenses as needed.
+mmcrcluster: Propagating the cluster configuration data to all
+  affected nodes.  This is an asynchronous process.
+[root@gpfs3-shankar src]# mmchlicense server -N all
+
+The following nodes will be designated as possessing GPFS server licenses:
+	gpfs3-shankar.shankar.net
+	gpfs1-shankar.shankar.net
+	gpfs2-shankar.shankar.net
+Please confirm that you accept the terms of the GPFS server Licensing Agreement.
+The full text can be found at www.ibm.com/software/sla
+Enter "yes" or "no": yes
+mmchlicense: Command successfully completed
+mmchlicense: Propagating the cluster configuration data to all
+  affected nodes.  This is an asynchronous process.
+[root@gpfs3-shankar src]# mmstartup -a
+Fri Jan 27 21:51:49 CST 2017: mmstartup: Starting GPFS ...
+[root@gpfs3-shankar src]# mmgetstate -a
+
+ Node number  Node name        GPFS state 
+------------------------------------------
+       1      gpfs3-shankar    active
+       2      gpfs1-shankar    active
+       3      gpfs2-shankar    active
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# mmgetstate -a
+
+ Node number  Node name        GPFS state 
+------------------------------------------
+       1      gpfs3-shankar    active
+       2      gpfs1-shankar    active
+       3      gpfs2-shankar    active
+[root@gpfs3-shankar src]# mmlscluster
+
+GPFS cluster information
+========================
+  GPFS cluster name:         hw4.shankar.net
+  GPFS cluster id:           9342766459812320518
+  GPFS UID domain:           hw4.shankar.net
+  Remote shell command:      /usr/bin/ssh
+  Remote file copy command:  /usr/bin/scp
+  Repository type:           CCR
+
+ Node  Daemon node name             IP address      Admin node name            Designation
+-------------------------------------------------------------------------------------------
+   1   gpfs3-shankar.shankar.net    169.53.128.117  gpfs3-shankar.shankar.net  quorum
+   2   gpfs1-shankar.shankar.net    169.53.128.114  gpfs1-shankar.shankar.net  
+   3   gpfs2-shankar.shankar.net    169.53.128.116  gpfs2-shankar.shankar.net  
+
+[root@gpfs3-shankar src]# fdisk -l
+
+Disk /dev/xvdb: 2147 MB, 2147483648 bytes
+255 heads, 63 sectors/track, 261 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00025cdb
+
+    Device Boot      Start         End      Blocks   Id  System
+/dev/xvdb1               1         261     2096451   82  Linux swap / Solaris
+
+Disk /dev/xvda: 26.8 GB, 26843545600 bytes
+255 heads, 63 sectors/track, 3263 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x000c15c6
+
+    Device Boot      Start         End      Blocks   Id  System
+/dev/xvda1   *           1          33      262144   83  Linux
+Partition 1 does not end on cylinder boundary.
+/dev/xvda2              33        3264    25951232   83  Linux
+
+Disk /dev/xvdc: 26.8 GB, 26843545600 bytes
+255 heads, 63 sectors/track, 3263 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+[root@gpfs3-shankar src]# fdisk -l |grep Disk |grep bytes
+Disk /dev/xvdb: 2147 MB, 2147483648 bytes
+Disk /dev/xvda: 26.8 GB, 26843545600 bytes
+Disk /dev/xvdc: 26.8 GB, 26843545600 bytes
+[root@gpfs3-shankar src]# 
+mount | grep ' \/ '
+
+
+
+
+
+
+
+[root@gpfs3-shankar src]# mount | grep ' \/ '
+/dev/xvda2 on / type ext3 (rw,noatime)
+[root@gpfs3-shankar src]# pwd
+/usr/lpp/mmfs/src
+[root@gpfs3-shankar src]# vi /root/diskfile.fpo
+[root@gpfs3-shankar src]# mmcrnsd -F /root/diskfile.fpo
+mmcrnsd: Processing disk xvdc
+mmcrnsd: Incorrect node gpfs1 specified for command.
+mmcrnsd: Error found while processing stanza
+    %nsd:
+    device=/dev/xvdc
+    servers=gpfs1
+    usage=dataAndMetadata
+    pool=system
+    failureGroup=1
+mmcrnsd: Processing disk xvdc
+mmcrnsd: Incorrect node gpfs2 specified for command.
+mmcrnsd: Error found while processing stanza
+    %nsd:
+    device=/dev/xvdc
+    servers=gpfs2
+    usage=dataAndMetadata
+    pool=system
+    failureGroup=2
+mmcrnsd: Processing disk xvdc
+mmcrnsd: Incorrect node gpfs3 specified for command.
+mmcrnsd: Error found while processing stanza
+    %nsd:
+    device=/dev/xvdc
+    servers=gpfs3
+    usage=dataAndMetadata
+    pool=system
+    failureGroup=3
+mmcrnsd: Command failed. Examine previous error messages to determine cause.
+[root@gpfs3-shankar src]# !vi
+vi /root/diskfile.fpo
+
+
+
+
+
+%pool:
+pool=system
+allowWriteAffinity=yes
+writeAffinityDepth=1
+
+%nsd: nsd=gpfs1nsd
+device=/dev/xvdc
+servers=gpfs3-shankar <-----------NOTE
+usage=dataAndMetadata
+pool=system
+failureGroup=1
+
+%nsd: nsd=gpfs2nsd
+device=/dev/xvdc
+servers=gpfs2-shankar
+usage=dataAndMetadata
+pool=system
+failureGroup=2
+
+%nsd: nsd=gpfs3nsd
+device=/dev/xvdc
+servers=gpfs1-shankar <------------- NOTE
+usage=dataAndMetadata
+pool=system
+failureGroup=3
+
+
+
+
+
+[root@gpfs3-shankar src]# mmcrnsd -F /root/diskfile.fpo
+mmcrnsd: Processing disk xvdc
+mmcrnsd: Processing disk xvdc
+mmcrnsd: Processing disk xvdc
+mmcrnsd: Propagating the cluster configuration data to all
+  affected nodes.  This is an asynchronous process.
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# 
+[root@gpfs3-shankar src]# mmlsnsd -m
+
+ Disk name    NSD volume ID      Device         Node name                Remarks       
+---------------------------------------------------------------------------------------
+ gpfs1nsd     A9358075588C29D2   /dev/xvdc      gpfs3-shankar.shankar.net server node
+ gpfs2nsd     A9358074588C29D3   /dev/xvdc      gpfs2-shankar.shankar.net server node
+ gpfs3nsd     A9358072588C29D7   /dev/xvdc      gpfs1-shankar.shankar.net server node
+
+[root@gpfs3-shankar src]#
+
+
+
+
+
+[root@gpfs3-shankar src]# mmcrfs gpfsfpo -F /root/diskfile.fpo -A yes -Q no -r 1 -R 1
+
+The following disks of gpfsfpo will be formatted on node gpfs3-shankar.shankar.net:
+    gpfs1nsd: size 25600 MB
+    gpfs2nsd: size 25600 MB
+    gpfs3nsd: size 25600 MB
+Formatting file system ...
+Disks up to size 223 GB can be added to storage pool system.
+Creating Inode File
+  29 % complete on Fri Jan 27 23:23:09 2017
+  59 % complete on Fri Jan 27 23:23:14 2017
+  89 % complete on Fri Jan 27 23:23:19 2017
+ 100 % complete on Fri Jan 27 23:23:21 2017
+Creating Allocation Maps
+Creating Log Files
+  53 % complete on Fri Jan 27 23:23:27 2017
+ 100 % complete on Fri Jan 27 23:23:29 2017
+Clearing Inode Allocation Map
+Clearing Block Allocation Map
+Formatting Allocation Map for storage pool system
+Completed creation of file system /dev/gpfsfpo.
+mmcrfs: Propagating the cluster configuration data to all
+  affected nodes.  This is an asynchronous process.
+[root@gpfs3-shankar src]# 
+
+
+
+
+[root@gpfs3-shankar src]# mmlsfs all
+
+File system attributes for /dev/gpfsfpo:
+========================================
+flag                value                    description
+------------------- ------------------------ -----------------------------------
+ -f                 8192                     Minimum fragment size in bytes
+ -i                 4096                     Inode size in bytes
+ -I                 16384                    Indirect block size in bytes
+ -m                 1                        Default number of metadata replicas
+ -M                 2                        Maximum number of metadata replicas
+ -r                 1                        Default number of data replicas
+ -R                 1                        Maximum number of data replicas
+ -j                 cluster                  Block allocation type
+ -D                 nfs4                     File locking semantics in effect
+ -k                 all                      ACL semantics in effect
+ -n                 32                       Estimated number of nodes that will mount file system
+ -B                 262144                   Block size
+ -Q                 none                     Quotas accounting enabled
+                    none                     Quotas enforced
+                    none                     Default quotas enabled
+ --perfileset-quota No                       Per-fileset quota enforcement
+ --filesetdf        No                       Fileset df enabled?
+ -V                 14.04 (4.1.0.0)          File system version
+ --create-time      Fri Jan 27 23:23:09 2017 File system creation time
+ -z                 No                       Is DMAPI enabled?
+ -L                 4194304                  Logfile size
+ -E                 Yes                      Exact mtime mount option
+ -S                 No                       Suppress atime mount option
+ -K                 whenpossible             Strict replica allocation option
+ --fastea           Yes                      Fast external attributes enabled?
+ --encryption       No                       Encryption enabled?
+ --inode-limit      76992                    Maximum number of inodes
+ --log-replicas     0                        Number of log replicas
+ --is4KAligned      Yes                      is4KAligned?
+ -P                 system                   Disk storage pools in file system
+ --rapid-repair     Yes                      rapidRepair enabled?
+ -d                 gpfs1nsd;gpfs2nsd;gpfs3nsd  Disks in file system
+ -A                 yes                      Automatic mount option
+ -o                 none                     Additional mount options
+ -T                 /gpfs/gpfsfpo            Default mount point
+ --mount-priority   0                        Mount priority
+[root@gpfs3-shankar src]# 
+
+
+
+
+
+[root@gpfs3-shankar src]# mmmount all -a
+Fri Jan 27 23:24:43 CST 2017: mmmount: Mounting file systems ...
+[root@gpfs3-shankar src]# cd /gpfs/gpfsfpo
+[root@gpfs3-shankar gpfsfpo]# df -h .
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/gpfsfpo     75G  645M   75G   1% /gpfs/gpfsfpo
+
+
+
+
+
+
+
+[root@gpfs3-shankar gpfsfpo]# touch aa
+[root@gpfs3-shankar gpfsfpo]# ls -l /gpfs/gpfsfpo
+total 0
+-rw-r--r--. 1 root root 0 Jan 27 23:25 aa
+
+
+
+[root@gpfs3-shankar gpfsfpo]# ssh gpfs2-shankar 'ls -l /gpfs/gpfsfpo'
+The authenticity of host 'gpfs2-shankar (169.53.128.116)' can't be established.
+RSA key fingerprint is 9f:95:35:c7:f0:bf:f0:3e:52:8d:a6:07:6b:ec:ab:be.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'gpfs2-shankar' (RSA) to the list of known hosts.
+total 0
+-rw-r--r--. 1 root root 0 Jan 27 23:25 aa
+
+
+
+[root@gpfs3-shankar gpfsfpo]# ssh gpfs1-shankar 'ls -l /gpfs/gpfsfpo'
+total 0
+-rw-r--r--. 1 root root 0 Jan 27 23:25 aa
+[root@gpfs3-shankar gpfsfpo]#
+
+
+
+

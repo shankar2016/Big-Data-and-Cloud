@@ -1,0 +1,207 @@
+GPFS Environment
+================
+
+iiMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:........:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter : action :
+:..........:...............:................:................:............:........:
+: 27930727 : gpfs1-shankar : 169.53.128.115 : 10.122.149.199 :   sjc01    :   -    :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :   -    :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :   -    :
+:..........:...............:................:................:............:........:
+iMac:~ NatarajanShankar$ 
+
+
+
+iMac:~ NatarajanShankar$ slcli vs credentials 27930727
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : PgKl46sm :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 27930747
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : MbQkm8pK :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 27930751
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : XsPvzD7L :
+:..........:..........:
+iMac:~ NatarajanShankar$
+
+
+
+
+STEP 1: Location of Download Script and Download Files
+======================================================
+The script used for file download from Google is at /gpfs/gpfsfpo/scripts/download.sh
+The downloaded files are in /gpfs/gpfsfpo/download.  
+
+download files on all 3 nodes using:
+		/gpfs/gpfsfpo/scripts/download.sh
+
+Distributed download of Google files (possible but not used)
+============================================================
+Distributed download of Google data is available via the /gpfs/gpfsfpo/scripts/distributed_download.sh
+script. 
+
+	Invoke this script ONLY on gpfs1 node and run in the scripts directory using 
+		./distributed_download.sh
+
+STEP 2: The Pre-processor and Preprocessing for aggregation 
+===========================================================
+The preprocessor is at /gpfs/gpfsfpo/scripts/mumbler_optimizer.sh
+This is a awk scrpt that nicely aggregates the word counts 
+
+The preprocessor is run using:
+	/gpfs/gpfsfpo/scripts/mumbler_optimizer.sh &
+
+in the scripts directory. 
+
+A datafile.master is generated. It has all the ASCII data.
+
+
+
+STEP3: Second step of Optimization
+==================================
+
+From the above generated datafile.master, generate files in the "data" directory for lines that start with each alphabet and each number. 
+This separation will greatly simplify the search time
+
+This script is run using:
+	/gpfs/gpfsfpo/scripts/file_splitter.sh
+
+The resultant "data" dierectory looks like this:
+[root@gpfs2-shankar data]# ls -la
+total 6511880
+drwxr-xr-x. 2 root root       4096 Feb  4 21:23 .
+drwxr-xr-x. 9 root root     262144 Feb  4 15:16 ..
+-rw-r--r--. 1 root root    2086747 Feb  4 15:19 0
+-rw-r--r--. 1 root root   26110763 Feb  4 15:19 1
+-rw-r--r--. 1 root root   12905669 Feb  4 15:19 2
+-rw-r--r--. 1 root root    7888019 Feb  4 15:19 3
+-rw-r--r--. 1 root root    5158054 Feb  4 15:19 4
+-rw-r--r--. 1 root root    3881680 Feb  4 15:19 5
+-rw-r--r--. 1 root root    3105090 Feb  4 15:19 6
+-rw-r--r--. 1 root root    2674483 Feb  4 15:19 7
+-rw-r--r--. 1 root root    2572010 Feb  4 15:19 8
+-rw-r--r--. 1 root root    2428896 Feb  4 15:19 9
+-rw-r--r--. 1 root root  270729892 Feb  4 15:21 A
+-rw-r--r--. 1 root root  154446207 Feb  4 15:22 B
+-rw-r--r--. 1 root root  275145181 Feb  4 15:23 C
+-rw-r--r--. 1 root root  163102312 Feb  4 15:24 D
+-rw-r--r--. 1 root root 3333872884 Feb  4 15:41 datafile.master
+-rw-r--r--. 1 root root  150752693 Feb  4 15:42 E
+-rw-r--r--. 1 root root  146911810 Feb  4 15:43 F
+-rw-r--r--. 1 root root   87022044 Feb  4 15:44 G
+-rw-r--r--. 1 root root  111923862 Feb  4 15:44 H
+-rw-r--r--. 1 root root  166120298 Feb  4 15:46 I
+-rw-r--r--. 1 root root   31671254 Feb  4 15:46 J
+-rw-r--r--. 1 root root   26930014 Feb  4 15:46 K
+-rw-r--r--. 1 root root  112786652 Feb  4 15:47 L
+-rw-r--r--. 1 root root  176080459 Feb  4 15:48 M
+-rw-r--r--. 1 root root   82247803 Feb  4 15:48 N
+-rw-r--r--. 1 root root  125230765 Feb  4 15:49 O
+-rw-r--r--. 1 root root  232039081 Feb  4 15:50 P
+-rw-r--r--. 1 root root   12712707 Feb  4 15:50 Q
+-rw-r--r--. 1 root root  149435823 Feb  4 15:51 R
+-rw-r--r--. 1 root root  310046294 Feb  4 15:52 S
+-rw-r--r--. 1 root root  230230184 Feb  4 15:53 T
+-rw-r--r--. 1 root root   63590851 Feb  4 15:54 U
+-rw-r--r--. 1 root root   48556213 Feb  4 15:54 V
+-rw-r--r--. 1 root root  113361150 Feb  4 15:55 W
+-rw-r--r--. 1 root root    2262163 Feb  4 15:55 X
+-rw-r--r--. 1 root root   16546273 Feb  4 15:55 Y
+-rw-r--r--. 1 root root    5179488 Feb  4 15:55 Z
+[root@gpfs2-shankar data]#
+
+
+
+STEP 3: Remove TAB separators form the optimized files in data directory
+========================================================================
+
+Just deal with only spaces in the python code
+
+iRemove all TABS from data file. 
+	/gpfs/gpfsfpo/data/sed -i $'s/\t/ /g' *
+
+
+
+STEP4 :  (THIS IS THE ONLY STEP THAT INSTRUCTORS NEED TO RUN) Python Code for Mumbler Algorithm 
+===============================================================================================
+
+Location: /gpfs/gpfsfpo/source
+
+	mumbler.py
+
+Implements
+	Command Parsing
+	Main Algorithm
+	Probability based next word selection
+
+
+When will run stop
+	The algorithm will stop when special characters (non-alphanumeric) make up the next lead word
+
+
+Invocation 
+	./mumbler.py xray 25
+
+EXAMPLE RUN
+===========
+[root@gpfs3-shankar source]# ./mumbler.py xray 25
+('Start time is: ', datetime.datetime(2017, 2, 4, 21, 11, 48, 324851))
+Starting lead word is : 
+xray
+next lead word is : 
+spectra
+next lead word is : 
+discovered
+next lead word is : 
+deposit
+next lead word is : 
+current
+next lead word is : 
+more
+next lead word is : 
+again
+next lead word is : 
+refrained
+next lead word is : 
+because
+next lead word is : 
+Chamberlain
+next lead word is : 
+outside
+next lead word is : 
+frames
+next lead word is : 
+supported
+next lead word is : 
+satisfactorily
+next lead word is : 
+defended
+next lead word is : 
+suits
+next lead word is : 
+obtained
+next lead word is : 
+57
+
+
+Mumbler path is:
+['xray', 'spectra', 'discovered', 'deposit', 'current', 'more', 'again', 'refrained', 'because', 'Chamberlain', 'outside', 'frames', 'supported', 'satisfactorily', 'defended', 'suits', 'obtained', '57']
+('End time: ', datetime.datetime(2017, 2, 4, 21, 15, 15, 598170))
+[root@gpfs3-shankar source]#
+
+
+NOTE ON PERFORMANCE
+===================
+
+I plan to profile this code so that it can be optmized. I do not have this done yet. 
+
+
