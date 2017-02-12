@@ -1,0 +1,16 @@
+hadoop jar $(ls $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar) \
+-Dmapreduce.job.reduces=6 \
+-Dmapreduce.output.fileoutputformat.compress=true \
+-Dmapreduce.map.output.compress=true \
+-files hdfs:///mumbler/mapper-filter.py,hdfs:///mumbler/reducer.py \
+-input hdfs:///mumbler/pass \
+-output hdfs:///mumbler/results \
+-mapper mapper-filter.py \
+-reducer reducer.py
+
+
+Investigate results
+
+You can view the compressed output of the reduce operation with hadoop commands like this:
+
+hadoop fs -text hdfs:///mumbler/results/part-00000.deflate
