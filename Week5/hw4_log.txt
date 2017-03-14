@@ -1,0 +1,1171 @@
+
+
+Short description of experience
+===============================
+
+The Hadoop part of the assignment was stepwise, granular and clear.  It is good to 
+see how machines are set up for Hadoop, added to the cluster and the HDFS file system. 
+
+It is unclear how nodes can be added after the initial cluster has been set up. 
+
+The Terasort part of the homework is opaque. Not clear how the Map or Reduce processes are kicking in and 
+what they are each doing.  The utility of Hadoop native libs versus the Java libs is also not clear. How impactful 
+the warning with the Java libs is not clear. 
+
+The functioning of YARN and the Resource Manager will also be nice to observe.  Debug hooks will be nice to have. 
+In order to observe traffic flow during map and reduce. 
+
+
+
+
+Log
+===
+
+iMac:~ NatarajanShankar$ slcli vs create --datacenter=sjc01 --hostname=master --domain=mids --billing=hourly --key=RSASL  --cpu=2 --memory=4096 --disk=25 --disk=100 --network=1000 --os=CENTOS_LATEST_64
+This action will incur charges on your account. Continue? [y/N]: y
+SoftLayerAPIError(SoftLayer_Exception_Public): The hostname and domain must be alphanumeric strings that may be separated by periods '.'.  The only other allowable special character is the dash '-'  However the special characters '.' and '-' may not be consecutive.  Each alphanumeric string separated by a period is considered a label.  Labels must begin and end with an alphanumeric character and must be between 1-63 characters in length.  The last label, the TLD (top level domain) must be between 2-24 alphabetic characters. The TLD label and hostname cannot be solely comprised of digits. The domain portion must consist of least one label followed by a period '.' then ending with the TLD label.  Combining the hostname, followed by a period '.', followed by the domain gives the FQDN (fully qualified domain name), which may not exceed 253 characters in total length.
+iMac:~ NatarajanShankar$ slcli vs create --datacenter=sjc01 --hostname=master --domain=shankar.net  --billing=hourly --key=RSASL  --cpu=2 --memory=4096 --disk=25 --disk=100 --network=1000 --os=CENTOS_LATEST_64
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 28114889                             :
+: created : 2017-02-06T15:35:10-06:00            :
+:    guid : 753f71c7-f5f4-434d-8424-530d8452406a :
+:.........:......................................:
+iMac:~ NatarajanShankar$ slcli vs create --datacenter=sjc01 --hostname=slave1 --domain=shankar.net  --billing=hourly --key=RSASL  --cpu=2 --memory=4096 --disk=25 --disk=100 --network=1000 --os=CENTOS_LATEST_64
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 28114929                             :
+: created : 2017-02-06T15:35:43-06:00            :
+:    guid : e346f250-8a9b-40ce-b2de-e568fea5b1e2 :
+:.........:......................................:
+iMac:~ NatarajanShankar$ slcli vs create --datacenter=sjc01 --hostname=slave2 --domain=shankar.net  --billing=hourly --key=RSASL  --cpu=2 --memory=4096 --disk=25 --disk=100 --network=1000 --os=CENTOS_LATEST_64
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 28114947                             :
+: created : 2017-02-06T15:36:10-06:00            :
+:    guid : 19e2c717-c113-4502-a121-ab35a248163a :
+:.........:......................................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:....................................:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :               action               :
+:..........:...............:................:................:............:....................................:
+: 27930727 : gpfs1-shankar : 169.53.128.115 : 10.122.149.199 :   sjc01    :                 -                  :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :                 -                  :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :                 -                  :
+: 28114889 :     master    : 169.53.128.117 : 10.122.149.204 :   sjc01    : Check Cloud Disk Template Transfer :
+: 28114929 :     slave1    : 169.53.128.118 : 10.122.149.212 :   sjc01    : Check Cloud Disk Template Transfer :
+: 28114947 :     slave2    :       -        :       -        :     -      :            Assign Host             :
+:..........:...............:................:................:............:....................................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:....................................:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter :               action               :
+:..........:...............:................:................:............:....................................:
+: 27930727 : gpfs1-shankar : 169.53.128.115 : 10.122.149.199 :   sjc01    :                 -                  :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :                 -                  :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :                 -                  :
+: 28114889 :     master    : 169.53.128.117 : 10.122.149.204 :   sjc01    : Check Cloud Disk Template Transfer :
+: 28114929 :     slave1    : 169.53.128.118 : 10.122.149.212 :   sjc01    : Check Cloud Disk Template Transfer :
+: 28114947 :     slave2    :       -        :       -        :     -      :            Assign Host             :
+:..........:...............:................:................:............:....................................:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:...............:................:................:............:........:
+:    id    :    hostname   :   primary_ip   :   backend_ip   : datacenter : action :
+:..........:...............:................:................:............:........:
+: 27930727 : gpfs1-shankar : 169.53.128.115 : 10.122.149.199 :   sjc01    :   -    :
+: 27930747 : gpfs2-shankar : 169.53.128.114 : 10.122.149.194 :   sjc01    :   -    :
+: 27930751 : gpfs3-shankar : 169.53.128.116 : 10.122.149.198 :   sjc01    :   -    :
+: 28114889 :     master    : 169.53.128.117 : 10.122.149.204 :   sjc01    :   -    :
+: 28114929 :     slave1    : 169.53.128.118 : 10.122.149.212 :   sjc01    :   -    :
+: 28114947 :     slave2    : 158.85.179.179 : 10.122.149.218 :   sjc01    :   -    :
+:..........:...............:................:................:............:........:
+iMac:~ NatarajanShankar$ slcli vs credentials
+Usage: slcli vs credentials [OPTIONS] IDENTIFIER
+
+Error: Missing argument "identifier".
+iMac:~ NatarajanShankar$ slcli vs credentials 28114889
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : XDjm2Mfg :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 28114929
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : P3fcPFGc :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 28114947
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : Bx9GPb8y :
+:..........:..........:
+iMac:~ NatarajanShankar$ ssh root@169.53.128.117
+The authenticity of host '169.53.128.117 (169.53.128.117)' can't be established.
+ECDSA key fingerprint is SHA256:vtyznriGQC5xxZCOZ9O8mdMvmVqDP8YHFSORP3f1Zjs.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '169.53.128.117' (ECDSA) to the list of known hosts.
+root@169.53.128.117's password: 
+[root@master ~]# 
+[root@master ~]# 
+[root@master ~]# vi /setc/hosts
+[root@master ~]# vi /etc/hosts
+[root@master ~]# ping slave1
+PING slave1.shankar.net (169.53.128.118) 56(84) bytes of data.
+64 bytes from slave1.shankar.net (169.53.128.118): icmp_seq=1 ttl=64 time=1.66 ms
+64 bytes from slave1.shankar.net (169.53.128.118): icmp_seq=2 ttl=64 time=0.680 ms
+64 bytes from slave1.shankar.net (169.53.128.118): icmp_seq=3 ttl=64 time=0.496 ms
+^C
+--- slave1.shankar.net ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 0.496/0.945/1.661/0.512 ms
+[root@master ~]# ping slave2
+PING slave2.shankar.net (158.85.179.179) 56(84) bytes of data.
+64 bytes from slave2.shankar.net (158.85.179.179): icmp_seq=1 ttl=63 time=0.748 ms
+64 bytes from slave2.shankar.net (158.85.179.179): icmp_seq=2 ttl=63 time=0.614 ms
+64 bytes from slave2.shankar.net (158.85.179.179): icmp_seq=3 ttl=63 time=0.456 ms
+^C
+--- slave2.shankar.net ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2000ms
+rtt min/avg/max/mdev = 0.456/0.606/0.748/0.119 ms
+[root@master ~]# 
+[root@master ~]# 
+[root@master ~]# 
+[root@master ~]# fdisk -l |grep Disk |grep GB
+Disk /dev/xvda: 26.8 GB, 26843545600 bytes, 52428800 sectors
+Disk /dev/xvdc: 107.4 GB, 107374182400 bytes, 209715200 sectors
+[root@master ~]# mkdir /data
+[root@master ~]# mkfs.ext4 /dev/xvdc
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=0 blocks
+6553600 inodes, 26214400 blocks
+1310720 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=2174746624
+800 block groups
+32768 blocks per group, 32768 fragments per group
+8192 inodes per group
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
+	4096000, 7962624, 11239424, 20480000, 23887872
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done   
+
+[root@master ~]# vi /dev/fstab
+[root@master ~]# mount /data
+mount: can't find /data in /etc/fstab
+[root@master ~]# mv /dev/fstab /etc/fstab
+mv: overwrite ‘/etc/fstab’? no
+[root@master ~]# vi /etc/fstab
+[root@master ~]# rm /dev/fstab
+rm: remove regular file ‘/dev/fstab’? 
+[root@master ~]# rm /dev/fstab
+rm: remove regular file ‘/dev/fstab’? y
+[root@master ~]# mount /data
+[root@master ~]# chmod 1777 /data
+[root@master ~]# yum install -y rsync net-tools java-1.8.0-openjdk-devel http://pkgs.repoforge.org/nmon/nmon-14g-1.el7.rf.x86_64.rpm
+Loaded plugins: fastestmirror
+base                                                                                                                                                                                          | 3.6 kB  00:00:00     
+extras                                                                                                                                                                                        | 3.4 kB  00:00:00     
+updates                                                                                                                                                                                       | 3.4 kB  00:00:00     
+(1/4): base/7/x86_64/group_gz                                                                                                                                                                 | 155 kB  00:00:00     
+(2/4): extras/7/x86_64/primary_db                                                                                                                                                             | 121 kB  00:00:00     
+(3/4): updates/7/x86_64/primary_db                                                                                                                                                            | 2.2 MB  00:00:00     
+(4/4): base/7/x86_64/primary_db                                                                                                                                                               | 5.6 MB  00:00:00     
+Determining fastest mirrors
+Cannot open: http://pkgs.repoforge.org/nmon/nmon-14g-1.el7.rf.x86_64.rpm. Skipping.
+Resolving Dependencies
+--> Running transaction check
+---> Package java-1.8.0-openjdk-devel.x86_64 1:1.8.0.121-0.b13.el7_3 will be installed
+--> Processing Dependency: java-1.8.0-openjdk = 1:1.8.0.121-0.b13.el7_3 for package: 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libawt_xawt.so(SUNWprivate_1.1)(64bit) for package: 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libjvm.so()(64bit) for package: 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libjava.so()(64bit) for package: 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libawt_xawt.so()(64bit) for package: 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libawt.so()(64bit) for package: 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libX11.so.6()(64bit) for package: 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64
+---> Package net-tools.x86_64 0:2.0-0.17.20131004git.el7 will be installed
+---> Package rsync.x86_64 0:3.0.9-17.el7 will be installed
+--> Running transaction check
+---> Package java-1.8.0-openjdk.x86_64 1:1.8.0.121-0.b13.el7_3 will be installed
+--> Processing Dependency: xorg-x11-fonts-Type1 for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libpng15.so.15(PNG15_0)(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libjpeg.so.62(LIBJPEG_6.2)(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: fontconfig(x86-64) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libpng15.so.15()(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libjpeg.so.62()(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libgif.so.4()(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libXtst.so.6()(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libXrender.so.1()(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libXi.so.6()(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libXext.so.6()(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: libXcomposite.so.1()(64bit) for package: 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64
+---> Package java-1.8.0-openjdk-headless.x86_64 1:1.8.0.121-0.b13.el7_3 will be installed
+--> Processing Dependency: tzdata-java >= 2015d for package: 1:java-1.8.0-openjdk-headless-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: copy-jdk-configs >= 1.1-3 for package: 1:java-1.8.0-openjdk-headless-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: lksctp-tools(x86-64) for package: 1:java-1.8.0-openjdk-headless-1.8.0.121-0.b13.el7_3.x86_64
+--> Processing Dependency: jpackage-utils for package: 1:java-1.8.0-openjdk-headless-1.8.0.121-0.b13.el7_3.x86_64
+---> Package libX11.x86_64 0:1.6.3-3.el7 will be installed
+--> Processing Dependency: libX11-common >= 1.6.3-3.el7 for package: libX11-1.6.3-3.el7.x86_64
+--> Processing Dependency: libxcb.so.1()(64bit) for package: libX11-1.6.3-3.el7.x86_64
+--> Running transaction check
+---> Package copy-jdk-configs.noarch 0:1.2-1.el7 will be installed
+---> Package fontconfig.x86_64 0:2.10.95-10.el7 will be installed
+--> Processing Dependency: fontpackages-filesystem for package: fontconfig-2.10.95-10.el7.x86_64
+---> Package giflib.x86_64 0:4.1.6-9.el7 will be installed
+--> Processing Dependency: libSM.so.6()(64bit) for package: giflib-4.1.6-9.el7.x86_64
+--> Processing Dependency: libICE.so.6()(64bit) for package: giflib-4.1.6-9.el7.x86_64
+---> Package javapackages-tools.noarch 0:3.4.1-11.el7 will be installed
+--> Processing Dependency: python-javapackages = 3.4.1-11.el7 for package: javapackages-tools-3.4.1-11.el7.noarch
+--> Processing Dependency: libxslt for package: javapackages-tools-3.4.1-11.el7.noarch
+---> Package libX11-common.noarch 0:1.6.3-3.el7 will be installed
+---> Package libXcomposite.x86_64 0:0.4.4-4.1.el7 will be installed
+---> Package libXext.x86_64 0:1.3.3-3.el7 will be installed
+---> Package libXi.x86_64 0:1.7.4-2.el7 will be installed
+---> Package libXrender.x86_64 0:0.9.8-2.1.el7 will be installed
+---> Package libXtst.x86_64 0:1.2.2-2.1.el7 will be installed
+---> Package libjpeg-turbo.x86_64 0:1.2.90-5.el7 will be installed
+---> Package libpng.x86_64 2:1.5.13-7.el7_2 will be installed
+---> Package libxcb.x86_64 0:1.11-4.el7 will be installed
+--> Processing Dependency: libXau.so.6()(64bit) for package: libxcb-1.11-4.el7.x86_64
+---> Package lksctp-tools.x86_64 0:1.0.17-2.el7 will be installed
+---> Package tzdata-java.noarch 0:2016j-1.el7 will be installed
+---> Package xorg-x11-fonts-Type1.noarch 0:7.5-9.el7 will be installed
+--> Processing Dependency: ttmkfdir for package: xorg-x11-fonts-Type1-7.5-9.el7.noarch
+--> Processing Dependency: ttmkfdir for package: xorg-x11-fonts-Type1-7.5-9.el7.noarch
+--> Processing Dependency: mkfontdir for package: xorg-x11-fonts-Type1-7.5-9.el7.noarch
+--> Processing Dependency: mkfontdir for package: xorg-x11-fonts-Type1-7.5-9.el7.noarch
+--> Running transaction check
+---> Package fontpackages-filesystem.noarch 0:1.44-8.el7 will be installed
+---> Package libICE.x86_64 0:1.0.9-2.el7 will be installed
+---> Package libSM.x86_64 0:1.2.2-2.el7 will be installed
+---> Package libXau.x86_64 0:1.0.8-2.1.el7 will be installed
+---> Package libxslt.x86_64 0:1.1.28-5.el7 will be installed
+---> Package python-javapackages.noarch 0:3.4.1-11.el7 will be installed
+--> Processing Dependency: python-lxml for package: python-javapackages-3.4.1-11.el7.noarch
+---> Package ttmkfdir.x86_64 0:3.0.9-42.el7 will be installed
+---> Package xorg-x11-font-utils.x86_64 1:7.5-20.el7 will be installed
+--> Processing Dependency: libfontenc.so.1()(64bit) for package: 1:xorg-x11-font-utils-7.5-20.el7.x86_64
+--> Processing Dependency: libXfont.so.1()(64bit) for package: 1:xorg-x11-font-utils-7.5-20.el7.x86_64
+--> Running transaction check
+---> Package libXfont.x86_64 0:1.5.1-2.el7 will be installed
+---> Package libfontenc.x86_64 0:1.1.2-3.el7 will be installed
+---> Package python-lxml.x86_64 0:3.2.1-4.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=====================================================================================================================================================================================================================
+ Package                                                       Arch                                     Version                                                      Repository                                 Size
+=====================================================================================================================================================================================================================
+Installing:
+ java-1.8.0-openjdk-devel                                      x86_64                                   1:1.8.0.121-0.b13.el7_3                                      updates                                   9.7 M
+ net-tools                                                     x86_64                                   2.0-0.17.20131004git.el7                                     base                                      304 k
+ rsync                                                         x86_64                                   3.0.9-17.el7                                                 base                                      360 k
+Installing for dependencies:
+ copy-jdk-configs                                              noarch                                   1.2-1.el7                                                    base                                       14 k
+ fontconfig                                                    x86_64                                   2.10.95-10.el7                                               base                                      229 k
+ fontpackages-filesystem                                       noarch                                   1.44-8.el7                                                   base                                      9.9 k
+ giflib                                                        x86_64                                   4.1.6-9.el7                                                  base                                       40 k
+ java-1.8.0-openjdk                                            x86_64                                   1:1.8.0.121-0.b13.el7_3                                      updates                                   232 k
+ java-1.8.0-openjdk-headless                                   x86_64                                   1:1.8.0.121-0.b13.el7_3                                      updates                                    31 M
+ javapackages-tools                                            noarch                                   3.4.1-11.el7                                                 base                                       73 k
+ libICE                                                        x86_64                                   1.0.9-2.el7                                                  base                                       65 k
+ libSM                                                         x86_64                                   1.2.2-2.el7                                                  base                                       39 k
+ libX11                                                        x86_64                                   1.6.3-3.el7                                                  base                                      606 k
+ libX11-common                                                 noarch                                   1.6.3-3.el7                                                  base                                      162 k
+ libXau                                                        x86_64                                   1.0.8-2.1.el7                                                base                                       29 k
+ libXcomposite                                                 x86_64                                   0.4.4-4.1.el7                                                base                                       22 k
+ libXext                                                       x86_64                                   1.3.3-3.el7                                                  base                                       39 k
+ libXfont                                                      x86_64                                   1.5.1-2.el7                                                  base                                      150 k
+ libXi                                                         x86_64                                   1.7.4-2.el7                                                  base                                       40 k
+ libXrender                                                    x86_64                                   0.9.8-2.1.el7                                                base                                       25 k
+ libXtst                                                       x86_64                                   1.2.2-2.1.el7                                                base                                       20 k
+ libfontenc                                                    x86_64                                   1.1.2-3.el7                                                  base                                       30 k
+ libjpeg-turbo                                                 x86_64                                   1.2.90-5.el7                                                 base                                      134 k
+ libpng                                                        x86_64                                   2:1.5.13-7.el7_2                                             base                                      213 k
+ libxcb                                                        x86_64                                   1.11-4.el7                                                   base                                      189 k
+ libxslt                                                       x86_64                                   1.1.28-5.el7                                                 base                                      242 k
+ lksctp-tools                                                  x86_64                                   1.0.17-2.el7                                                 base                                       88 k
+ python-javapackages                                           noarch                                   3.4.1-11.el7                                                 base                                       31 k
+ python-lxml                                                   x86_64                                   3.2.1-4.el7                                                  base                                      758 k
+ ttmkfdir                                                      x86_64                                   3.0.9-42.el7                                                 base                                       48 k
+ tzdata-java                                                   noarch                                   2016j-1.el7                                                  updates                                   182 k
+ xorg-x11-font-utils                                           x86_64                                   1:7.5-20.el7                                                 base                                       87 k
+ xorg-x11-fonts-Type1                                          noarch                                   7.5-9.el7                                                    base                                      521 k
+
+Transaction Summary
+=====================================================================================================================================================================================================================
+Install  3 Packages (+30 Dependent packages)
+
+Total download size: 46 M
+Installed size: 156 M
+Downloading packages:
+(1/33): copy-jdk-configs-1.2-1.el7.noarch.rpm                                                                                                                                                 |  14 kB  00:00:00     
+(2/33): fontpackages-filesystem-1.44-8.el7.noarch.rpm                                                                                                                                         | 9.9 kB  00:00:00     
+(3/33): fontconfig-2.10.95-10.el7.x86_64.rpm                                                                                                                                                  | 229 kB  00:00:00     
+(4/33): giflib-4.1.6-9.el7.x86_64.rpm                                                                                                                                                         |  40 kB  00:00:00     
+(5/33): java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64.rpm                                                                                                                                   | 232 kB  00:00:00     
+(6/33): java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64.rpm                                                                                                                             | 9.7 MB  00:00:00     
+(7/33): libICE-1.0.9-2.el7.x86_64.rpm                                                                                                                                                         |  65 kB  00:00:00     
+(8/33): javapackages-tools-3.4.1-11.el7.noarch.rpm                                                                                                                                            |  73 kB  00:00:00     
+(9/33): libSM-1.2.2-2.el7.x86_64.rpm                                                                                                                                                          |  39 kB  00:00:00     
+(10/33): libX11-common-1.6.3-3.el7.noarch.rpm                                                                                                                                                 | 162 kB  00:00:00     
+(11/33): libXau-1.0.8-2.1.el7.x86_64.rpm                                                                                                                                                      |  29 kB  00:00:00     
+(12/33): libXcomposite-0.4.4-4.1.el7.x86_64.rpm                                                                                                                                               |  22 kB  00:00:00     
+(13/33): libXext-1.3.3-3.el7.x86_64.rpm                                                                                                                                                       |  39 kB  00:00:00     
+(14/33): libXfont-1.5.1-2.el7.x86_64.rpm                                                                                                                                                      | 150 kB  00:00:00     
+(15/33): libX11-1.6.3-3.el7.x86_64.rpm                                                                                                                                                        | 606 kB  00:00:00     
+(16/33): libXrender-0.9.8-2.1.el7.x86_64.rpm                                                                                                                                                  |  25 kB  00:00:00     
+(17/33): libXi-1.7.4-2.el7.x86_64.rpm                                                                                                                                                         |  40 kB  00:00:00     
+(18/33): libXtst-1.2.2-2.1.el7.x86_64.rpm                                                                                                                                                     |  20 kB  00:00:00     
+(19/33): libfontenc-1.1.2-3.el7.x86_64.rpm                                                                                                                                                    |  30 kB  00:00:00     
+(20/33): libjpeg-turbo-1.2.90-5.el7.x86_64.rpm                                                                                                                                                | 134 kB  00:00:00     
+(21/33): libpng-1.5.13-7.el7_2.x86_64.rpm                                                                                                                                                     | 213 kB  00:00:00     
+(22/33): libxcb-1.11-4.el7.x86_64.rpm                                                                                                                                                         | 189 kB  00:00:00     
+(23/33): libxslt-1.1.28-5.el7.x86_64.rpm                                                                                                                                                      | 242 kB  00:00:00     
+(24/33): lksctp-tools-1.0.17-2.el7.x86_64.rpm                                                                                                                                                 |  88 kB  00:00:00     
+(25/33): java-1.8.0-openjdk-headless-1.8.0.121-0.b13.el7_3.x86_64.rpm                                                                                                                         |  31 MB  00:00:00     
+(26/33): net-tools-2.0-0.17.20131004git.el7.x86_64.rpm                                                                                                                                        | 304 kB  00:00:00     
+(27/33): python-javapackages-3.4.1-11.el7.noarch.rpm                                                                                                                                          |  31 kB  00:00:00     
+(28/33): python-lxml-3.2.1-4.el7.x86_64.rpm                                                                                                                                                   | 758 kB  00:00:00     
+(29/33): rsync-3.0.9-17.el7.x86_64.rpm                                                                                                                                                        | 360 kB  00:00:00     
+(30/33): ttmkfdir-3.0.9-42.el7.x86_64.rpm                                                                                                                                                     |  48 kB  00:00:00     
+(31/33): xorg-x11-font-utils-7.5-20.el7.x86_64.rpm                                                                                                                                            |  87 kB  00:00:00     
+(32/33): xorg-x11-fonts-Type1-7.5-9.el7.noarch.rpm                                                                                                                                            | 521 kB  00:00:00     
+(33/33): tzdata-java-2016j-1.el7.noarch.rpm                                                                                                                                                   | 182 kB  00:00:00     
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                                                                 50 MB/s |  46 MB  00:00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : libfontenc-1.1.2-3.el7.x86_64                                                                                                                                                                    1/33 
+  Installing : libICE-1.0.9-2.el7.x86_64                                                                                                                                                                        2/33 
+  Installing : libxslt-1.1.28-5.el7.x86_64                                                                                                                                                                      3/33 
+  Installing : libjpeg-turbo-1.2.90-5.el7.x86_64                                                                                                                                                                4/33 
+  Installing : python-lxml-3.2.1-4.el7.x86_64                                                                                                                                                                   5/33 
+  Installing : python-javapackages-3.4.1-11.el7.noarch                                                                                                                                                          6/33 
+  Installing : javapackages-tools-3.4.1-11.el7.noarch                                                                                                                                                           7/33 
+  Installing : libSM-1.2.2-2.el7.x86_64                                                                                                                                                                         8/33 
+  Installing : libXfont-1.5.1-2.el7.x86_64                                                                                                                                                                      9/33 
+  Installing : 1:xorg-x11-font-utils-7.5-20.el7.x86_64                                                                                                                                                         10/33 
+  Installing : libX11-common-1.6.3-3.el7.noarch                                                                                                                                                                11/33 
+  Installing : libXau-1.0.8-2.1.el7.x86_64                                                                                                                                                                     12/33 
+  Installing : libxcb-1.11-4.el7.x86_64                                                                                                                                                                        13/33 
+  Installing : libX11-1.6.3-3.el7.x86_64                                                                                                                                                                       14/33 
+  Installing : libXext-1.3.3-3.el7.x86_64                                                                                                                                                                      15/33 
+  Installing : libXi-1.7.4-2.el7.x86_64                                                                                                                                                                        16/33 
+  Installing : libXtst-1.2.2-2.1.el7.x86_64                                                                                                                                                                    17/33 
+  Installing : giflib-4.1.6-9.el7.x86_64                                                                                                                                                                       18/33 
+  Installing : libXcomposite-0.4.4-4.1.el7.x86_64                                                                                                                                                              19/33 
+  Installing : libXrender-0.9.8-2.1.el7.x86_64                                                                                                                                                                 20/33 
+  Installing : tzdata-java-2016j-1.el7.noarch                                                                                                                                                                  21/33 
+  Installing : copy-jdk-configs-1.2-1.el7.noarch                                                                                                                                                               22/33 
+  Installing : lksctp-tools-1.0.17-2.el7.x86_64                                                                                                                                                                23/33 
+  Installing : 1:java-1.8.0-openjdk-headless-1.8.0.121-0.b13.el7_3.x86_64                                                                                                                                      24/33 
+  Installing : fontpackages-filesystem-1.44-8.el7.noarch                                                                                                                                                       25/33 
+  Installing : fontconfig-2.10.95-10.el7.x86_64                                                                                                                                                                26/33 
+  Installing : ttmkfdir-3.0.9-42.el7.x86_64                                                                                                                                                                    27/33 
+  Installing : xorg-x11-fonts-Type1-7.5-9.el7.noarch                                                                                                                                                           28/33 
+  Installing : 2:libpng-1.5.13-7.el7_2.x86_64                                                                                                                                                                  29/33 
+  Installing : 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64                                                                                                                                               30/33 
+  Installing : 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64                                                                                                                                         31/33 
+  Installing : rsync-3.0.9-17.el7.x86_64                                                                                                                                                                       32/33 
+  Installing : net-tools-2.0-0.17.20131004git.el7.x86_64                                                                                                                                                       33/33 
+  Verifying  : libXext-1.3.3-3.el7.x86_64                                                                                                                                                                       1/33 
+  Verifying  : 1:java-1.8.0-openjdk-headless-1.8.0.121-0.b13.el7_3.x86_64                                                                                                                                       2/33 
+  Verifying  : giflib-4.1.6-9.el7.x86_64                                                                                                                                                                        3/33 
+  Verifying  : libjpeg-turbo-1.2.90-5.el7.x86_64                                                                                                                                                                4/33 
+  Verifying  : libXtst-1.2.2-2.1.el7.x86_64                                                                                                                                                                     5/33 
+  Verifying  : net-tools-2.0-0.17.20131004git.el7.x86_64                                                                                                                                                        6/33 
+  Verifying  : python-lxml-3.2.1-4.el7.x86_64                                                                                                                                                                   7/33 
+  Verifying  : libxcb-1.11-4.el7.x86_64                                                                                                                                                                         8/33 
+  Verifying  : 2:libpng-1.5.13-7.el7_2.x86_64                                                                                                                                                                   9/33 
+  Verifying  : 1:java-1.8.0-openjdk-devel-1.8.0.121-0.b13.el7_3.x86_64                                                                                                                                         10/33 
+  Verifying  : ttmkfdir-3.0.9-42.el7.x86_64                                                                                                                                                                    11/33 
+  Verifying  : fontpackages-filesystem-1.44-8.el7.noarch                                                                                                                                                       12/33 
+  Verifying  : python-javapackages-3.4.1-11.el7.noarch                                                                                                                                                         13/33 
+  Verifying  : libXcomposite-0.4.4-4.1.el7.x86_64                                                                                                                                                              14/33 
+  Verifying  : libXrender-0.9.8-2.1.el7.x86_64                                                                                                                                                                 15/33 
+  Verifying  : lksctp-tools-1.0.17-2.el7.x86_64                                                                                                                                                                16/33 
+  Verifying  : copy-jdk-configs-1.2-1.el7.noarch                                                                                                                                                               17/33 
+  Verifying  : tzdata-java-2016j-1.el7.noarch                                                                                                                                                                  18/33 
+  Verifying  : xorg-x11-fonts-Type1-7.5-9.el7.noarch                                                                                                                                                           19/33 
+  Verifying  : libxslt-1.1.28-5.el7.x86_64                                                                                                                                                                     20/33 
+  Verifying  : libXfont-1.5.1-2.el7.x86_64                                                                                                                                                                     21/33 
+  Verifying  : libICE-1.0.9-2.el7.x86_64                                                                                                                                                                       22/33 
+  Verifying  : javapackages-tools-3.4.1-11.el7.noarch                                                                                                                                                          23/33 
+  Verifying  : libXi-1.7.4-2.el7.x86_64                                                                                                                                                                        24/33 
+  Verifying  : libXau-1.0.8-2.1.el7.x86_64                                                                                                                                                                     25/33 
+  Verifying  : libSM-1.2.2-2.el7.x86_64                                                                                                                                                                        26/33 
+  Verifying  : libfontenc-1.1.2-3.el7.x86_64                                                                                                                                                                   27/33 
+  Verifying  : libX11-1.6.3-3.el7.x86_64                                                                                                                                                                       28/33 
+  Verifying  : 1:java-1.8.0-openjdk-1.8.0.121-0.b13.el7_3.x86_64                                                                                                                                               29/33 
+  Verifying  : libX11-common-1.6.3-3.el7.noarch                                                                                                                                                                30/33 
+  Verifying  : fontconfig-2.10.95-10.el7.x86_64                                                                                                                                                                31/33 
+  Verifying  : rsync-3.0.9-17.el7.x86_64                                                                                                                                                                       32/33 
+  Verifying  : 1:xorg-x11-font-utils-7.5-20.el7.x86_64                                                                                                                                                         33/33 
+
+Installed:
+  java-1.8.0-openjdk-devel.x86_64 1:1.8.0.121-0.b13.el7_3                             net-tools.x86_64 0:2.0-0.17.20131004git.el7                             rsync.x86_64 0:3.0.9-17.el7                            
+
+Dependency Installed:
+  copy-jdk-configs.noarch 0:1.2-1.el7                    fontconfig.x86_64 0:2.10.95-10.el7                              fontpackages-filesystem.noarch 0:1.44-8.el7      giflib.x86_64 0:4.1.6-9.el7             
+  java-1.8.0-openjdk.x86_64 1:1.8.0.121-0.b13.el7_3      java-1.8.0-openjdk-headless.x86_64 1:1.8.0.121-0.b13.el7_3      javapackages-tools.noarch 0:3.4.1-11.el7         libICE.x86_64 0:1.0.9-2.el7             
+  libSM.x86_64 0:1.2.2-2.el7                             libX11.x86_64 0:1.6.3-3.el7                                     libX11-common.noarch 0:1.6.3-3.el7               libXau.x86_64 0:1.0.8-2.1.el7           
+  libXcomposite.x86_64 0:0.4.4-4.1.el7                   libXext.x86_64 0:1.3.3-3.el7                                    libXfont.x86_64 0:1.5.1-2.el7                    libXi.x86_64 0:1.7.4-2.el7              
+  libXrender.x86_64 0:0.9.8-2.1.el7                      libXtst.x86_64 0:1.2.2-2.1.el7                                  libfontenc.x86_64 0:1.1.2-3.el7                  libjpeg-turbo.x86_64 0:1.2.90-5.el7     
+  libpng.x86_64 2:1.5.13-7.el7_2                         libxcb.x86_64 0:1.11-4.el7                                      libxslt.x86_64 0:1.1.28-5.el7                    lksctp-tools.x86_64 0:1.0.17-2.el7      
+  python-javapackages.noarch 0:3.4.1-11.el7              python-lxml.x86_64 0:3.2.1-4.el7                                ttmkfdir.x86_64 0:3.0.9-42.el7                   tzdata-java.noarch 0:2016j-1.el7        
+  xorg-x11-font-utils.x86_64 1:7.5-20.el7                xorg-x11-fonts-Type1.noarch 0:7.5-9.el7                        
+
+Complete!
+[root@master ~]# adduser hadoop
+[root@master ~]# passwd hadoop
+Changing password for user hadoop.
+New password: 
+BAD PASSWORD: The password is shorter than 7 characters
+Retype new password: 
+passwd: all authentication tokens updated successfully.
+[root@master ~]# passwd hadoop
+Changing password for user hadoop.
+New password: 
+BAD PASSWORD: The password contains the user name in some form
+Retype new password: 
+Sorry, passwords do not match.
+New password: 
+Retype new password: 
+passwd: all authentication tokens updated successfully.
+[root@master ~]# curl http://apache.claz.org/hadoop/core/hadoop-2.7.1/hadoop-2.7.1.tar.gz | tar -zx -C /usr/local --show-transformed --transform='s,/*[^/]*,hadoop,'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  200M  100  200M    0     0  8188k      0  0:00:25  0:00:25 --:--:-- 5461k
+[root@master ~]# chown -R hadoop.hadoop /data
+[root@master ~]# chown -R hadoop.hadoop /usr/local/hadoop
+[root@master ~]# su - hadoop
+[hadoop@master ~]$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/hadoop/.ssh/id_rsa): 
+Created directory '/home/hadoop/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/hadoop/.ssh/id_rsa.
+Your public key has been saved in /home/hadoop/.ssh/id_rsa.pub.
+The key fingerprint is:
+56:00:de:0f:42:ac:55:4b:ae:c9:1f:3e:86:bd:36:a0 hadoop@master.shankar.net
+The key's randomart image is:
++--[ RSA 2048]----+
+|     .oo+        |
+|     oo+ o       |
+|     oo = .      |
+|    .. + +       |
+|      + S .      |
+|      .* .       |
+|     ...*        |
+|    E  .oo       |
+|       ...       |
++-----------------+
+[hadoop@master ~]$ for i in master slave1 slave2; do ssh-copy-id $i; done
+The authenticity of host 'master (169.53.128.117)' can't be established.
+ECDSA key fingerprint is 66:df:7d:15:42:10:be:de:a9:1a:24:cf:a1:88:e6:62.
+Are you sure you want to continue connecting (yes/no)? yes
+/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+hadoop@master's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'master'"
+and check to make sure that only the key(s) you wanted were added.
+
+The authenticity of host 'slave1 (169.53.128.118)' can't be established.
+ECDSA key fingerprint is 04:63:e5:d7:0e:1d:b7:de:bd:70:bd:23:3d:aa:0c:9e.
+Are you sure you want to continue connecting (yes/no)? yes
+/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+hadoop@slave1's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'slave1'"
+and check to make sure that only the key(s) you wanted were added.
+
+The authenticity of host 'slave2 (158.85.179.179)' can't be established.
+ECDSA key fingerprint is 66:d4:1d:d6:58:48:cc:86:06:7e:64:75:89:0e:d8:d7.
+Are you sure you want to continue connecting (yes/no)? yes
+/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+hadoop@slave2's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'slave2'"
+and check to make sure that only the key(s) you wanted were added.
+
+[hadoop@master ~]$ 
+[hadoop@master ~]$ 
+[hadoop@master ~]$ 
+[hadoop@master ~]$ ssh root@169.53.128.118
+root@169.53.128.118's password: 
+Permission denied, please try again.
+root@169.53.128.118's password: 
+Last failed login: Mon Feb  6 16:06:41 CST 2017 from master.shankar.net on ssh:notty
+There was 1 failed login attempt since the last successful login.
+Last login: Mon Feb  6 15:45:00 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@slave1 ~]# logout
+Connection to 169.53.128.118 closed.
+[hadoop@master ~]$ ssh root@158.85.179.179
+root@158.85.179.179's password: 
+Last login: Mon Feb  6 15:45:32 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@slave2 ~]# logout
+Connection to 158.85.179.179 closed.
+[hadoop@master ~]$ for i in 0.0.0.0 master slave1 slave2; do ssh $i; done
+The authenticity of host '0.0.0.0 (0.0.0.0)' can't be established.
+ECDSA key fingerprint is 66:df:7d:15:42:10:be:de:a9:1a:24:cf:a1:88:e6:62.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '0.0.0.0' (ECDSA) to the list of known hosts.
+Last login: Mon Feb  6 16:03:20 2017
+[hadoop@master ~]$ for i in master slave1 slave2; do ssh $i; done
+Last login: Mon Feb  6 16:09:23 2017 from localhost.localdomain
+[hadoop@master ~]$ 
+[hadoop@master ~]$ 
+[hadoop@master ~]$ 
+[hadoop@master ~]$ ssh 'master'
+Last login: Mon Feb  6 16:11:03 2017 from master.shankar.net
+[hadoop@master ~]$ ssh 'slave1'
+Last login: Mon Feb  6 16:03:28 2017
+[hadoop@slave1 ~]$ logout
+Connection to slave1 closed.
+[hadoop@master ~]$ ssh 'slave2'
+Last login: Mon Feb  6 16:03:33 2017
+[hadoop@slave2 ~]$ logout
+Connection to slave2 closed.
+[hadoop@master ~]$ for i in 0.0.0.0 master slave1 slave2; do ssh $i; done
+Last login: Mon Feb  6 16:12:39 2017 from master.shankar.net
+[hadoop@master ~]$ echo "export JAVA_HOME=\"$(readlink -f $(which javac) | grep -oP '.*(?=/bin)')\"" >> ~/.bash_profile
+[hadoop@master ~]$ cat <<\EOF >> ~/.bash_profile
+> export HADOOP_HOME=/usr/local/hadoop
+> export HADOOP_MAPRED_HOME=$HADOOP_HOME
+> export HADOOP_HDFS_HOME=$HADOOP_HOME
+> export YARN_HOME=$HADOOP_HOME
+> export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+> EOF
+[hadoop@master ~]$ 
+[hadoop@master ~]$ source ~/.bash_profile
+[hadoop@master ~]$ $JAVA_HOME/bin/java -version
+openjdk version "1.8.0_121"
+OpenJDK Runtime Environment (build 1.8.0_121-b13)
+OpenJDK 64-Bit Server VM (build 25.121-b13, mixed mode)
+[hadoop@master ~]$ cd $HADOOP_HOME/etc/hadoop
+[hadoop@master hadoop]$ echo "export JAVA_HOME=\"$JAVA_HOME\"" > ./hadoop-env.sh
+[hadoop@master hadoop]$ vi core-site.xml
+[hadoop@master hadoop]$ vi yarn-site.xml
+[hadoop@master hadoop]$ vi mapred-site.xml
+[hadoop@master hadoop]$ !!
+vi mapred-site.xml
+[hadoop@master hadoop]$ vi hdfs-site.xml
+[hadoop@master hadoop]$ rsync -a /usr/local/hadoop/etc/hadoop/* hadoop@slave1:/usr/local/hadoop/etc/hadoop/
+[hadoop@master hadoop]$ rsync -a /usr/local/hadoop/etc/hadoop/* hadoop@slave2:/usr/local/hadoop/etc/hadoop/
+[hadoop@master hadoop]$ vi slaves
+[hadoop@master hadoop]$ hdfs namenode -format
+17/02/06 16:30:14 INFO namenode.NameNode: STARTUP_MSG: 
+/************************************************************
+STARTUP_MSG: Starting NameNode
+STARTUP_MSG:   host = master.shankar.net/169.53.128.117
+STARTUP_MSG:   args = [-format]
+STARTUP_MSG:   version = 2.7.1
+STARTUP_MSG:   classpath = /usr/local/hadoop/etc/hadoop:/usr/local/hadoop/share/hadoop/common/lib/commons-logging-1.1.3.jar:/usr/local/hadoop/share/hadoop/common/lib/jackson-jaxrs-1.9.13.jar:/usr/local/hadoop/share/hadoop/common/lib/activation-1.1.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-codec-1.4.jar:/usr/local/hadoop/share/hadoop/common/lib/guava-11.0.2.jar:/usr/local/hadoop/share/hadoop/common/lib/jets3t-0.9.0.jar:/usr/local/hadoop/share/hadoop/common/lib/avro-1.7.4.jar:/usr/local/hadoop/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar:/usr/local/hadoop/share/hadoop/common/lib/junit-4.11.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-configuration-1.6.jar:/usr/local/hadoop/share/hadoop/common/lib/jackson-xc-1.9.13.jar:/usr/local/hadoop/share/hadoop/common/lib/servlet-api-2.5.jar:/usr/local/hadoop/share/hadoop/common/lib/jetty-util-6.1.26.jar:/usr/local/hadoop/share/hadoop/common/lib/jackson-mapper-asl-1.9.13.jar:/usr/local/hadoop/share/hadoop/common/lib/httpclient-4.2.5.jar:/usr/local/hadoop/share/hadoop/common/lib/jackson-core-asl-1.9.13.jar:/usr/local/hadoop/share/hadoop/common/lib/netty-3.6.2.Final.jar:/usr/local/hadoop/share/hadoop/common/lib/hadoop-annotations-2.7.1.jar:/usr/local/hadoop/share/hadoop/common/lib/htrace-core-3.1.0-incubating.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-beanutils-core-1.8.0.jar:/usr/local/hadoop/share/hadoop/common/lib/jsp-api-2.1.jar:/usr/local/hadoop/share/hadoop/common/lib/jersey-server-1.9.jar:/usr/local/hadoop/share/hadoop/common/lib/asm-3.2.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-compress-1.4.1.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-lang-2.6.jar:/usr/local/hadoop/share/hadoop/common/lib/api-util-1.0.0-M20.jar:/usr/local/hadoop/share/hadoop/common/lib/paranamer-2.3.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-beanutils-1.7.0.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-io-2.4.jar:/usr/local/hadoop/share/hadoop/common/lib/jaxb-api-2.2.2.jar:/usr/local/hadoop/share/hadoop/common/lib/jaxb-impl-2.2.3-1.jar:/usr/local/hadoop/share/hadoop/common/lib/gson-2.2.4.jar:/usr/local/hadoop/share/hadoop/common/lib/protobuf-java-2.5.0.jar:/usr/local/hadoop/share/hadoop/common/lib/hamcrest-core-1.3.jar:/usr/local/hadoop/share/hadoop/common/lib/jetty-6.1.26.jar:/usr/local/hadoop/share/hadoop/common/lib/api-asn1-api-1.0.0-M20.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-cli-1.2.jar:/usr/local/hadoop/share/hadoop/common/lib/zookeeper-3.4.6.jar:/usr/local/hadoop/share/hadoop/common/lib/xz-1.0.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-collections-3.2.1.jar:/usr/local/hadoop/share/hadoop/common/lib/apacheds-kerberos-codec-2.0.0-M15.jar:/usr/local/hadoop/share/hadoop/common/lib/jsr305-3.0.0.jar:/usr/local/hadoop/share/hadoop/common/lib/java-xmlbuilder-0.4.jar:/usr/local/hadoop/share/hadoop/common/lib/curator-framework-2.7.1.jar:/usr/local/hadoop/share/hadoop/common/lib/stax-api-1.0-2.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-httpclient-3.1.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-net-3.1.jar:/usr/local/hadoop/share/hadoop/common/lib/hadoop-auth-2.7.1.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-math3-3.1.1.jar:/usr/local/hadoop/share/hadoop/common/lib/commons-digester-1.8.jar:/usr/local/hadoop/share/hadoop/common/lib/xmlenc-0.52.jar:/usr/local/hadoop/share/hadoop/common/lib/log4j-1.2.17.jar:/usr/local/hadoop/share/hadoop/common/lib/apacheds-i18n-2.0.0-M15.jar:/usr/local/hadoop/share/hadoop/common/lib/jettison-1.1.jar:/usr/local/hadoop/share/hadoop/common/lib/jersey-core-1.9.jar:/usr/local/hadoop/share/hadoop/common/lib/snappy-java-1.0.4.1.jar:/usr/local/hadoop/share/hadoop/common/lib/slf4j-api-1.7.10.jar:/usr/local/hadoop/share/hadoop/common/lib/curator-recipes-2.7.1.jar:/usr/local/hadoop/share/hadoop/common/lib/jersey-json-1.9.jar:/usr/local/hadoop/share/hadoop/common/lib/jsch-0.1.42.jar:/usr/local/hadoop/share/hadoop/common/lib/mockito-all-1.8.5.jar:/usr/local/hadoop/share/hadoop/common/lib/curator-client-2.7.1.jar:/usr/local/hadoop/share/hadoop/common/lib/httpcore-4.2.5.jar:/usr/local/hadoop/share/hadoop/common/hadoop-common-2.7.1.jar:/usr/local/hadoop/share/hadoop/common/hadoop-nfs-2.7.1.jar:/usr/local/hadoop/share/hadoop/common/hadoop-common-2.7.1-tests.jar:/usr/local/hadoop/share/hadoop/hdfs:/usr/local/hadoop/share/hadoop/hdfs/lib/commons-logging-1.1.3.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/commons-codec-1.4.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/guava-11.0.2.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/servlet-api-2.5.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/jetty-util-6.1.26.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/jackson-mapper-asl-1.9.13.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/xml-apis-1.3.04.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/jackson-core-asl-1.9.13.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/netty-3.6.2.Final.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/htrace-core-3.1.0-incubating.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/jersey-server-1.9.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/netty-all-4.0.23.Final.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/asm-3.2.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/commons-lang-2.6.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/leveldbjni-all-1.8.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/commons-io-2.4.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/protobuf-java-2.5.0.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/jetty-6.1.26.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/commons-cli-1.2.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/jsr305-3.0.0.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/xercesImpl-2.9.1.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/xmlenc-0.52.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/log4j-1.2.17.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/jersey-core-1.9.jar:/usr/local/hadoop/share/hadoop/hdfs/lib/commons-daemon-1.0.13.jar:/usr/local/hadoop/share/hadoop/hdfs/hadoop-hdfs-nfs-2.7.1.jar:/usr/local/hadoop/share/hadoop/hdfs/hadoop-hdfs-2.7.1-tests.jar:/usr/local/hadoop/share/hadoop/hdfs/hadoop-hdfs-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/lib/commons-logging-1.1.3.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jackson-jaxrs-1.9.13.jar:/usr/local/hadoop/share/hadoop/yarn/lib/activation-1.1.jar:/usr/local/hadoop/share/hadoop/yarn/lib/javax.inject-1.jar:/usr/local/hadoop/share/hadoop/yarn/lib/commons-codec-1.4.jar:/usr/local/hadoop/share/hadoop/yarn/lib/guava-11.0.2.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jackson-xc-1.9.13.jar:/usr/local/hadoop/share/hadoop/yarn/lib/servlet-api-2.5.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jetty-util-6.1.26.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jackson-mapper-asl-1.9.13.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jackson-core-asl-1.9.13.jar:/usr/local/hadoop/share/hadoop/yarn/lib/netty-3.6.2.Final.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jersey-server-1.9.jar:/usr/local/hadoop/share/hadoop/yarn/lib/asm-3.2.jar:/usr/local/hadoop/share/hadoop/yarn/lib/commons-compress-1.4.1.jar:/usr/local/hadoop/share/hadoop/yarn/lib/commons-lang-2.6.jar:/usr/local/hadoop/share/hadoop/yarn/lib/leveldbjni-all-1.8.jar:/usr/local/hadoop/share/hadoop/yarn/lib/commons-io-2.4.jar:/usr/local/hadoop/share/hadoop/yarn/lib/guice-3.0.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jaxb-api-2.2.2.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jaxb-impl-2.2.3-1.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jersey-guice-1.9.jar:/usr/local/hadoop/share/hadoop/yarn/lib/protobuf-java-2.5.0.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jetty-6.1.26.jar:/usr/local/hadoop/share/hadoop/yarn/lib/commons-cli-1.2.jar:/usr/local/hadoop/share/hadoop/yarn/lib/guice-servlet-3.0.jar:/usr/local/hadoop/share/hadoop/yarn/lib/zookeeper-3.4.6.jar:/usr/local/hadoop/share/hadoop/yarn/lib/aopalliance-1.0.jar:/usr/local/hadoop/share/hadoop/yarn/lib/xz-1.0.jar:/usr/local/hadoop/share/hadoop/yarn/lib/commons-collections-3.2.1.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jsr305-3.0.0.jar:/usr/local/hadoop/share/hadoop/yarn/lib/stax-api-1.0-2.jar:/usr/local/hadoop/share/hadoop/yarn/lib/log4j-1.2.17.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jettison-1.1.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jersey-core-1.9.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jersey-json-1.9.jar:/usr/local/hadoop/share/hadoop/yarn/lib/zookeeper-3.4.6-tests.jar:/usr/local/hadoop/share/hadoop/yarn/lib/jersey-client-1.9.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-server-resourcemanager-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-common-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-server-tests-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-applications-unmanaged-am-launcher-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-client-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-server-nodemanager-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-applications-distributedshell-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-server-applicationhistoryservice-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-server-common-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-server-sharedcachemanager-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-api-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-registry-2.7.1.jar:/usr/local/hadoop/share/hadoop/yarn/hadoop-yarn-server-web-proxy-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/javax.inject-1.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/avro-1.7.4.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/junit-4.11.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/jackson-mapper-asl-1.9.13.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/jackson-core-asl-1.9.13.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/netty-3.6.2.Final.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/hadoop-annotations-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/jersey-server-1.9.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/asm-3.2.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/commons-compress-1.4.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/paranamer-2.3.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/leveldbjni-all-1.8.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/commons-io-2.4.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/guice-3.0.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/jersey-guice-1.9.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/protobuf-java-2.5.0.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/hamcrest-core-1.3.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/guice-servlet-3.0.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/aopalliance-1.0.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/xz-1.0.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/log4j-1.2.17.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/jersey-core-1.9.jar:/usr/local/hadoop/share/hadoop/mapreduce/lib/snappy-java-1.0.4.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-common-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-shuffle-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-hs-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-hs-plugins-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.1-tests.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-app-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.7.1.jar:/usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar
+STARTUP_MSG:   build = https://git-wip-us.apache.org/repos/asf/hadoop.git -r 15ecc87ccf4a0228f35af08fc56de536e6ce657a; compiled by 'jenkins' on 2015-06-29T06:04Z
+STARTUP_MSG:   java = 1.8.0_121
+************************************************************/
+17/02/06 16:30:14 INFO namenode.NameNode: registered UNIX signal handlers for [TERM, HUP, INT]
+17/02/06 16:30:14 INFO namenode.NameNode: createNameNode [-format]
+17/02/06 16:30:14 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Formatting using clusterid: CID-66405c76-8427-4de0-af99-c1bf8e1b9bf5
+17/02/06 16:30:14 INFO namenode.FSNamesystem: No KeyProvider found.
+17/02/06 16:30:14 INFO namenode.FSNamesystem: fsLock is fair:true
+17/02/06 16:30:14 INFO blockmanagement.DatanodeManager: dfs.block.invalidate.limit=1000
+17/02/06 16:30:15 INFO blockmanagement.DatanodeManager: dfs.namenode.datanode.registration.ip-hostname-check=true
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: dfs.namenode.startup.delay.block.deletion.sec is set to 000:00:00:00.000
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: The block deletion will start around 2017 Feb 06 16:30:15
+17/02/06 16:30:15 INFO util.GSet: Computing capacity for map BlocksMap
+17/02/06 16:30:15 INFO util.GSet: VM type       = 64-bit
+17/02/06 16:30:15 INFO util.GSet: 2.0% max memory 889 MB = 17.8 MB
+17/02/06 16:30:15 INFO util.GSet: capacity      = 2^21 = 2097152 entries
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: dfs.block.access.token.enable=false
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: defaultReplication         = 3
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: maxReplication             = 512
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: minReplication             = 1
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: maxReplicationStreams      = 2
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: shouldCheckForEnoughRacks  = false
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: replicationRecheckInterval = 3000
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: encryptDataTransfer        = false
+17/02/06 16:30:15 INFO blockmanagement.BlockManager: maxNumBlocksToLog          = 1000
+17/02/06 16:30:15 INFO namenode.FSNamesystem: fsOwner             = hadoop (auth:SIMPLE)
+17/02/06 16:30:15 INFO namenode.FSNamesystem: supergroup          = supergroup
+17/02/06 16:30:15 INFO namenode.FSNamesystem: isPermissionEnabled = true
+17/02/06 16:30:15 INFO namenode.FSNamesystem: HA Enabled: false
+17/02/06 16:30:15 INFO namenode.FSNamesystem: Append Enabled: true
+17/02/06 16:30:15 INFO util.GSet: Computing capacity for map INodeMap
+17/02/06 16:30:15 INFO util.GSet: VM type       = 64-bit
+17/02/06 16:30:15 INFO util.GSet: 1.0% max memory 889 MB = 8.9 MB
+17/02/06 16:30:15 INFO util.GSet: capacity      = 2^20 = 1048576 entries
+17/02/06 16:30:15 INFO namenode.FSDirectory: ACLs enabled? false
+17/02/06 16:30:15 INFO namenode.FSDirectory: XAttrs enabled? true
+17/02/06 16:30:15 INFO namenode.FSDirectory: Maximum size of an xattr: 16384
+17/02/06 16:30:15 INFO namenode.NameNode: Caching file names occuring more than 10 times
+17/02/06 16:30:15 INFO util.GSet: Computing capacity for map cachedBlocks
+17/02/06 16:30:15 INFO util.GSet: VM type       = 64-bit
+17/02/06 16:30:15 INFO util.GSet: 0.25% max memory 889 MB = 2.2 MB
+17/02/06 16:30:15 INFO util.GSet: capacity      = 2^18 = 262144 entries
+17/02/06 16:30:15 INFO namenode.FSNamesystem: dfs.namenode.safemode.threshold-pct = 0.9990000128746033
+17/02/06 16:30:15 INFO namenode.FSNamesystem: dfs.namenode.safemode.min.datanodes = 0
+17/02/06 16:30:15 INFO namenode.FSNamesystem: dfs.namenode.safemode.extension     = 30000
+17/02/06 16:30:15 INFO metrics.TopMetrics: NNTop conf: dfs.namenode.top.window.num.buckets = 10
+17/02/06 16:30:15 INFO metrics.TopMetrics: NNTop conf: dfs.namenode.top.num.users = 10
+17/02/06 16:30:15 INFO metrics.TopMetrics: NNTop conf: dfs.namenode.top.windows.minutes = 1,5,25
+17/02/06 16:30:15 INFO namenode.FSNamesystem: Retry cache on namenode is enabled
+17/02/06 16:30:15 INFO namenode.FSNamesystem: Retry cache will use 0.03 of total heap and retry cache entry expiry time is 600000 millis
+17/02/06 16:30:15 INFO util.GSet: Computing capacity for map NameNodeRetryCache
+17/02/06 16:30:15 INFO util.GSet: VM type       = 64-bit
+17/02/06 16:30:15 INFO util.GSet: 0.029999999329447746% max memory 889 MB = 273.1 KB
+17/02/06 16:30:15 INFO util.GSet: capacity      = 2^15 = 32768 entries
+17/02/06 16:30:15 INFO namenode.FSImage: Allocated new BlockPoolId: BP-1477888400-169.53.128.117-1486420215189
+17/02/06 16:30:15 INFO common.Storage: Storage directory /data/namenode has been successfully formatted.
+17/02/06 16:30:15 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid >= 0
+17/02/06 16:30:15 INFO util.ExitUtil: Exiting with status 0
+17/02/06 16:30:15 INFO namenode.NameNode: SHUTDOWN_MSG: 
+/************************************************************
+SHUTDOWN_MSG: Shutting down NameNode at master.shankar.net/169.53.128.117
+************************************************************/
+[hadoop@master hadoop]$ start-dfs.sh
+17/02/06 16:30:27 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Starting namenodes on [master]
+master: starting namenode, logging to /usr/local/hadoop/logs/hadoop-hadoop-namenode-master.shankar.net.out
+master: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hadoop-datanode-master.shankar.net.out
+slave2: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hadoop-datanode-slave2.shankar.net.out
+slave1: starting datanode, logging to /usr/local/hadoop/logs/hadoop-hadoop-datanode-slave1.shankar.net.out
+Starting secondary namenodes [0.0.0.0]
+0.0.0.0: starting secondarynamenode, logging to /usr/local/hadoop/logs/hadoop-hadoop-secondarynamenode-master.shankar.net.out
+17/02/06 16:30:44 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[hadoop@master hadoop]$ start-yarn.sh
+starting yarn daemons
+starting resourcemanager, logging to /usr/local/hadoop/logs/yarn-hadoop-resourcemanager-master.shankar.net.out
+slave2: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hadoop-nodemanager-slave2.shankar.net.out
+slave1: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hadoop-nodemanager-slave1.shankar.net.out
+master: starting nodemanager, logging to /usr/local/hadoop/logs/yarn-hadoop-nodemanager-master.shankar.net.out
+[hadoop@master hadoop]$ hdfs dfsadmin -report
+17/02/06 16:31:30 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Configured Capacity: 316664487936 (294.92 GB)
+Present Capacity: 300318064640 (279.69 GB)
+DFS Remaining: 300317990912 (279.69 GB)
+DFS Used: 73728 (72 KB)
+DFS Used%: 0.00%
+Under replicated blocks: 0
+Blocks with corrupt replicas: 0
+Missing blocks: 0
+Missing blocks (with replication factor 1): 0
+
+-------------------------------------------------
+Live datanodes (3):
+
+Name: 169.53.128.117:50010 (master.shankar.net)
+Hostname: master.shankar.net
+Decommission Status : Normal
+Configured Capacity: 105554829312 (98.31 GB)
+DFS Used: 24576 (24 KB)
+Non DFS Used: 5449531392 (5.08 GB)
+DFS Remaining: 100105273344 (93.23 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 94.84%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 1
+Last contact: Mon Feb 06 16:31:28 CST 2017
+
+
+Name: 169.53.128.118:50010 (slave1.shankar.net)
+Hostname: slave1.shankar.net
+Decommission Status : Normal
+Configured Capacity: 105554829312 (98.31 GB)
+DFS Used: 24576 (24 KB)
+Non DFS Used: 5448445952 (5.07 GB)
+DFS Remaining: 100106358784 (93.23 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 94.84%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 1
+Last contact: Mon Feb 06 16:31:28 CST 2017
+
+
+Name: 158.85.179.179:50010 (slave2.shankar.net)
+Hostname: slave2.shankar.net
+Decommission Status : Normal
+Configured Capacity: 105554829312 (98.31 GB)
+DFS Used: 24576 (24 KB)
+Non DFS Used: 5448445952 (5.07 GB)
+DFS Remaining: 100106358784 (93.23 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 94.84%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 1
+Last contact: Mon Feb 06 16:31:28 CST 2017
+
+
+[hadoop@master hadoop]$ yarn node -list
+17/02/06 16:31:52 INFO client.RMProxy: Connecting to ResourceManager at master/169.53.128.117:8032
+17/02/06 16:31:52 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Total Nodes:3
+         Node-Id	     Node-State	Node-Http-Address	Number-of-Running-Containers
+slave1.shankar.net:39509	        RUNNING	slave1.shankar.net:8042	                           0
+slave2.shankar.net:40189	        RUNNING	slave2.shankar.net:8042	                           0
+master.shankar.net:41909	        RUNNING	master.shankar.net:8042	                           0
+[hadoop@master hadoop]$ 
+[hadoop@master hadoop]$ 
+[hadoop@master hadoop]$ 
+[hadoop@master hadoop]$ jps
+20786 Jps
+19940 ResourceManager
+19574 DataNode
+19447 NameNode
+19740 SecondaryNameNode
+20047 NodeManager
+[hadoop@master hadoop]$ jps .
+19940 ResourceManager
+20836 Jps
+19574 DataNode
+19447 NameNode
+19740 SecondaryNameNode
+20047 NodeManager
+[hadoop@master hadoop]$ cd /usr/local/hadoop/share/hadoop/mapreduce
+[hadoop@master mapreduce]$ hadoop jar $(ls hadoop-mapreduce-examples-2*.jar) teragen 100000000 /terasort/in
+17/02/06 16:42:40 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17/02/06 16:42:40 INFO client.RMProxy: Connecting to ResourceManager at master/169.53.128.117:8032
+17/02/06 16:42:42 INFO terasort.TeraSort: Generating 100000000 using 2
+17/02/06 16:42:42 INFO mapreduce.JobSubmitter: number of splits:2
+17/02/06 16:42:42 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1486420276765_0001
+17/02/06 16:42:43 INFO impl.YarnClientImpl: Submitted application application_1486420276765_0001
+17/02/06 16:42:43 INFO mapreduce.Job: The url to track the job: http://master:8088/proxy/application_1486420276765_0001/
+17/02/06 16:42:43 INFO mapreduce.Job: Running job: job_1486420276765_0001
+17/02/06 16:42:50 INFO mapreduce.Job: Job job_1486420276765_0001 running in uber mode : false
+17/02/06 16:42:50 INFO mapreduce.Job:  map 0% reduce 0%
+17/02/06 16:43:01 INFO mapreduce.Job:  map 3% reduce 0%
+17/02/06 16:43:02 INFO mapreduce.Job:  map 6% reduce 0%
+17/02/06 16:43:04 INFO mapreduce.Job:  map 7% reduce 0%
+17/02/06 16:43:05 INFO mapreduce.Job:  map 9% reduce 0%
+17/02/06 16:43:07 INFO mapreduce.Job:  map 11% reduce 0%
+17/02/06 16:43:08 INFO mapreduce.Job:  map 13% reduce 0%
+17/02/06 16:43:10 INFO mapreduce.Job:  map 15% reduce 0%
+17/02/06 16:43:11 INFO mapreduce.Job:  map 17% reduce 0%
+17/02/06 16:43:13 INFO mapreduce.Job:  map 19% reduce 0%
+17/02/06 16:43:14 INFO mapreduce.Job:  map 21% reduce 0%
+17/02/06 16:43:16 INFO mapreduce.Job:  map 23% reduce 0%
+17/02/06 16:43:17 INFO mapreduce.Job:  map 25% reduce 0%
+17/02/06 16:43:19 INFO mapreduce.Job:  map 27% reduce 0%
+17/02/06 16:43:20 INFO mapreduce.Job:  map 29% reduce 0%
+17/02/06 16:43:22 INFO mapreduce.Job:  map 31% reduce 0%
+17/02/06 16:43:23 INFO mapreduce.Job:  map 33% reduce 0%
+17/02/06 16:43:25 INFO mapreduce.Job:  map 36% reduce 0%
+17/02/06 16:43:26 INFO mapreduce.Job:  map 38% reduce 0%
+17/02/06 16:43:29 INFO mapreduce.Job:  map 39% reduce 0%
+17/02/06 16:43:30 INFO mapreduce.Job:  map 42% reduce 0%
+17/02/06 16:43:32 INFO mapreduce.Job:  map 44% reduce 0%
+17/02/06 16:43:33 INFO mapreduce.Job:  map 46% reduce 0%
+17/02/06 16:43:35 INFO mapreduce.Job:  map 48% reduce 0%
+17/02/06 16:43:36 INFO mapreduce.Job:  map 50% reduce 0%
+17/02/06 16:43:38 INFO mapreduce.Job:  map 52% reduce 0%
+17/02/06 16:43:39 INFO mapreduce.Job:  map 54% reduce 0%
+17/02/06 16:43:41 INFO mapreduce.Job:  map 57% reduce 0%
+17/02/06 16:43:42 INFO mapreduce.Job:  map 59% reduce 0%
+17/02/06 16:43:44 INFO mapreduce.Job:  map 61% reduce 0%
+17/02/06 16:43:45 INFO mapreduce.Job:  map 63% reduce 0%
+17/02/06 16:43:47 INFO mapreduce.Job:  map 65% reduce 0%
+17/02/06 16:43:48 INFO mapreduce.Job:  map 67% reduce 0%
+17/02/06 16:43:50 INFO mapreduce.Job:  map 69% reduce 0%
+17/02/06 16:43:51 INFO mapreduce.Job:  map 71% reduce 0%
+17/02/06 16:43:53 INFO mapreduce.Job:  map 75% reduce 0%
+17/02/06 16:43:56 INFO mapreduce.Job:  map 79% reduce 0%
+17/02/06 16:43:59 INFO mapreduce.Job:  map 83% reduce 0%
+17/02/06 16:44:02 INFO mapreduce.Job:  map 87% reduce 0%
+17/02/06 16:44:04 INFO mapreduce.Job:  map 89% reduce 0%
+17/02/06 16:44:05 INFO mapreduce.Job:  map 91% reduce 0%
+17/02/06 16:44:07 INFO mapreduce.Job:  map 93% reduce 0%
+17/02/06 16:44:08 INFO mapreduce.Job:  map 95% reduce 0%
+17/02/06 16:44:10 INFO mapreduce.Job:  map 98% reduce 0%
+17/02/06 16:44:13 INFO mapreduce.Job:  map 99% reduce 0%
+17/02/06 16:44:14 INFO mapreduce.Job:  map 100% reduce 0%
+17/02/06 16:44:15 INFO mapreduce.Job: Job job_1486420276765_0001 completed successfully
+17/02/06 16:44:16 INFO mapreduce.Job: Counters: 31
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=230040
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=170
+		HDFS: Number of bytes written=10000000000
+		HDFS: Number of read operations=8
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=4
+	Job Counters 
+		Launched map tasks=2
+		Other local map tasks=2
+		Total time spent by all maps in occupied slots (ms)=160296
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=160296
+		Total vcore-seconds taken by all map tasks=160296
+		Total megabyte-seconds taken by all map tasks=164143104
+	Map-Reduce Framework
+		Map input records=100000000
+		Map output records=100000000
+		Input split bytes=170
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=1236
+		CPU time spent (ms)=165120
+		Physical memory (bytes) snapshot=352620544
+		Virtual memory (bytes) snapshot=4246429696
+		Total committed heap usage (bytes)=196083712
+	org.apache.hadoop.examples.terasort.TeraGen$Counters
+		CHECKSUM=214760662691937609
+	File Input Format Counters 
+		Bytes Read=0
+	File Output Format Counters 
+		Bytes Written=10000000000
+[hadoop@master mapreduce]$ hadoop jar $(ls hadoop-mapreduce-examples-2*.jar) terasort /terasort/in /terasort/out
+17/02/06 16:45:36 INFO terasort.TeraSort: starting
+17/02/06 16:45:36 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17/02/06 16:45:37 INFO input.FileInputFormat: Total input paths to process : 2
+Spent 178ms computing base-splits.
+Spent 4ms computing TeraScheduler splits.
+Computing input splits took 182ms
+Sampling 10 splits of 76
+Making 1 from 100000 sampled records
+Computing parititions took 644ms
+Spent 829ms computing partitions.
+17/02/06 16:45:37 INFO client.RMProxy: Connecting to ResourceManager at master/169.53.128.117:8032
+17/02/06 16:45:38 INFO mapreduce.JobSubmitter: number of splits:76
+17/02/06 16:45:38 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1486420276765_0002
+17/02/06 16:45:39 INFO impl.YarnClientImpl: Submitted application application_1486420276765_0002
+17/02/06 16:45:39 INFO mapreduce.Job: The url to track the job: http://master:8088/proxy/application_1486420276765_0002/
+17/02/06 16:45:39 INFO mapreduce.Job: Running job: job_1486420276765_0002
+17/02/06 16:45:46 INFO mapreduce.Job: Job job_1486420276765_0002 running in uber mode : false
+17/02/06 16:45:46 INFO mapreduce.Job:  map 0% reduce 0%
+17/02/06 16:46:06 INFO mapreduce.Job:  map 1% reduce 0%
+17/02/06 16:46:07 INFO mapreduce.Job:  map 2% reduce 0%
+17/02/06 16:46:08 INFO mapreduce.Job:  map 3% reduce 0%
+17/02/06 16:46:10 INFO mapreduce.Job:  map 4% reduce 0%
+17/02/06 16:46:11 INFO mapreduce.Job:  map 6% reduce 0%
+17/02/06 16:46:12 INFO mapreduce.Job:  map 7% reduce 0%
+17/02/06 16:46:14 INFO mapreduce.Job:  map 9% reduce 0%
+17/02/06 16:46:15 INFO mapreduce.Job:  map 11% reduce 0%
+17/02/06 16:46:16 INFO mapreduce.Job:  map 12% reduce 0%
+17/02/06 16:46:17 INFO mapreduce.Job:  map 13% reduce 0%
+17/02/06 16:46:19 INFO mapreduce.Job:  map 14% reduce 0%
+17/02/06 16:46:20 INFO mapreduce.Job:  map 15% reduce 0%
+17/02/06 16:46:27 INFO mapreduce.Job:  map 17% reduce 0%
+17/02/06 16:46:29 INFO mapreduce.Job:  map 19% reduce 0%
+17/02/06 16:46:30 INFO mapreduce.Job:  map 20% reduce 0%
+17/02/06 16:46:32 INFO mapreduce.Job:  map 21% reduce 0%
+17/02/06 16:46:34 INFO mapreduce.Job:  map 22% reduce 0%
+17/02/06 16:46:38 INFO mapreduce.Job:  map 23% reduce 0%
+17/02/06 16:46:41 INFO mapreduce.Job:  map 24% reduce 0%
+17/02/06 16:46:42 INFO mapreduce.Job:  map 25% reduce 0%
+17/02/06 16:46:44 INFO mapreduce.Job:  map 26% reduce 0%
+17/02/06 16:46:47 INFO mapreduce.Job:  map 27% reduce 0%
+17/02/06 16:46:48 INFO mapreduce.Job:  map 28% reduce 0%
+17/02/06 16:46:50 INFO mapreduce.Job:  map 32% reduce 0%
+17/02/06 16:46:59 INFO mapreduce.Job:  map 34% reduce 0%
+17/02/06 16:47:06 INFO mapreduce.Job:  map 35% reduce 1%
+17/02/06 16:47:08 INFO mapreduce.Job:  map 36% reduce 1%
+17/02/06 16:47:09 INFO mapreduce.Job:  map 37% reduce 1%
+17/02/06 16:47:10 INFO mapreduce.Job:  map 38% reduce 2%
+17/02/06 16:47:12 INFO mapreduce.Job:  map 40% reduce 2%
+17/02/06 16:47:13 INFO mapreduce.Job:  map 41% reduce 3%
+17/02/06 16:47:16 INFO mapreduce.Job:  map 43% reduce 5%
+17/02/06 16:47:19 INFO mapreduce.Job:  map 45% reduce 6%
+17/02/06 16:47:22 INFO mapreduce.Job:  map 46% reduce 7%
+17/02/06 16:47:25 INFO mapreduce.Job:  map 46% reduce 8%
+17/02/06 16:47:27 INFO mapreduce.Job:  map 47% reduce 8%
+17/02/06 16:47:28 INFO mapreduce.Job:  map 47% reduce 9%
+17/02/06 16:47:32 INFO mapreduce.Job:  map 50% reduce 10%
+17/02/06 16:47:33 INFO mapreduce.Job:  map 51% reduce 10%
+17/02/06 16:47:35 INFO mapreduce.Job:  map 53% reduce 11%
+17/02/06 16:47:38 INFO mapreduce.Job:  map 54% reduce 11%
+17/02/06 16:47:41 INFO mapreduce.Job:  map 56% reduce 12%
+17/02/06 16:47:44 INFO mapreduce.Job:  map 58% reduce 12%
+17/02/06 16:47:47 INFO mapreduce.Job:  map 59% reduce 14%
+17/02/06 16:47:50 INFO mapreduce.Job:  map 62% reduce 15%
+17/02/06 16:47:53 INFO mapreduce.Job:  map 63% reduce 15%
+17/02/06 16:47:54 INFO mapreduce.Job:  map 64% reduce 15%
+17/02/06 16:47:56 INFO mapreduce.Job:  map 64% reduce 16%
+17/02/06 16:47:59 INFO mapreduce.Job:  map 64% reduce 17%
+17/02/06 16:48:05 INFO mapreduce.Job:  map 64% reduce 18%
+17/02/06 16:48:11 INFO mapreduce.Job:  map 64% reduce 19%
+17/02/06 16:48:13 INFO mapreduce.Job:  map 66% reduce 19%
+17/02/06 16:48:14 INFO mapreduce.Job:  map 69% reduce 19%
+17/02/06 16:48:16 INFO mapreduce.Job:  map 70% reduce 19%
+17/02/06 16:48:17 INFO mapreduce.Job:  map 72% reduce 19%
+17/02/06 16:48:18 INFO mapreduce.Job:  map 73% reduce 20%
+17/02/06 16:48:20 INFO mapreduce.Job:  map 74% reduce 20%
+17/02/06 16:48:21 INFO mapreduce.Job:  map 75% reduce 21%
+17/02/06 16:48:23 INFO mapreduce.Job:  map 76% reduce 21%
+17/02/06 16:48:24 INFO mapreduce.Job:  map 78% reduce 21%
+17/02/06 16:48:31 INFO mapreduce.Job:  map 79% reduce 21%
+17/02/06 16:48:32 INFO mapreduce.Job:  map 82% reduce 21%
+17/02/06 16:48:34 INFO mapreduce.Job:  map 83% reduce 21%
+17/02/06 16:48:35 INFO mapreduce.Job:  map 84% reduce 21%
+17/02/06 16:48:37 INFO mapreduce.Job:  map 85% reduce 21%
+17/02/06 16:48:39 INFO mapreduce.Job:  map 85% reduce 22%
+17/02/06 16:48:40 INFO mapreduce.Job:  map 86% reduce 22%
+17/02/06 16:48:45 INFO mapreduce.Job:  map 87% reduce 22%
+17/02/06 16:48:47 INFO mapreduce.Job:  map 88% reduce 22%
+17/02/06 16:48:48 INFO mapreduce.Job:  map 89% reduce 23%
+17/02/06 16:48:50 INFO mapreduce.Job:  map 90% reduce 23%
+17/02/06 16:48:51 INFO mapreduce.Job:  map 91% reduce 25%
+17/02/06 16:48:53 INFO mapreduce.Job:  map 92% reduce 25%
+17/02/06 16:48:54 INFO mapreduce.Job:  map 92% reduce 28%
+17/02/06 16:48:55 INFO mapreduce.Job:  map 95% reduce 28%
+17/02/06 16:48:56 INFO mapreduce.Job:  map 96% reduce 28%
+17/02/06 16:48:57 INFO mapreduce.Job:  map 96% reduce 31%
+17/02/06 16:48:58 INFO mapreduce.Job:  map 97% reduce 31%
+17/02/06 16:49:04 INFO mapreduce.Job:  map 97% reduce 32%
+17/02/06 16:49:05 INFO mapreduce.Job:  map 98% reduce 32%
+17/02/06 16:49:08 INFO mapreduce.Job:  map 99% reduce 32%
+17/02/06 16:49:11 INFO mapreduce.Job:  map 100% reduce 32%
+17/02/06 16:49:12 INFO mapreduce.Job:  map 100% reduce 33%
+17/02/06 16:50:27 INFO mapreduce.Job:  map 100% reduce 37%
+17/02/06 16:50:30 INFO mapreduce.Job:  map 100% reduce 42%
+17/02/06 16:50:33 INFO mapreduce.Job:  map 100% reduce 46%
+17/02/06 16:50:36 INFO mapreduce.Job:  map 100% reduce 51%
+17/02/06 16:50:39 INFO mapreduce.Job:  map 100% reduce 55%
+17/02/06 16:50:42 INFO mapreduce.Job:  map 100% reduce 60%
+17/02/06 16:50:45 INFO mapreduce.Job:  map 100% reduce 65%
+17/02/06 16:50:48 INFO mapreduce.Job:  map 100% reduce 67%
+17/02/06 16:50:51 INFO mapreduce.Job:  map 100% reduce 68%
+17/02/06 16:50:57 INFO mapreduce.Job:  map 100% reduce 69%
+17/02/06 16:51:00 INFO mapreduce.Job:  map 100% reduce 70%
+17/02/06 16:51:06 INFO mapreduce.Job:  map 100% reduce 71%
+17/02/06 16:51:09 INFO mapreduce.Job:  map 100% reduce 72%
+17/02/06 16:51:12 INFO mapreduce.Job:  map 100% reduce 73%
+17/02/06 16:51:18 INFO mapreduce.Job:  map 100% reduce 74%
+17/02/06 16:51:21 INFO mapreduce.Job:  map 100% reduce 75%
+17/02/06 16:51:27 INFO mapreduce.Job:  map 100% reduce 76%
+17/02/06 16:51:30 INFO mapreduce.Job:  map 100% reduce 77%
+17/02/06 16:51:36 INFO mapreduce.Job:  map 100% reduce 78%
+17/02/06 16:51:39 INFO mapreduce.Job:  map 100% reduce 79%
+17/02/06 16:51:45 INFO mapreduce.Job:  map 100% reduce 80%
+17/02/06 16:51:48 INFO mapreduce.Job:  map 100% reduce 81%
+17/02/06 16:51:54 INFO mapreduce.Job:  map 100% reduce 82%
+17/02/06 16:51:57 INFO mapreduce.Job:  map 100% reduce 83%
+17/02/06 16:52:00 INFO mapreduce.Job:  map 100% reduce 84%
+17/02/06 16:52:07 INFO mapreduce.Job:  map 100% reduce 85%
+17/02/06 16:52:10 INFO mapreduce.Job:  map 100% reduce 86%
+17/02/06 16:52:16 INFO mapreduce.Job:  map 100% reduce 87%
+17/02/06 16:52:19 INFO mapreduce.Job:  map 100% reduce 88%
+17/02/06 16:52:25 INFO mapreduce.Job:  map 100% reduce 89%
+17/02/06 16:52:28 INFO mapreduce.Job:  map 100% reduce 90%
+17/02/06 16:52:34 INFO mapreduce.Job:  map 100% reduce 91%
+17/02/06 16:52:37 INFO mapreduce.Job:  map 100% reduce 92%
+17/02/06 16:52:43 INFO mapreduce.Job:  map 100% reduce 93%
+17/02/06 16:52:46 INFO mapreduce.Job:  map 100% reduce 94%
+17/02/06 16:52:52 INFO mapreduce.Job:  map 100% reduce 95%
+17/02/06 16:52:55 INFO mapreduce.Job:  map 100% reduce 96%
+17/02/06 16:53:01 INFO mapreduce.Job:  map 100% reduce 97%
+17/02/06 16:53:04 INFO mapreduce.Job:  map 100% reduce 98%
+17/02/06 16:53:10 INFO mapreduce.Job:  map 100% reduce 99%
+17/02/06 16:53:13 INFO mapreduce.Job:  map 100% reduce 100%
+17/02/06 16:53:15 INFO mapreduce.Job: Job job_1486420276765_0002 completed successfully
+17/02/06 16:53:15 INFO mapreduce.Job: Counters: 50
+	File System Counters
+		FILE: Number of bytes read=30850224848
+		FILE: Number of bytes written=41259188346
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=10000007828
+		HDFS: Number of bytes written=10000000000
+		HDFS: Number of read operations=231
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Killed map tasks=1
+		Launched map tasks=77
+		Launched reduce tasks=1
+		Data-local map tasks=77
+		Total time spent by all maps in occupied slots (ms)=3934852
+		Total time spent by all reduces in occupied slots (ms)=389294
+		Total time spent by all map tasks (ms)=3934852
+		Total time spent by all reduce tasks (ms)=389294
+		Total vcore-seconds taken by all map tasks=3934852
+		Total vcore-seconds taken by all reduce tasks=389294
+		Total megabyte-seconds taken by all map tasks=4029288448
+		Total megabyte-seconds taken by all reduce tasks=398637056
+	Map-Reduce Framework
+		Map input records=100000000
+		Map output records=100000000
+		Map output bytes=10200000000
+		Map output materialized bytes=10400000456
+		Input split bytes=7828
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=100000000
+		Reduce shuffle bytes=10400000456
+		Reduce input records=100000000
+		Reduce output records=100000000
+		Spilled Records=396636764
+		Shuffled Maps =76
+		Failed Shuffles=0
+		Merged Map outputs=76
+		GC time elapsed (ms)=47390
+		CPU time spent (ms)=1008590
+		Physical memory (bytes) snapshot=19337158656
+		Virtual memory (bytes) snapshot=163053973504
+		Total committed heap usage (bytes)=15252062208
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=10000000000
+	File Output Format Counters 
+		Bytes Written=10000000000
+17/02/06 16:53:15 INFO terasort.TeraSort: done
+[hadoop@master mapreduce]$ hadoop jar $(ls hadoop-mapreduce-examples-2*.jar) teravalidate /terasort/out /terasort/val
+17/02/06 17:05:39 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17/02/06 17:05:40 INFO client.RMProxy: Connecting to ResourceManager at master/169.53.128.117:8032
+17/02/06 17:05:41 INFO input.FileInputFormat: Total input paths to process : 1
+Spent 32ms computing base-splits.
+Spent 3ms computing TeraScheduler splits.
+17/02/06 17:05:41 INFO mapreduce.JobSubmitter: number of splits:1
+17/02/06 17:05:41 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1486420276765_0003
+17/02/06 17:05:41 INFO impl.YarnClientImpl: Submitted application application_1486420276765_0003
+17/02/06 17:05:41 INFO mapreduce.Job: The url to track the job: http://master:8088/proxy/application_1486420276765_0003/
+17/02/06 17:05:41 INFO mapreduce.Job: Running job: job_1486420276765_0003
+17/02/06 17:05:47 INFO mapreduce.Job: Job job_1486420276765_0003 running in uber mode : false
+17/02/06 17:05:47 INFO mapreduce.Job:  map 0% reduce 0%
+17/02/06 17:05:58 INFO mapreduce.Job:  map 4% reduce 0%
+17/02/06 17:06:01 INFO mapreduce.Job:  map 6% reduce 0%
+17/02/06 17:06:04 INFO mapreduce.Job:  map 8% reduce 0%
+17/02/06 17:06:07 INFO mapreduce.Job:  map 10% reduce 0%
+17/02/06 17:06:10 INFO mapreduce.Job:  map 12% reduce 0%
+17/02/06 17:06:13 INFO mapreduce.Job:  map 14% reduce 0%
+17/02/06 17:06:16 INFO mapreduce.Job:  map 16% reduce 0%
+17/02/06 17:06:19 INFO mapreduce.Job:  map 18% reduce 0%
+17/02/06 17:06:22 INFO mapreduce.Job:  map 20% reduce 0%
+17/02/06 17:06:25 INFO mapreduce.Job:  map 22% reduce 0%
+17/02/06 17:06:28 INFO mapreduce.Job:  map 23% reduce 0%
+17/02/06 17:06:31 INFO mapreduce.Job:  map 26% reduce 0%
+17/02/06 17:06:34 INFO mapreduce.Job:  map 27% reduce 0%
+17/02/06 17:06:37 INFO mapreduce.Job:  map 29% reduce 0%
+17/02/06 17:06:40 INFO mapreduce.Job:  map 31% reduce 0%
+17/02/06 17:06:43 INFO mapreduce.Job:  map 33% reduce 0%
+17/02/06 17:06:46 INFO mapreduce.Job:  map 35% reduce 0%
+17/02/06 17:06:49 INFO mapreduce.Job:  map 38% reduce 0%
+17/02/06 17:06:52 INFO mapreduce.Job:  map 40% reduce 0%
+17/02/06 17:06:55 INFO mapreduce.Job:  map 42% reduce 0%
+17/02/06 17:06:58 INFO mapreduce.Job:  map 44% reduce 0%
+17/02/06 17:07:01 INFO mapreduce.Job:  map 46% reduce 0%
+17/02/06 17:07:04 INFO mapreduce.Job:  map 49% reduce 0%
+17/02/06 17:07:07 INFO mapreduce.Job:  map 51% reduce 0%
+17/02/06 17:07:10 INFO mapreduce.Job:  map 53% reduce 0%
+17/02/06 17:07:13 INFO mapreduce.Job:  map 55% reduce 0%
+17/02/06 17:07:16 INFO mapreduce.Job:  map 57% reduce 0%
+17/02/06 17:07:19 INFO mapreduce.Job:  map 59% reduce 0%
+17/02/06 17:07:22 INFO mapreduce.Job:  map 61% reduce 0%
+17/02/06 17:07:25 INFO mapreduce.Job:  map 63% reduce 0%
+17/02/06 17:07:28 INFO mapreduce.Job:  map 65% reduce 0%
+17/02/06 17:07:31 INFO mapreduce.Job:  map 100% reduce 0%
+17/02/06 17:07:36 INFO mapreduce.Job:  map 100% reduce 100%
+17/02/06 17:07:38 INFO mapreduce.Job: Job job_1486420276765_0003 completed successfully
+17/02/06 17:07:38 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=95
+		FILE: Number of bytes written=230923
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=10000000104
+		HDFS: Number of bytes written=25
+		HDFS: Number of read operations=6
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=1
+		Launched reduce tasks=1
+		Rack-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=101784
+		Total time spent by all reduces in occupied slots (ms)=3181
+		Total time spent by all map tasks (ms)=101784
+		Total time spent by all reduce tasks (ms)=3181
+		Total vcore-seconds taken by all map tasks=101784
+		Total vcore-seconds taken by all reduce tasks=3181
+		Total megabyte-seconds taken by all map tasks=104226816
+		Total megabyte-seconds taken by all reduce tasks=3257344
+	Map-Reduce Framework
+		Map input records=100000000
+		Map output records=3
+		Map output bytes=83
+		Map output materialized bytes=95
+		Input split bytes=104
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=3
+		Reduce shuffle bytes=95
+		Reduce input records=3
+		Reduce output records=1
+		Spilled Records=6
+		Shuffled Maps =1
+		Failed Shuffles=0
+		Merged Map outputs=1
+		GC time elapsed (ms)=723
+		CPU time spent (ms)=97420
+		Physical memory (bytes) snapshot=427458560
+		Virtual memory (bytes) snapshot=4238479360
+		Total committed heap usage (bytes)=309329920
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=10000000000
+	File Output Format Counters 
+		Bytes Written=25
+[hadoop@master mapreduce]$ cd /terasort
+-bash: cd: /terasort: No such file or directory
+[hadoop@master mapreduce]$ cd /terasort/in
+-bash: cd: /terasort/in: No such file or directory
+[hadoop@master mapreduce]$ 
+

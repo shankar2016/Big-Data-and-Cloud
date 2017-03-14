@@ -1,0 +1,34 @@
+iMac:~ NatarajanShankar$ slcli vs create -d sjc01 --os UBUNTU_LATEST --cpu 2 --memory 4096 --disk=100 --network=1000 --hostname shankar --domain shankar.net --key rsa-key
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 28662721                             :
+: created : 2017-02-21T18:22:26-06:00            :
+:    guid : e181621c-400f-4449-bbb6-335e24548486 :
+:.........:......................................:
+o
+
+
+iMac:~ NatarajanShankar$
+
+
+
+iMac:~ NatarajanShankar$ slcli vs credentials 28662721
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : MUgpxcl7 :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 28662763
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : G7tK24gw :
+:..........:..........:
+iMac:~ NatarajanShankar$
+
+
+
+
+

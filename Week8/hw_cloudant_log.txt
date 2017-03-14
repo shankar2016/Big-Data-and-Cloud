@@ -1,0 +1,21 @@
+iMac:Big-Data-and-Cloud NatarajanShankar$ cd Week8
+iMac:Week8 NatarajanShankar$ curl -X PUT -H 'Content-Type: application/json' https://shankar:xxxxxxxxxx@username.cloudant.com/crud/
+{"error":"forbidden","reason":"server_admin access is required for this request"}
+iMac:Week8 NatarajanShankar$ curl -X PUT -H 'Content-Type: application/json' https://shankar:xxxxxxxxxx@shankar.cloudant.com/crud/
+{"ok":true}
+iMac:Week8 NatarajanShankar$ curl -d '{"season": "summer", "weather": "usually warm and sunny""}' -X POST https://shankar:xxxxxxxxxx@shankar.cloudant.com/crud/ -H 'Content-Type: application/json'
+{"error":"bad_request","reason":"invalid UTF-8 JSON"}
+iMac:Week8 NatarajanShankar$ curl -d '{"season": "summer", "weather": "usually warm and sunny""}' -X POST https://shankar:xxxxxxxxxx@shankar.cloudant.com/crud/ -H "Content-Type: application/json"
+{"error":"bad_request","reason":"invalid UTF-8 JSON"}
+iMac:Week8 NatarajanShankar$ curl -d '{"season": "summer", "weather": "usually warm and sunny"}' -X POST https://shankar:xxxxxxxxxx@shankar.cloudant.com/crud/ -H "Content-Type: application/json"
+{"ok":true,"id":"45beca4a7bf663ee360b463b2a8c38de","rev":"1-0af5e64fe24d262db237b9f14046f490"}
+iMac:Week8 NatarajanShankar$ curl -d '{"season": "summer", "pleasanton [Dweather": "usually warm and sunny"}' -X POST https://shankar:xxxxxxxxxx@shankar.cloudant.com/crud/ -H 'Content-Type: application/json'
+{"ok":true,"id":"c69c1ed21940fe31f880dda0234a3929","rev":"1-5c1840bd0fb5eb26407ab451ab410357"}
+iMac:Week8 NatarajanShankar$ curl https://shankar:xxxxxxxxxx@shankar.cloudant.com/crud/all_docs
+{"error":"not_found","reason":"missing"}
+iMac:Week8 NatarajanShankar$ curl https://shankar:xxxxxxxxxx@shankar.cloudant.com/crud/_all_docs
+{"total_rows":2,"offset":0,"rows":[
+{"id":"45beca4a7bf663ee360b463b2a8c38de","key":"45beca4a7bf663ee360b463b2a8c38de","value":{"rev":"1-0af5e64fe24d262db237b9f14046f490"}},
+{"id":"c69c1ed21940fe31f880dda0234a3929","key":"c69c1ed21940fe31f880dda0234a3929","value":{"rev":"1-5c1840bd0fb5eb26407ab451ab410357"}}
+]}
+iMac:Week8 NatarajanShankar$ 

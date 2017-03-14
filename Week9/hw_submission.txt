@@ -1,0 +1,32 @@
+1). How to access the master node in the cluster
+
+	ssh root@169.53.128.114
+
+	password : CVTfB8Hz
+
+
+2). cd $SPARK_HOME
+
+3). cd twitter_popularity
+
+4). Scaka code is in twitter_popularity.scala
+
+5). run using
+
+	sbt clean assembly && $SPARK_HOME/bin/spark-submit   --master spark://spark1:7077 $(find target -iname "*assembly*.jar")  10 30 1000
+
+
+WHAT WORKS: Listing of popular topics and related people
+
+((,here lies chels,),1)
+((,RUBIN,@NICKIMINAJ,@viviaanzhou,@headkrack),1)
+((#CHANELFallWinter,#CHANELGroundControl,#PFW,Ariel Olvera,@CHANEL:),1)
+((,Forever8791,@charlieadamsyes:),1)
+((,Komakurup,@madhukishwar),1)
+
+
+
+WHAT DOES NOT WORK:
+	The final aggregation of trendsetters
+	
+

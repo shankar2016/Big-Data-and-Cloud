@@ -1,0 +1,94 @@
+Last login: Tue Feb 21 14:40:42 on console
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:..........:................:................:............:........:
+:    id    : hostname :   primary_ip   :   backend_ip   : datacenter : action :
+:..........:..........:................:................:............:........:
+: 28570419 :  spark1  : 169.53.128.114 : 10.122.149.194 :   sjc01    :   -    :
+: 28374849 :  spark2  : 158.85.179.184 : 10.122.149.198 :   sjc01    :   -    :
+: 28375427 :  spark3  : 158.85.179.179 : 10.122.149.199 :   sjc01    :   -    :
+:..........:..........:................:................:............:........:
+iMac:~ NatarajanShankar$ slcli vs credentials 28570419
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : CVTfB8Hz :
+:..........:..........:
+iMac:~ NatarajanShankar$ ssh root@169.53.128.114
+root@169.53.128.114's password: 
+Last failed login: Tue Feb 21 16:08:55 CST 2017 from 122.194.229.5 on ssh:notty
+There were 13233 failed login attempts since the last successful login.
+Last login: Mon Feb 20 10:01:53 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@spark1 ~]# 
+
+
+
+
+Data used for testing
+=====================
+[root@spark1 download]# ls -la
+total 339408
+drwxr-xr-x.  2 root root      4096 Feb 19 16:40 .
+dr-xr-x---. 11 root root      4096 Feb 19 16:43 ..
+-rw-r--r--.  1 root root  70844416 Feb 20 02:48 googlebooks-eng-all-2gram-20090715-99.csv
+-rw-r--r--.  1 root root 276351745 Dec 21  2010 googlebooks-eng-all-2gram-20090715-99.csv.zip
+[root@spark1 download]#
+
+
+
+CRETATE, LIST and DELETE using SWIFT
+===================================
+[root@spark1 scripts]# swift upload container1 junk.txt  --os-auth-token AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+junk.txt
+[root@spark1 scripts]# swift --os-auth-token AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1 list
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+junk.txt
+[root@spark1 scripts]# swift delete container1 junk.txt  --os-auth-token AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+junk.txt
+[root@spark1 scripts]# swift --os-auth-token AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1 list
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+[root@spark1 scripts]#
+
+
+
+
+
+1). READ and WRITE Performance - Single Threaded
+
+READ (3 iterations): 26MB/s, 26MB/s, 26MB/s --- Average is 26MB/s
+WRITE (3 iteratons): 6MB/s, 2MB/s, 7MB/s ------ Average is 5 MB/s
+
+
+2). READ and WRITE Performance - 2 Threads in parallel
+
+READ (3 iterations): 26MB/s, 26MB/s, 26MB/s , 33MB/s, 36MB/s, 36MB/s --- Average is 30.5MB/s
+WRITE (3 iteratons): 6MB/s, 2MB/s, 7MB/s, 7MB/3, 1MB/s, 5MB/s  ------ Average is 4.67 MB/s
+
+The additipon of a parallel write did not seem to affect the performance of either.
+This is beacuse of the parallel handling of object writes in Object Storage.
+====================================================================================
+
+
+Access to Object store has the following operations.
+
+1). HTTP connection to object store
+This is a client server style connection
+
+2).  Object Storage is run on a RESTful interface.
+
+3). Breaking up the data across multiple servers
+Object Storage uses multiple servers and multiple drives,
+
+4). Replication prior to write completion
+Object store replicates the data within the cluster across multiple
+physical servers. Replication ensures that data is always available.
+
+5). Intermediate servers in play
+Read and Write requests are handled through proxy servers, which
+abstract the actual data storage to provide the highest levels of fault tolerance.
+
+
+=====================================================================================================
+Many operations are common between Read and Write but there are some major operations on Write
+that are not shared by Read. Discrepancies in Read/Write are by the indexing, allocation, redundancy
+and replication  features.
+=====================================================================================================

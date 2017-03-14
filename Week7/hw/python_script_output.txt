@@ -1,0 +1,12 @@
+[root@spark1 scripts]# python test2.py
+SL Object Store Connected <object_storage.client.Client object at 0x2059110>
+SL Object Store Containers [Container(container1)]
+SL Object Store Create status is test.txt
+SL Object Store Create status is StorageObject(container1, testfile.txt, UnknownB)
+SL Object Store switft conn is <swiftclient.client.Connection object at 0x20594d0>
+Assignments asks that we list the data
+SL Object Store List status is [StorageObject(container1, testfile.txt, 0B), StorageObject(container1, ../download/googlebooks-eng-all-2gram-20090715-99.csv, 70844416B), StorageObject(container1, junk.txt, 47B)]
+Assignments asks that we delete an object
+SL Object Store Delete status is True
+SL Object Store FINAL List status is [StorageObject(container1, ../download/googlebooks-eng-all-2gram-20090715-99.csv, 70844416B), StorageObject(container1, junk.txt, 47B)]
+[root@spark1 scripts]#

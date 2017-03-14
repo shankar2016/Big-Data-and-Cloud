@@ -1,0 +1,53 @@
+[root@spark1 scripts]# curl -i -H "X-Auth-User: SLOS1187161-3:SL1187161 " -H "X-Auth-Key: 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f  " https://dal05.objectstorage.service.networklayer.com/auth/v1.0
+HTTP/1.1 200 OK
+Content-Length: 1757
+X-Auth-Token-Expires: 85367
+X-Auth-Token: AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d
+X-Storage-Token: AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d
+X-Storage-Url: https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+Content-Type: application/json
+X-Trans-Id: tx5e978278ea464607abb0b-0058acca5a
+Date: Tue, 21 Feb 2017 23:16:42 GMT
+
+{"clusters": {"lon02": "https://lon02.objectstorage.service.networklayer.com/auth/v1.0", "syd01": "https://syd01.objectstorage.service.networklayer.com/auth/v1.0", "mon01": "https://mon01.objectstorage.service.networklayer.com/auth/v1.0", "dal05": "https://dal05.objectstorage.service.networklayer.com/auth/v1.0", "ams01": "https://ams01.objectstorage.service.networklayer.com/auth/v1.0", "osl01": "https://osl01.objectstorage.service.networklayer.com/auth/v1.0", "tor01": "https://tor01.objectstorage.service.networklayer.com/auth/v1.0", "hkg02": "https://hkg02.objectstorage.service.networklayer.com/auth/v1.0", "mex01": "https://mex01.objectstorage.service.networklayer.com/auth/v1.0", "par01": "https://par01.objectstorage.service.networklayer.com/auth/v1.0", "sjc01": "https://sjc01.objectstorage.service.networklayer.com/auth/v1.0", "mil01": "https://mil01.objectstorage.service.networklayer.com/auth/v1.0", "wdc": "https://wdc.objectstorage.service.networklayer.com/auth/v1.0", "fra02": "https://fra02.objectstorage.service.networklayer.com/auth/v1.0", "sng01": "https://sng01.objectstorage.service.networklayer.com/auth/v1.0", "seo01": "https://seo01.objectstorage.service.networklayer.com/auth/v1.0", "che01": "https://che01.objectstorage.service.networklayer.com/auth/v1.0", "sao01": "https://sao01.objectstorage.service.networklayer.com/auth/v1.0", "mel01": "https://mel01.objectstorage.service.networklayer.com/auth/v1.0", "tok02": "https://tok02.objectstorage.service.networklayer.com/auth/v1.0"}, "storage": {"default": "private", "public": "https://dal05.objectstorage.softlayer.net/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0", "private": "https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0"}}[root@spark1 scripts]# 
+[root@spark1 scripts]# 
+
+
+
+
+
+CREATE
+======
+[root@spark1 scripts]# swift upload container1 junk.txt  --os-auth-token AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+junk.txt
+
+
+
+
+LIST
+====
+[root@spark1 scripts]# swift --os-auth-token AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1 list
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+junk.txt
+
+
+DELETE
+=====
+[root@spark1 scripts]# swift delete container1 junk.txt  --os-auth-token AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+junk.txt
+
+
+
+LIST AGAIN
+==========
+[root@spark1 scripts]# swift --os-auth-token AUTH_tkd0d73c03f41b4761b02a05cd5e4b598d  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1 list
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+[root@spark1 scripts]#
+
+
+
+
+
+
+
+

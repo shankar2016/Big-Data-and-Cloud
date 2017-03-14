@@ -1,0 +1,352 @@
+
+
+1). Re-provisioning spark1
+==========================
+iMac:~ NatarajanShankar$ slcli vs create -d sjc01 --os CENTOS_7 --cpu 2 --memory 4096 --disk 100 --hostname spark1 --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 28570419                             :
+: created : 2017-02-18T11:59:06-06:00            :
+:    guid : 99e2dbbb-769d-45e5-a067-42457bd15a2d :
+:.........:......................................:
+
+
+
+:..........:..........:................:................:............:...............:
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:..........:................:................:............:........:
+:    id    : hostname :   primary_ip   :   backend_ip   : datacenter : action :
+:..........:..........:................:................:............:........:
+: 28570419 :  spark1  : 169.53.128.114 : 10.122.149.194 :   sjc01    :   -    :
+: 28374849 :  spark2  : 158.85.179.184 : 10.122.149.198 :   sjc01    :   -    :
+: 28375427 :  spark3  : 158.85.179.179 : 10.122.149.199 :   sjc01    :   -    :
+:..........:..........:................:................:............:........:
+
+
+2). Get the login credentials for spark1
+========================================
+
+iMac:~ NatarajanShankar$ slcli vs credentials 28570419
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : CVTfB8Hz :
+:..........:..........:
+iMac:~ NatarajanShankar$
+
+
+
+
+3). Ensure Connectivity
+=======================
+
+
+[root@spark1 ~]# ping spark1
+PING spark1.shankar.net (169.53.128.114) 56(84) bytes of data.
+64 bytes from spark1.shankar.net (169.53.128.114): icmp_seq=1 ttl=64 time=0.025 ms
+64 bytes from spark1.shankar.net (169.53.128.114): icmp_seq=2 ttl=64 time=0.039 ms
+^C
+--- spark1.shankar.net ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+rtt min/avg/max/mdev = 0.025/0.032/0.039/0.007 ms
+[root@spark1 ~]# ping spark 2
+PING 2 (0.0.0.2) 56(124) bytes of data.
+^[[^C
+--- 2 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3003ms
+
+[root@spark1 ~]# ^C
+[root@spark1 ~]# ping spark2
+PING spark2.shankar.net (158.85.179.184) 56(84) bytes of data.
+64 bytes from spark2.shankar.net (158.85.179.184): icmp_seq=1 ttl=63 time=0.450 ms
+64 bytes from spark2.shankar.net (158.85.179.184): icmp_seq=2 ttl=63 time=0.412 ms
+64 bytes from spark2.shankar.net (158.85.179.184): icmp_seq=3 ttl=63 time=0.365 ms
+64 bytes from spark2.shankar.net (158.85.179.184): icmp_seq=4 ttl=63 time=0.501 ms
+64 bytes from spark2.shankar.net (158.85.179.184): icmp_seq=5 ttl=63 time=0.458 ms
+64 bytes from spark2.shankar.net (158.85.179.184): icmp_seq=6 ttl=63 time=0.643 ms
+64 bytes from spark2.shankar.net (158.85.179.184): icmp_seq=7 ttl=63 time=0.512 ms
+^C
+--- spark2.shankar.net ping statistics ---
+7 packets transmitted, 7 received, 0% packet loss, time 5999ms
+rtt min/avg/max/mdev = 0.365/0.477/0.643/0.083 ms
+[root@spark1 ~]# ping spark3
+PING spark3.shankar.net (158.85.179.179) 56(84) bytes of data.
+64 bytes from spark3.shankar.net (158.85.179.179): icmp_seq=1 ttl=63 time=0.835 ms
+64 bytes from spark3.shankar.net (158.85.179.179): icmp_seq=2 ttl=63 time=0.617 ms
+64 bytes from spark3.shankar.net (158.85.179.179): icmp_seq=3 ttl=63 time=0.769 ms
+^C
+--- spark3.shankar.net ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2000ms
+rtt min/avg/max/mdev = 0.617/0.740/0.835/0.093 ms
+
+
+
+
+[root@spark1 ~]# chmod 700 ~/.ssh/id_rsa
+
+
+4). Ensure access to other machines without password
+====================================================
+[root@spark1 ~]# ssh spark2
+Last failed login: Sat Feb 18 12:09:07 CST 2017 from 112.85.42.22 on ssh:notty
+There were 21 failed login attempts since the last successful login.
+Last login: Sat Feb 18 12:03:16 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@spark2 ~]# exit
+logout
+Connection to spark2 closed.
+[root@spark1 ~]# ssh spark3
+The authenticity of host 'spark3 (158.85.179.179)' can't be established.
+ECDSA key fingerprint is f1:21:6e:5b:91:64:82:0b:b0:b3:08:01:f4:e4:1a:68.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'spark3,158.85.179.179' (ECDSA) to the list of known hosts.
+Last failed login: Sat Feb 18 12:09:41 CST 2017 from 202.109.143.111 on ssh:notty
+There were 94397 failed login attempts since the last successful login.
+Last login: Mon Feb 13 01:03:26 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@spark3 ~]# exit
+logout
+Connection to spark3 closed.
+[root@spark1 ~]# ssh spark3
+Last failed login: Sat Feb 18 12:09:51 CST 2017 from 202.109.143.111 on ssh:notty
+There were 3 failed login attempts since the last successful login.
+Last login: Sat Feb 18 12:09:43 2017 from spark1.shankar.net
+[root@spark3 ~]# exit
+logout
+Connection to spark3 closed.
+
+5). Install needed infra
+=========================
+
+[root@spark1 ~]# curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   162    0   162    0     0    477      0 --:--:-- --:--:-- --:--:--   476
+#bintray--sbt-rpm - packages by  from Bintray
+[bintray--sbt-rpm]
+name=bintray--sbt-rpm
+
+
+
+6). Set up the spark environment
+================================
+
+
+Complete!
+[root@spark1 ~]# echo export JAVA_HOME=\"$(readlink -f $(which java) | grep -oP '.*(?=/bin)')\" >> /root/.bash_profile
+[root@spark1 ~]# source /root/.bash_profile
+[root@spark1 ~]# $JAVA_HOME/bin/java -version
+openjdk version "1.8.0_121"
+OpenJDK Runtime Environment (build 1.8.0_121-b13)
+OpenJDK 64-Bit Server VM (build 25.121-b13, mixed mode)
+[root@spark1 ~]# curl http://www.gtlib.gatech.edu/pub/apache/spark/spark-1.6.2/spark-1.6.2-bin-hadoop2.6.tgz | tar -zx -C /usr/local --show-transformed --transform='s,/*[^/]*,spark,'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  265M  100  265M    0     0  4226k      0  0:01:04  0:01:04 --:--:-- 8374k
+[root@spark1 ~]# echo export SPARK_HOME=\"/usr/local/spark\" >> /root/.bash_profile
+[root@spark1 ~]# source /root/.bash_profile
+[root@spark1 ~]# vi $SPARK_HOME/conf/slaves
+[root@spark1 ~]# $SPARK_HOME/sbin/start-master.sh
+starting org.apache.spark.deploy.master.Master, logging to /usr/local/spark/logs/spark-root-org.apache.spark.deploy.master.Master-1-spark1.shankar.net.out
+[root@spark1 ~]# $SPARK_HOME/sbin/start-slaves.sh
+spark1: Warning: Permanently added 'spark1,169.53.128.114' (ECDSA) to the list of known hosts.
+spark1: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark1.shankar.net.out
+spark3: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark3.shankar.net.out
+spark2: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark2.shankar.net.out
+
+
+
+TASK #1
+=======
+[root@spark1 ~]# $SPARK_HOME/bin/run-example SparkPi
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+17/02/18 12:30:27 INFO SparkContext: Running Spark version 1.6.2
+17/02/18 12:30:27 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+Pi is roughly 3.14156
+
+
+[root@spark1 ~]# $SPARK_HOME/bin/spark-submit $SPARK_HOME/examples/src/main/python/pi.py
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+17/02/18 12:31:15 INFO SparkContext: Running Spark version 1.6.2
+17/02/18 12:31:15 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17/02/18 12:31:16 INFO SecurityManager: Changing view acls to: root
+17/02/18 12:31:16 INFO SecurityManager: Changing modify acls to: root
+17/02/18 12:31:16 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(root); users with modify permissions: Set(root)
+17/02/18 12:31:16 INFO Utils: Successfully started service 'sparkDriver' on port 40982.
+17/02/18 12:31:16 INFO Slf4jLogger: Slf4jLogger started
+17/02/18 12:31:16 INFO Remoting: Starting remoting
+17/02/18 12:31:16 INFO Utils: Successfully started service 'sparkDriverActorSystem' on port 38708.
+17/02/18 12:31:16 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@169.53.128.114:38708]
+17/02/18 12:31:16 INFO SparkEnv: Registering MapOutputTracker
+17/02/18 12:31:16 INFO SparkEnv: Registering BlockManagerMaster
+17/02/18 12:31:16 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-41c6c138-e6c3-4204-9227-0b1b5a2f2d61
+17/02/18 12:31:16 INFO MemoryStore: MemoryStore started with capacity 511.1 MB
+17/02/18 12:31:17 INFO SparkEnv: Registering OutputCommitCoordinator
+17/02/18 12:31:17 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+17/02/18 12:31:17 INFO SparkUI: Started SparkUI at http://169.53.128.114:4040
+17/02/18 12:31:17 INFO Utils: Copying /usr/local/spark/examples/src/main/python/pi.py to /tmp/spark-af988c9c-72dd-4ac4-b786-8977acd12f6c/userFiles-3c7fb416-4d94-48a7-85a1-3da0e2ab6772/pi.py
+17/02/18 12:31:17 INFO SparkContext: Added file file:/usr/local/spark/examples/src/main/python/pi.py at file:/usr/local/spark/examples/src/main/python/pi.py with timestamp 1487442677306
+17/02/18 12:31:17 INFO Executor: Starting executor ID driver on host localhost
+17/02/18 12:31:17 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 42656.
+17/02/18 12:31:17 INFO NettyBlockTransferService: Server created on 42656
+17/02/18 12:31:17 INFO BlockManagerMaster: Trying to register BlockManager
+17/02/18 12:31:17 INFO BlockManagerMasterEndpoint: Registering block manager localhost:42656 with 511.1 MB RAM, BlockManagerId(driver, localhost, 42656)
+17/02/18 12:31:17 INFO BlockManagerMaster: Registered BlockManager
+17/02/18 12:31:18 INFO SparkContext: Starting job: reduce at /usr/local/spark/examples/src/main/python/pi.py:39
+17/02/18 12:31:18 INFO DAGScheduler: Got job 0 (reduce at /usr/local/spark/examples/src/main/python/pi.py:39) with 2 output partitions
+17/02/18 12:31:18 INFO DAGScheduler: Final stage: ResultStage 0 (reduce at /usr/local/spark/examples/src/main/python/pi.py:39)
+17/02/18 12:31:18 INFO DAGScheduler: Parents of final stage: List()
+17/02/18 12:31:18 INFO DAGScheduler: Missing parents: List()
+17/02/18 12:31:18 INFO DAGScheduler: Submitting ResultStage 0 (PythonRDD[1] at reduce at /usr/local/spark/examples/src/main/python/pi.py:39), which has no missing parents
+17/02/18 12:31:18 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 4.0 KB, free 4.0 KB)
+17/02/18 12:31:18 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 2.7 KB, free 6.7 KB)
+17/02/18 12:31:18 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on localhost:42656 (size: 2.7 KB, free: 511.1 MB)
+17/02/18 12:31:18 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1006
+17/02/18 12:31:18 INFO DAGScheduler: Submitting 2 missing tasks from ResultStage 0 (PythonRDD[1] at reduce at /usr/local/spark/examples/src/main/python/pi.py:39)
+17/02/18 12:31:18 INFO TaskSchedulerImpl: Adding task set 0.0 with 2 tasks
+17/02/18 12:31:18 WARN TaskSetManager: Stage 0 contains a task of very large size (365 KB). The maximum recommended task size is 100 KB.
+17/02/18 12:31:18 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, localhost, partition 0,PROCESS_LOCAL, 374521 bytes)
+17/02/18 12:31:18 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, localhost, partition 1,PROCESS_LOCAL, 502324 bytes)
+17/02/18 12:31:18 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+17/02/18 12:31:18 INFO Executor: Fetching file:/usr/local/spark/examples/src/main/python/pi.py with timestamp 1487442677306
+17/02/18 12:31:18 INFO Executor: Running task 1.0 in stage 0.0 (TID 1)
+17/02/18 12:31:18 INFO Utils: /usr/local/spark/examples/src/main/python/pi.py has been previously copied to /tmp/spark-af988c9c-72dd-4ac4-b786-8977acd12f6c/userFiles-3c7fb416-4d94-48a7-85a1-3da0e2ab6772/pi.py
+17/02/18 12:31:18 INFO PythonRunner: Times: total = 304, boot = 177, init = 6, finish = 121
+17/02/18 12:31:18 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 998 bytes result sent to driver
+17/02/18 12:31:18 INFO PythonRunner: Times: total = 307, boot = 171, init = 6, finish = 130
+17/02/18 12:31:18 INFO Executor: Finished task 1.0 in stage 0.0 (TID 1). 998 bytes result sent to driver
+17/02/18 12:31:18 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 431 ms on localhost (1/2)
+17/02/18 12:31:18 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 413 ms on localhost (2/2)
+17/02/18 12:31:18 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+17/02/18 12:31:18 INFO DAGScheduler: ResultStage 0 (reduce at /usr/local/spark/examples/src/main/python/pi.py:39) finished in 0.447 s
+17/02/18 12:31:18 INFO DAGScheduler: Job 0 finished: reduce at /usr/local/spark/examples/src/main/python/pi.py:39, took 0.628109 s
+Pi is roughly 3.148760
+17/02/18 12:31:18 INFO SparkUI: Stopped Spark web UI at http://169.53.128.114:4040
+17/02/18 12:31:18 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+17/02/18 12:31:18 INFO MemoryStore: MemoryStore cleared
+17/02/18 12:31:18 INFO BlockManager: BlockManager stopped
+17/02/18 12:31:18 INFO BlockManagerMaster: BlockManagerMaster stopped
+17/02/18 12:31:18 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+17/02/18 12:31:18 INFO SparkContext: Successfully stopped SparkContext
+17/02/18 12:31:18 INFO RemoteActorRefProvider$RemotingTerminator: Shutting down remote daemon.
+17/02/18 12:31:18 INFO RemoteActorRefProvider$RemotingTerminator: Remote daemon shut down; proceeding with flushing remote transports.
+17/02/18 12:31:18 INFO RemoteActorRefProvider$RemotingTerminator: Remoting shut down.
+17/02/18 12:31:19 INFO ShutdownHookManager: Shutdown hook called
+17/02/18 12:31:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-af988c9c-72dd-4ac4-b786-8977acd12f6c
+17/02/18 12:31:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-af988c9c-72dd-4ac4-b786-8977acd12f6c/pyspark-69812268-4d61-449c-becd-79ccb746a22f
+
+
+
+
+TASK #2
+=======
+[root@spark1 ~]# cd $SPARK_HOME
+[root@spark1 spark]# $SPARK_HOME/bin/spark-shell
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+Using Spark's repl log4j profile: org/apache/spark/log4j-defaults-repl.properties
+To adjust logging level use sc.setLogLevel("INFO")
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 1.6.2
+      /_/
+
+Using Scala version 2.10.5 (OpenJDK 64-Bit Server VM, Java 1.8.0_121)
+Type in expressions to have them evaluated.
+Type :help for more information.
+Spark context available as sc.
+17/02/18 12:33:01 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/02/18 12:33:01 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/02/18 12:33:05 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+17/02/18 12:33:05 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+17/02/18 12:33:07 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/02/18 12:33:07 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/02/18 12:33:10 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+17/02/18 12:33:10 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+SQL context available as sqlContext.
+
+scala> val textFile = sc.textFile("README.md")
+textFile: org.apache.spark.rdd.RDD[String] = README.md MapPartitionsRDD[1] at textFile at <console>:27
+
+scala> textFile.count()
+res0: Long = 95
+
+scala> textFile.first()
+res1: String = # Apache Spark
+
+scala> val linesWithSpark = textFile.filter(line => line.contains("Spark"))
+linesWithSpark: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[2] at filter at <console>:29
+
+scala> linesWithSpark.count()
+res2: Long = 17
+
+scala> Stopping spark context.
+
+
+
+
+
+
+
+
+TASK #3
+=======
+
+
+[root@spark1 spark]# vi SimpleApp.scala
+[root@spark1 spark]# vi build.sbt
+[root@spark1 spark]# sbt package
+Getting org.scala-sbt sbt 0.13.13 ...
+downloading https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt/0.13.13/jars/sbt.jar ...
+	[SUCCESSFUL ] org.scala-sbt#sbt;0.13.13!sbt.jar (1402ms)
+downloading https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.6/scala-library-2.10.6.jar ...
+	[SUCCESSFUL ] org.scala-lang#scala-library;2.10.6!scala-library.jar (305ms)
+downloading https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/main/0.13.13/jars/main.jar ...
+
+
+	[SUCCESSFUL ] org.scala-sbt#apply-macro;0.13.13!apply-macro.jar (1359ms)
+downloading https://repo1.maven.org/maven2/org/scala-sbt/template-resolver/0.1/template-resolver-0.1.jar ...
+	[SUCCESSFUL ] org.scala-sbt#template-resolver;0.1!template-resolver.jar (7ms)
+:: retrieving :: org.scala-sbt#boot-app
+	confs: [default]
+	50 artifacts copied, 0 already retrieved (17645kB/73ms)
+[info] 	[SUCCESSFUL ] org.scala-lang#jline;2.10.4!jline.jar (12ms)
+[info] Done updating.
+[info] Compiling 1 Scala source to /usr/local/spark/target/scala-2.10/classes...
+[info] 'compiler-interface' not yet compiled for Scala 2.10.4. Compiling...
+[info]   Compilation completed in 12.323 s
+[info] Packaging /usr/local/spark/target/scala-2.10/simple-project_2.10-1.0.jar ...
+[info] Done packaging.
+[success] Total time: 34 s, completed Feb 18, 2017 2:52:26 PM
+
+
+
+[root@spark1 spark]# find target -iname "*.jar"
+target/scala-2.10/simple-project_2.10-1.0.jar
+
+
+
+
+[root@spark1 spark]# $SPARK_HOME/bin/spark-submit --class "SimpleApp" \
+> --master spark://spark1:7077 \
+> $(find target -iname "*.jar")
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+17/02/18 14:52:40 INFO SparkContext: Running Spark version 1.6.2
+17/02/18 14:52:40 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17/02/18 14:52:46 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 3) in 46 ms on spark3.shankar.net (2/2)
+17/02/18 14:52:46 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+17/02/18 14:52:46 INFO DAGScheduler: ResultStage 1 (count at SimpleApp.scala:13) finished in 0.049 s
+17/02/18 14:52:46 INFO DAGScheduler: Job 1 finished: count at SimpleApp.scala:13, took 0.077350 s
++++++++++++ Lines with a: 58, Lines with b: 26 ++++++++++
+17/02/18 14:52:46 INFO SparkContext: Invoking stop() from shutdown hook
+17/02/18 14:52:46 INFO SparkUI: Stopped Spark web UI at http://169.53.128.114:4040
+17/02/18 14:52:46 INFO SparkDeploySchedulerBackend: Shutting down all executors
+
+
+
+[root@spark1 spark]# 
+

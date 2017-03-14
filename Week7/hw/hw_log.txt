@@ -1,0 +1,742 @@
+Last login: Sun Feb 19 12:04:05 on console
+iMac:~ NatarajanShankar$ ssh root@169.53.128.114
+root@169.53.128.114's password: 
+Last failed login: Sun Feb 19 14:07:17 CST 2017 from 183.214.141.105 on ssh:notty
+There were 29843 failed login attempts since the last successful login.
+Last login: Sat Feb 18 12:06:33 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# which curl
+/usr/bin/curl
+[root@spark1 ~]# which jq
+/usr/bin/which: no jq in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin)
+[root@spark1 ~]# which tee
+/usr/bin/tee
+[root@spark1 ~]# sudo apt-get install jq
+sudo: apt-get: command not found
+[root@spark1 ~]# yum install jq
+Loaded plugins: fastestmirror
+base                                                                                                     | 3.6 kB  00:00:00     
+bintray--sbt-rpm                                                                                         | 1.3 kB  00:00:00     
+extras                                                                                                   | 3.4 kB  00:00:00     
+updates                                                                                                  | 3.4 kB  00:00:00     
+Loading mirror speeds from cached hostfile
+No package jq available.
+Error: Nothing to do
+[root@spark1 ~]# which jq
+/usr/bin/which: no jq in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin)
+[root@spark1 ~]# sudo dnf install jq
+sudo: dnf: command not found
+[root@spark1 ~]# uname -a
+Linux spark1.shankar.net 3.10.0-514.2.2.el7.x86_64 #1 SMP Tue Dec 6 23:06:41 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
+[root@spark1 ~]# uname
+Linux
+[root@spark1 ~]# man uname
+[root@spark1 ~]# 
+[root@spark1 ~]# uname -q
+uname: invalid option -- 'q'
+Try 'uname --help' for more information.
+[root@spark1 ~]# uname -all
+uname: invalid option -- 'l'
+Try 'uname --help' for more information.
+[root@spark1 ~]# uname -a
+Linux spark1.shankar.net 3.10.0-514.2.2.el7.x86_64 #1 SMP Tue Dec 6 23:06:41 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
+[root@spark1 ~]# wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
+--2017-02-19 14:12:05--  https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64
+Resolving github.com (github.com)... 192.30.253.113, 192.30.253.112
+Connecting to github.com (github.com)|192.30.253.113|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://github-cloud.s3.amazonaws.com/releases/5101141/65ac1c64-43ac-11e5-9195-46846013b9a3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAISTNZFOVBIJMK3TQ%2F20170219%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20170219T201201Z&X-Amz-Expires=300&X-Amz-Signature=79dbacc42917a3b5472611b0375491e8299594d648875a1b7db999ef8ae75234&X-Amz-SignedHeaders=host&actor_id=0&response-content-disposition=attachment%3B%20filename%3Djq-linux64&response-content-type=application%2Foctet-stream [following]
+--2017-02-19 14:12:05--  https://github-cloud.s3.amazonaws.com/releases/5101141/65ac1c64-43ac-11e5-9195-46846013b9a3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAISTNZFOVBIJMK3TQ%2F20170219%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20170219T201201Z&X-Amz-Expires=300&X-Amz-Signature=79dbacc42917a3b5472611b0375491e8299594d648875a1b7db999ef8ae75234&X-Amz-SignedHeaders=host&actor_id=0&response-content-disposition=attachment%3B%20filename%3Djq-linux64&response-content-type=application%2Foctet-stream
+Resolving github-cloud.s3.amazonaws.com (github-cloud.s3.amazonaws.com)... 54.231.113.227
+Connecting to github-cloud.s3.amazonaws.com (github-cloud.s3.amazonaws.com)|54.231.113.227|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3027945 (2.9M) [application/octet-stream]
+Saving to: ‘jq’
+
+100%[======================================================================================>] 3,027,945   1.19MB/s   in 2.4s   
+
+2017-02-19 14:12:08 (1.19 MB/s) - ‘jq’ saved [3027945/3027945]
+
+[root@spark1 ~]# chmod +x ./jq
+[root@spark1 ~]# cp jq /usr/bin
+[root@spark1 ~]# which jq
+/usr/bin/jq
+[root@spark1 ~]# curl --user SL1187161:3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f https://api.softlayer.com/rest/v3.1/SoftLayer_Account/getHubNetworkStorage | tee softlayer.$(date +%s).log | jq '.[] | select(.vendorName == "Swift") | del (.properties)'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7096  100  7096    0     0   9648      0 --:--:-- --:--:-- --:--:--  9641
+{
+  "accountId": 1187161,
+  "capacityGb": 0,
+  "createDate": "2017-01-17T10:41:38-06:00",
+  "guestId": null,
+  "hardwareId": null,
+  "hostId": null,
+  "id": 18754589,
+  "nasType": "HUB",
+  "password": "",
+  "serviceProviderId": 1,
+  "storageTypeId": "15",
+  "upgradableFlag": true,
+  "username": "SLOS1187161-2",
+  "serviceResourceBackendIpAddress": "https://dal05.objectstorage.service.networklayer.com/auth/v1.0/",
+  "serviceResourceName": "OBJECT_STORAGE_DAL05",
+  "vendorName": "Swift"
+}
+[root@spark1 ~]# curl -s --user SL1187161:3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f https://api.softlayer.com/rest/v3.1/SoftLayer_Product_Package/0/getItems | tee softlayer.$(date +%s).log | jq '.[] | select(.keyName == "OBJECT_STORAGE_PAY_AS_YOU_GO") | .prices[0].id'
+16984
+[root@spark1 ~]# pip install python-swiftclient
+-bash: pip: command not found
+[root@spark1 ~]# ^pip^yum
+yum install python-swiftclient
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+No package python-swiftclient available.
+Error: Nothing to do
+[root@spark1 ~]# curl --user SL1187161:3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f https://api.softlayer.com/rest/v3.1/SoftLayer_Account/getHubNetworkStorage | tee softlayer.$(date +%s).log | jq '.[] | select(.vendorName == "Swift") | del (.properties)'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 14191  100 14191    0     0  12055      0  0:00:01  0:00:01 --:--:-- 12067
+{
+  "accountId": 1187161,
+  "capacityGb": 0,
+  "createDate": "2017-01-17T10:41:38-06:00",
+  "guestId": null,
+  "hardwareId": null,
+  "hostId": null,
+  "id": 18754589,
+  "nasType": "HUB",
+  "password": "",
+  "serviceProviderId": 1,
+  "storageTypeId": "15",
+  "upgradableFlag": true,
+  "username": "SLOS1187161-2",
+  "serviceResourceBackendIpAddress": "https://dal05.objectstorage.service.networklayer.com/auth/v1.0/",
+  "serviceResourceName": "OBJECT_STORAGE_DAL05",
+  "vendorName": "Swift"
+}
+{
+  "accountId": 1187161,
+  "capacityGb": 0,
+  "createDate": "2017-02-19T15:00:52-06:00",
+  "guestId": null,
+  "hardwareId": null,
+  "hostId": null,
+  "id": 20273425,
+  "nasType": "HUB",
+  "password": "",
+  "serviceProviderId": 1,
+  "storageTypeId": "15",
+  "upgradableFlag": true,
+  "username": "SLOS1187161-3",
+  "serviceResourceBackendIpAddress": "https://dal05.objectstorage.service.networklayer.com/auth/v1.0/",
+  "serviceResourceName": "OBJECT_STORAGE_DAL05",
+  "vendorName": "Swift"
+}
+[root@spark1 ~]# swift -A https://dal05.objectstorage.service.networklayer.com/auth/v1.0/ -U SLOS1187161-3:SLOS1187161 -K 000000111111abcdef... list
+-bash: swift: command not found
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# sudo yum install python-setuptools
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Package python-setuptools-0.9.8-4.el7.noarch already installed and latest version
+Nothing to do
+[root@spark1 ~]# sudo easy_install pip
+Searching for pip
+Reading https://pypi.python.org/simple/pip/
+Best match: pip 9.0.1
+Downloading https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9
+Processing pip-9.0.1.tar.gz
+Writing /tmp/easy_install-dFJemA/pip-9.0.1/setup.cfg
+Running pip-9.0.1/setup.py -q bdist_egg --dist-dir /tmp/easy_install-dFJemA/pip-9.0.1/egg-dist-tmp-q13ACi
+/usr/lib64/python2.7/distutils/dist.py:267: UserWarning: Unknown distribution option: 'python_requires'
+  warnings.warn(msg)
+warning: no previously-included files found matching '.coveragerc'
+warning: no previously-included files found matching '.mailmap'
+warning: no previously-included files found matching '.travis.yml'
+warning: no previously-included files found matching '.landscape.yml'
+warning: no previously-included files found matching 'pip/_vendor/Makefile'
+warning: no previously-included files found matching 'tox.ini'
+warning: no previously-included files found matching 'dev-requirements.txt'
+warning: no previously-included files found matching 'appveyor.yml'
+no previously-included directories found matching '.github'
+no previously-included directories found matching '.travis'
+no previously-included directories found matching 'docs/_build'
+no previously-included directories found matching 'contrib'
+no previously-included directories found matching 'tasks'
+no previously-included directories found matching 'tests'
+Adding pip 9.0.1 to easy-install.pth file
+Installing pip script to /usr/bin
+Installing pip2.7 script to /usr/bin
+Installing pip2 script to /usr/bin
+
+Installed /usr/lib/python2.7/site-packages/pip-9.0.1-py2.7.egg
+Processing dependencies for pip
+Finished processing dependencies for pip
+[root@spark1 ~]# sudo pip install --upgrade setuptools
+Collecting setuptools
+  Downloading setuptools-34.2.0-py2.py3-none-any.whl (389kB)
+    100% |████████████████████████████████| 399kB 2.4MB/s 
+Collecting six>=1.6.0 (from setuptools)
+  Downloading six-1.10.0-py2.py3-none-any.whl
+Collecting appdirs>=1.4.0 (from setuptools)
+  Downloading appdirs-1.4.0-py2.py3-none-any.whl
+Collecting packaging>=16.8 (from setuptools)
+  Downloading packaging-16.8-py2.py3-none-any.whl
+Collecting pyparsing (from packaging>=16.8->setuptools)
+  Downloading pyparsing-2.1.10-py2.py3-none-any.whl (56kB)
+    100% |████████████████████████████████| 61kB 8.2MB/s 
+Installing collected packages: six, appdirs, pyparsing, packaging, setuptools
+  Found existing installation: setuptools 0.9.8
+    Uninstalling setuptools-0.9.8:
+      Successfully uninstalled setuptools-0.9.8
+Successfully installed appdirs-1.4.0 packaging-16.8 pyparsing-2.1.10 setuptools-34.2.0 six-1.10.0
+[root@spark1 ~]# sudo pip install python-swiftclient
+Collecting python-swiftclient
+  Downloading python_swiftclient-3.3.0-py2.py3-none-any.whl (72kB)
+    100% |████████████████████████████████| 81kB 4.8MB/s 
+Requirement already satisfied: six>=1.5.2 in /usr/lib/python2.7/site-packages (from python-swiftclient)
+Collecting futures>=3.0; python_version == "2.7" or python_version == "2.6" (from python-swiftclient)
+  Downloading futures-3.0.5-py2-none-any.whl
+Collecting requests>=1.1 (from python-swiftclient)
+  Downloading requests-2.13.0-py2.py3-none-any.whl (584kB)
+    100% |████████████████████████████████| 593kB 1.8MB/s 
+Installing collected packages: futures, requests, python-swiftclient
+Successfully installed futures-3.0.5 python-swiftclient-3.3.0 requests-2.13.0
+[root@spark1 ~]# swift -A https://dal05.objectstorage.service.networklayer.com/auth/v1.0/ -U SLOS1187161-3:SLOS1187161 -K 000000111111abcdef... list
+Auth GET failed: https://dal05.objectstorage.service.networklayer.com/auth/v1.0/ 401 Unauthorized  [first 60 chars of response] <html><h1>Unauthorized</h1><p>This server could not verify t
+Failed Transaction ID: tx320850a523be4a82b54ee-0058aa0a6f
+[root@spark1 ~]# swift -A https://dal05.objectstorage.service.networklayer.com/auth/v1.0/ -U SLOS1187161-3:SLOS1187161 -K 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f list
+Auth GET failed: https://dal05.objectstorage.service.networklayer.com/auth/v1.0/ 401 Unauthorized  [first 60 chars of response] <html><h1>Unauthorized</h1><p>This server could not verify t
+Failed Transaction ID: tx4bdda21835834302a4a93-0058aa0b8b
+[root@spark1 ~]# swift -A https://dal05.objectstorage.service.networklayer.com/auth/v1.0/ -U SLOS1187161-3:SLOS1187161 -K 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f... list
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# curl -i -H "X-Auth-User: SLOS1187161-3:SLOS118716 " -H "X-Auth-Key: 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f  " https://dal05.objectstorage.softlayer.net/auth/v1.0
+HTTP/1.1 401 Unauthorized
+Content-Length: 131
+Content-Type: text/html; charset=UTF-8
+Www-Authenticate: Swift realm="unknown"
+X-Trans-Id: txf76c3dc9d12b420ea712a-0058aa0d00
+Date: Sun, 19 Feb 2017 21:24:16 GMT
+
+<html><h1>Unauthorized</h1><p>This server could not verify that you are authorized to access the document you requested.</p></html>[root@spark1 ~]# cu " https://dal05.objectstorage.softlayer.net/auth/v1.0X-Auth-Key: 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f  
+HTTP/1.1 401 Unauthorized
+Content-Length: 131
+Content-Type: text/html; charset=UTF-8
+Www-Authenticate: Swift realm="unknown"
+X-Trans-Id: txd72bd41015a94e65a500f-0058aa0e16
+Date: Sun, 19 Feb 2017 21:28:55 GMT
+
+<html><h1>Unauthorized</h1><p>This server could not verify that you are authorized to access the document you requested.</p></html>[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# curl -i -H "X-Auth-User: SLOS1187161-3:SLOS118716 " -H "X-Auth-Key: 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f  " https://dal05.objectstorage.service.networklayer.com/auth/v1.0
+HTTP/1.1 401 Unauthorized
+Content-Length: 131
+Content-Type: text/html; charset=UTF-8
+Www-Authenticate: Swift realm="unknown"
+X-Trans-Id: tx4b0841177cb14c5c98412-0058aa0e64
+Date: Sun, 19 Feb 2017 21:30:12 GMT
+
+<html><h1>Unautho
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# curl -i -H "X-Auth-User: SLOS1187161-3:SLOS118716 " -H "X-Auth-Key: 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f  " https://dal05.objectstorage.service.networklayer.com/auth/v1.0
+HTTP/1.1 401 Unauthorized
+Content-Length: 131
+Content-Type: text/html; charset=UTF-8
+Www-Authenticate: Swift realm="unknown"
+X-Trans-Id: tx3003c815e8cf4f12a6623-0058aa0ebb
+Date: Sun, 19 Feb 2017 21:31:39 GMT
+
+<html><h1>Unauthorized</h1><p>This server could not verify that you are authorized to access the document you requested.</p></html>[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# curl -i -H "X-Auth-User: SLOS1187161-3:SL1187161 " -H "X-Auth-Key: 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f  " https://dal05.objectstorage.service.networklayer.com/auth/v1.0
+HTTP/1.1 200 OK
+Content-Length: 1757
+X-Auth-Token-Expires: 84494
+X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939
+X-Storage-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939
+X-Storage-Url: https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+Content-Type: application/json
+X-Trans-Id: txa845db1a0ff04b76a2bad-0058aa0f3a
+Date: Sun, 19 Feb 2017 21:33:46 GMT
+
+{"clusters": {"lon02": "https://lon02.objectstorage.service.networklayer.com/auth/v1.0", "syd01": "https://syd01.objectstorage.service.networklayer.com/auth/v1.0", "mon01": "https://mon01.objectstorage.service.networklayer.com/auth/v1.0", "dal05": "https://dal05.objectstorage.service.networklayer.com/auth/v1.0", "ams01": "https://ams01.objectstorage.service.networklayer.com/auth/v1.0", "osl01": "https://osl01.objectstorage.service.networklayer.com/auth/v1.0", "tor01": "https://tor01.objectstorage.service.networklayer.com/auth/v1.0", "hkg02": "https://hkg02.objectstorage.service.networklayer.com/auth/v1.0", "mex01": "https://mex01.objectstorage.service.networklayer.com/auth/v1.0", "par01": "https://par01.objectstorage.service.networklayer.com/auth/v1.0", "sjc01": "https://sjc01.objectstorage.service.networklayer.com/auth/v1.0", "mil01": "https://mil01.objectstorage.service.networklayer.com/auth/v1.0", "wdc": "https://wdc.objectstorage.service.networklayer.com/auth/v1.0", "fra02": "https://fra02.objectstorage.service.networklayer.com/auth/v1.0", "sng01": "https://sng01.objectstorage.service.networklayer.com/auth/v1.0", "seo01": "https://seo01.objectstorage.service.networklayer.com/auth/v1.0", "che01": "https://che01.objectstorage.service.networklayer.com/auth/v1.0", "sao01": "https://sao01.objectstorage.service.networklayer.com/auth/v1.0", "mel01": "https://mel01.objectstorage.service.networklayer.com/auth/v1.0", "tok02": "https://tok02.objectstorage.service.networklayer.com/auth/v1.0"}, "storage": {"default": "private", "public": "https://dal05.objectstorage.softlayer.net/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0", "private": "https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0"}}[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]#
+
+
+
+
+[root@spark1 ~]# curl -i -H "X-Auth-User: SLOS1187161-3:SL1187161 " -H "X-Auth-Key: 3d2ff55990eacb6b652bbe638b7e38fc30ee6f3f226eba1ca83fe5d1e1e4051f  " https://dal05.objectstorage.service.networklayer.com/auth/v1.0
+HTTP/1.1 200 OK
+Content-Length: 1757
+X-Auth-Token-Expires: 84494
+X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939
+X-Storage-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939
+X-Storage-Url: https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+Content-Type: application/json
+X-Trans-Id: txa845db1a0ff04b76a2bad-0058aa0f3a
+Date: Sun, 19 Feb 2017 21:33:46 GMT
+
+{"clusters": {"lon02": "https://lon02.objectstorage.service.networklayer.com/auth/v1.0", "syd01": "https://syd01.objectstorage.service.networklayer.com/auth/v1.0", "mon01": "https://mon01.objectstorage.service.networklayer.com/auth/v1.0", "dal05": "https://dal05.objectstorage.service.networklayer.com/auth/v1.0", "ams01": "https://ams01.objectstorage.service.networklayer.com/auth/v1.0", "osl01": "https://osl01.objectstorage.service.networklayer.com/auth/v1.0", "tor01": "https://tor01.objectstorage.service.networklayer.com/auth/v1.0", "hkg02": "https://hkg02.objectstorage.service.networklayer.com/auth/v1.0", "mex01": "https://mex01.objectstorage.service.networklayer.com/auth/v1.0", "par01": "https://par01.objectstorage.service.networklayer.com/auth/v1.0", "sjc01": "https://sjc01.objectstorage.service.networklayer.com/auth/v1.0", "mil01": "https://mil01.objectstorage.service.networklayer.com/auth/v1.0", "wdc": "https://wdc.objectstorage.service.networklayer.com/auth/v1.0", "fra02": "https://fra02.objectstorage.service.networklayer.com/auth/v1.0", "sng01": "https://sng01.objectstorage.service.networklayer.com/auth/v1.0", "seo01": "https://seo01.objectstorage.service.networklayer.com/auth/v1.0", "che01": "https://che01.objectstorage.service.networklayer.com/auth/v1.0", "sao01": "https://sao01.objectstorage.service.networklayer.com/auth/v1.0", "mel01": "https://mel01.objectstorage.service.networklayer.com/auth/v1.0", "tok02": "https://tok02.objectstorage.service.networklayer.com/auth/v1.0"}, "storage": {"default": "private", "public": "https://dal05.objectstorage.softlayer.net/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0", "private": "https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0"}}[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+
+
+
+
+
+
+
+
+
+
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# pwd
+/root
+[root@spark1 ~]# mkdir data
+[root@spark1 ~]# cd data
+[root@spark1 data]# wget -P ../download http://storage.googleapis.com/books/ngrams/books/googlebooks-eng-all-2gram-20090715-99.csv.zip
+--2017-02-19 16:38:09--  http://storage.googleapis.com/books/ngrams/books/googlebooks-eng-all-2gram-20090715-99.csv.zip
+Resolving storage.googleapis.com (storage.googleapis.com)... 216.58.193.80, 2607:f8b0:4005:804::2010
+Connecting to storage.googleapis.com (storage.googleapis.com)|216.58.193.80|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 276351745 (264M) [application/zip]
+Saving to: ‘../download/googlebooks-eng-all-2gram-20090715-99.csv.zip’
+
+100%[========================================================================================================================================>] 276,351,745 78.6MB/s   in 3.5s   
+
+2017-02-19 16:38:13 (75.1 MB/s) - ‘../download/googlebooks-eng-all-2gram-20090715-99.csv.zip’ saved [276351745/276351745]
+
+[root@spark1 data]# ls -la
+total 8
+drwxr-xr-x.  2 root root 4096 Feb 19 16:37 .
+dr-xr-x---. 10 root root 4096 Feb 19 16:38 ..
+[root@spark1 data]# ls -la
+total 8
+drwxr-xr-x.  2 root root 4096 Feb 19 16:37 .
+dr-xr-x---. 10 root root 4096 Feb 19 16:38 ..
+[root@spark1 data]# pwd
+/root/data
+[root@spark1 data]# cd ../download
+[root@spark1 download]# ls -la
+total 270152
+drwxr-xr-x.  2 root root      4096 Feb 19 16:38 .
+dr-xr-x---. 10 root root      4096 Feb 19 16:38 ..
+-rw-r--r--.  1 root root 276351745 Dec 21  2010 googlebooks-eng-all-2gram-20090715-99.csv.zip
+[root@spark1 download]# unzip googlebooks-eng-all-2gram-20090715-99.csv.zip 
+-bash: unzip: command not found
+[root@spark1 download]# which unzip
+/usr/bin/which: no unzip in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin)
+[root@spark1 download]# yum install unzip
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Resolving Dependencies
+--> Running transaction check
+---> Package unzip.x86_64 0:6.0-16.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+==================================================================================================================================================================================
+ Package                                  Arch                                      Version                                         Repository                               Size
+==================================================================================================================================================================================
+Installing:
+ unzip                                    x86_64                                    6.0-16.el7                                      base                                    169 k
+
+Transaction Summary
+==================================================================================================================================================================================
+Install  1 Package
+
+Total download size: 169 k
+Installed size: 365 k
+Is this ok [y/d/N]: y
+Downloading packages:
+unzip-6.0-16.el7.x86_64.rpm                                                                                                                                | 169 kB  00:00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : unzip-6.0-16.el7.x86_64                                                                                                                                        1/1 
+  Verifying  : unzip-6.0-16.el7.x86_64                                                                                                                                        1/1 
+
+Installed:
+  unzip.x86_64 0:6.0-16.el7                                                                                                                                                       
+
+Complete!
+[root@spark1 download]# which unzip
+/usr/bin/unzip
+[root@spark1 download]# unzip googlebooks-eng-all-2gram-20090715-99.csv.zip 
+Archive:  googlebooks-eng-all-2gram-20090715-99.csv.zip
+  inflating: googlebooks-eng-all-2gram-20090715-99.csv  
+[root@spark1 download]# ls -la
+total 1907272
+drwxr-xr-x.  2 root root       4096 Feb 19 16:40 .
+dr-xr-x---. 10 root root       4096 Feb 19 16:38 ..
+-rw-r--r--.  1 root root 1674767697 Dec 21  2010 googlebooks-eng-all-2gram-20090715-99.csv
+-rw-r--r--.  1 root root  276351745 Dec 21  2010 googlebooks-eng-all-2gram-20090715-99.csv.zip
+[root@spark1 download]# pwd
+/root/download
+[root@spark1 download]# cd ../scripts
+-bash: cd: ../scripts: No such file or directory
+[root@spark1 download]# cd ..
+[root@spark1 ~]# cd scripts
+-bash: cd: scripts: No such file or directory
+[root@spark1 ~]# mkdir scripts
+[root@spark1 ~]# cd scripts
+[root@spark1 scripts]# vi repeated_test.sh
+[root@spark1 scripts]# cp repeated_test.sh write_test.sh
+[root@spark1 scripts]# vi write_test.sh
+[root@spark1 scripts]# curl -i -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+HTTP/1.1 204 No Content
+Content-Length: 0
+Content-Type: text/plain; charset=utf-8
+X-Account-Object-Count: 0
+X-Timestamp: 1487538063.94168
+X-Account-Meta-Cdn-Id: 88715
+X-Account-Bytes-Used: 0
+X-Account-Container-Count: 0
+X-Account-Meta-Nas-Id: 20273425
+Accept-Ranges: bytes
+X-Trans-Id: tx2842cc1c7678427491be6-0058aa210d
+Date: Sun, 19 Feb 2017 22:49:49 GMT
+
+[root@spark1 scripts]# curl -i -XPUT -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1
+HTTP/1.1 201 Created
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+X-Trans-Id: txca5d446a6fbd4bee97f44-0058aa215d
+Date: Sun, 19 Feb 2017 22:51:09 GMT
+
+[root@spark1 scripts]# curl -i -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+HTTP/1.1 200 OK
+Content-Length: 11
+X-Account-Meta-Nas-Id: 20273425
+X-Account-Object-Count: 0
+X-Account-Storage-Policy-Standard-Container-Count: 1
+X-Timestamp: 1487538063.94168
+X-Account-Meta-Cdn-Id: 88715
+X-Account-Storage-Policy-Standard-Object-Count: 0
+X-Account-Bytes-Used: 0
+X-Account-Container-Count: 1
+Content-Type: text/plain; charset=utf-8
+Accept-Ranges: bytes
+X-Account-Storage-Policy-Standard-Bytes-Used: 0
+X-Trans-Id: tx94464498d50445319b8f2-0058aa2169
+Date: Sun, 19 Feb 2017 22:51:21 GMT
+
+container1
+[root@spark1 scripts]# curl -i -XPUT -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" --data-binary "Week 7 homework" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1/testfile.txt
+HTTP/1.1 201 Created
+Last-Modified: Sun, 19 Feb 2017 22:55:25 GMT
+Content-Length: 0
+Etag: 9a13815fa924d1beb98125080c726f11
+Content-Type: text/html; charset=UTF-8
+X-Trans-Id: txa9c832f6f18f46039abc0-0058aa225c
+Date: Sun, 19 Feb 2017 22:55:24 GMT
+
+[root@spark1 scripts]# curl -i -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" --data-binary "Week 7 homework" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1
+HTTP/1.1 204 No Content
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+X-Trans-Id: tx7773de1acdeb4758baef3-0058aa2295
+Date: Sun, 19 Feb 2017 22:56:21 GMT
+
+[root@spark1 scripts]# curl -i -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1
+HTTP/1.1 200 OK
+Content-Length: 13
+X-Container-Object-Count: 1
+Accept-Ranges: bytes
+X-Storage-Policy: standard
+X-Container-Bytes-Used: 15
+X-Timestamp: 1487544669.45813
+Content-Type: text/plain; charset=utf-8
+X-Trans-Id: tx10c35b3cdb1943cfba83f-0058aa22b9
+Date: Sun, 19 Feb 2017 22:56:57 GMT
+
+testfile.txt
+[root@spark1 scripts]# curl -i -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1/testfile.txt
+HTTP/1.1 200 OK
+Content-Length: 15
+Accept-Ranges: bytes
+Last-Modified: Sun, 19 Feb 2017 22:55:25 GMT
+Etag: 9a13815fa924d1beb98125080c726f11
+X-Timestamp: 1487544924.92910
+Content-Type: application/x-www-form-urlencoded
+X-Trans-Id: tx0a41a13f57424e6cac73e-0058aa22d2
+Date: Sun, 19 Feb 2017 22:57:22 GMT
+
+Week 7 homework[root@spark1 scriXPUT -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" --data-binary "Week 7 homework\n" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1/testfile.txt
+HTTP/1.1 201 Created
+Last-Modified: Sun, 19 Feb 2017 22:58:36 GMT
+Content-Length: 0
+Etag: 7076b25544c77482139391e05a19e185
+Content-Type: text/html; charset=UTF-8
+X-Trans-Id: txa9379c289e7b42abb5569-0058aa231b
+Date: Sun, 19 Feb 2017 22:58:35 GMT
+
+[root@spark1 scripts]# curl -i -H "X-Auth-Token: AUTH_tk87f94aefd6074dd29ae2636e2fc42939" https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1/testfile.txt
+HTTP/1.1 200 OK
+Content-Length: 17
+Accept-Ranges: bytes
+Last-Modified: Sun, 19 Feb 2017 22:58:41 GMT
+Etag: 7076b25544c77482139391e05a19e185
+X-Timestamp: 1487545120.74638
+Content-Type: application/x-www-form-urlencoded
+X-Trans-Id: txe2ff6a6fdc4d4dd6a8b3a-0058aa232b
+Date: Sun, 19 Feb 2017 22:58:51 GMT
+
+Week 7 homework\n[root@spark1 scripts]#
+
+
+
+
+
+
+
+
+
+
+
+
+
+[root@spark1 scripts]# ./write_test.sh
+Uploading google file into S3: Iteration 0
+File size is :  1674767697 bytes
+Iteration 0 Write start timestamp is : 1487576413
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+Iteration 0 Write end time is : 1487576584
+Time for this Iteration 0 WRITE is :  171 seconds (rounded)
+File WRITE rate is  9 Mbytes/sec
+ 
+ 
+Iteration 0 Read start timestamp is : 1487576584
+testfile.txt [auth 0.000s, headers 0.188s, total 0.188s, 0.000 MB/s]
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.187s, total 43.673s, 38.348 MB/s]
+Iteration 0 Read end timestamp is : 1487576631
+Time for this Iteration 0 READ is :  47 seconds (rounded)
+File READ rate is  35 Mbytes/sec
+ 
+ 
+Uploading google file into S3: Iteration 1
+File size is :  1674767697 bytes
+Iteration 1 Write start timestamp is : 1487576631
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+Iteration 1 Write end time is : 1487577027
+Time for this Iteration 1 WRITE is :  396 seconds (rounded)
+File WRITE rate is  4 Mbytes/sec
+ 
+ 
+Iteration 1 Read start timestamp is : 1487577027
+testfile.txt [auth 0.000s, headers 0.190s, total 0.190s, 0.000 MB/s]
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.195s, total 44.629s, 37.526 MB/s]
+Iteration 1 Read end timestamp is : 1487577072
+Time for this Iteration 1 READ is :  45 seconds (rounded)
+File READ rate is  37 Mbytes/sec
+ 
+ 
+Uploading google file into S3: Iteration 2
+File size is :  1674767697 bytes
+Iteration 2 Write start timestamp is : 1487577072
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+Iteration 2 Write end time is : 1487577275
+Time for this Iteration 2 WRITE is :  203 seconds (rounded)
+File WRITE rate is  8 Mbytes/sec
+ 
+ 
+Iteration 2 Read start timestamp is : 1487577275
+testfile.txt [auth 0.000s, headers 0.189s, total 0.190s, 0.000 MB/s]
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.187s, total 43.691s, 38.332 MB/s]
+Iteration 2 Read end timestamp is : 1487577319
+Time for this Iteration 2 READ is :  44 seconds (rounded)
+File READ rate is  38 Mbytes/sec
+
+'
+
+
+
+
+
+
+
+
+
+
+
+PARALLEL THREADS
+
+
+
+
+[root@spark1 scripts]# swift delete container1 testfile.txt  --os-auth-token AUTH_tk87f94aefd6074dd29ae2636e2fc42939  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0
+testfile.txt
+[root@spark1 scripts]# swift --os-auth-token AUTH_tk87f94aefd6074dd29ae2636e2fc42939  --os-storage-url https://dal05.objectstorage.service.networklayer.com/v1/AUTH_f8514a61-4c41-4f52-a413-b2e308db0da0/container1 list
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+[root@spark1 scripts]# ./write_test.sh &
+[1] 15198
+[root@spark1 scripts]# Uploading google file into SL Object Store: Iteration 0
+File size is :  1674767697 bytes
+Iteration 0 Write start timestamp is : 1487578054
+./write_test.sh &
+[2] 15209
+[root@spark1 scripts]# Uploading google file into SL Object Store: Iteration 0
+File size is :  1674767697 bytes
+Iteration 0 Write start timestamp is : 1487578059
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+Iteration 0 Write end time is : 1487578327
+Time for this Iteration 0 WRITE is :  268 seconds (rounded)
+File WRITE rate is  6 Mbytes/sec
+ 
+ 
+Iteration 0 Read start timestamp is : 1487578327
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.289s, total 62.315s, 26.876 MB/s]
+Iteration 0 Read end timestamp is : 1487578390
+Time for this Iteration 0 READ is :  63 seconds (rounded)
+File READ rate is  26 Mbytes/sec
+ 
+ 
+Uploading google file into SL Object Store: Iteration 1
+File size is :  1674767697 bytes
+Iteration 1 Write start timestamp is : 1487578390
+../download/googlebooks-eng-all-2gram-20090715-99.csv [after 2 attempts]
+Iteration 0 Write end time is : 1487578615
+Time for this Iteration 0 WRITE is :  561 seconds (rounded)
+File WRITE rate is  2 Mbytes/sec
+ 
+ 
+Iteration 0 Read start timestamp is : 1487578615
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.215s, total 62.362s, 26.856 MB/s]
+Iteration 0 Read end timestamp is : 1487578678
+Time for this Iteration 0 READ is :  63 seconds (rounded)
+File READ rate is  26 Mbytes/sec
+ 
+ 
+Uploading google file into SL Object Store: Iteration 1
+File size is :  1674767697 bytes
+Iteration 1 Write start timestamp is : 1487578678
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+Iteration 1 Write end time is : 1487578891
+Time for this Iteration 1 WRITE is :  213 seconds (rounded)
+File WRITE rate is  7 Mbytes/sec
+ 
+ 
+Iteration 1 Read start timestamp is : 1487578891
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.212s, total 62.094s, 26.971 MB/s]
+Iteration 1 Read end timestamp is : 1487578954
+Time for this Iteration 1 READ is :  63 seconds (rounded)
+File READ rate is  26 Mbytes/sec
+ 
+ 
+Uploading google file into SL Object Store: Iteration 2
+File size is :  1674767697 bytes
+Iteration 2 Write start timestamp is : 1487578954
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+Iteration 2 Write end time is : 1487579177
+Time for this Iteration 2 WRITE is :  223 seconds (rounded)
+File WRITE rate is  7 Mbytes/sec
+ 
+ 
+Iteration 2 Read start timestamp is : 1487579177
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.188s, total 45.683s, 36.661 MB/s]
+Iteration 2 Read end timestamp is : 1487579223
+Time for this Iteration 2 READ is :  46 seconds (rounded)
+File READ rate is  36 Mbytes/sec
+ 
+ 
+Uploading google file into SL Object Store: Iteration 3
+File size is :  1674767697 bytes
+Iteration 3 Write start timestamp is : 1487579223
+../download/googlebooks-eng-all-2gram-20090715-99.csv [after 4 attempts]
+Iteration 1 Write end time is : 1487579529
+Time for this Iteration 1 WRITE is :  1139 seconds (rounded)
+File WRITE rate is  1 Mbytes/sec
+ 
+ 
+Iteration 1 Read start timestamp is : 1487579529
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.196s, total 45.046s, 37.179 MB/s]
+Iteration 1 Read end timestamp is : 1487579575
+Time for this Iteration 1 READ is :  46 seconds (rounded)
+File READ rate is  36 Mbytes/sec
+ 
+ 
+Uploading google file into SL Object Store: Iteration 2
+File size is :  1674767697 bytes
+Iteration 2 Write start timestamp is : 1487579575
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+Iteration 2 Write end time is : 1487579870
+Time for this Iteration 2 WRITE is :  295 seconds (rounded)
+File WRITE rate is  5 Mbytes/sec
+ 
+ 
+Iteration 2 Read start timestamp is : 1487579870
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 0.293s, total 61.701s, 27.143 MB/s]
+Iteration 2 Read end timestamp is : 1487579938
+Time for this Iteration 2 READ is :  68 seconds (rounded)
+File READ rate is  24 Mbytes/sec
+ 
+ 
+Uploading google file into SL Object Store: Iteration 3
+File size is :  1674767697 bytes
+Iteration 3 Write start timestamp is : 1487579938
+../download/googlebooks-eng-all-2gram-20090715-99.csv
+Iteration 3 Write end time is : 1487580246
+Time for this Iteration 3 WRITE is :  308 seconds (rounded)
+File WRITE rate is  5 Mbytes/sec
+ 
+ 
+Iteration 3 Read start timestamp is : 1487580246
+../download/googlebooks-eng-all-2gram-20090715-99.csv [auth 0.000s, headers 5.302s, total 48.689s, 34.397 MB/s]
+Iteration 3 Read end timestamp is : 1487580296
+Time for this Iteration 3 READ is :  50 seconds (rounded)
+File READ rate is  33 Mbytes/sec
+ 
+ 
+Uploading google file into SL Object Store: Iteration 4
+File size is :  1674767697 bytes
+Iteration 4 Write start timestamp is : 1487580296
+^C
+[root@spark1 scripts]# ^C
+[root@spark1 scripts]# 
+

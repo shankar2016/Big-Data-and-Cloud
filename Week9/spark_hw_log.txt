@@ -1,0 +1,591 @@
+iMac:~ NatarajanShankar$ slcli vs create -d sjc01 --os CENTOS_7 --cpu 2 --memory 4096 --disk 100 --hostname spark2 --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 29023537                             :
+: created : 2017-03-04T09:15:13-06:00            :
+:    guid : 59aec287-b0fe-4d45-b769-958b5fea9be5 :
+:.........:......................................:
+iMac:~ NatarajanShankar$ slcli vs create -d sjc01 --os CENTOS_7 --cpu 2 --memory 4096 --disk 100 --hostname spark3 --domain shankar.net --key RSASL
+This action will incur charges on your account. Continue? [y/N]: y
+:.........:......................................:
+:    name : value                                :
+:.........:......................................:
+:      id : 29023553                             :
+: created : 2017-03-04T09:17:10-06:00            :
+:    guid : c5545307-782b-4080-8643-afb75e8c6579 :
+:.........:......................................:
+iMac:~ NatarajanShankar$
+
+
+
+iMac:~ NatarajanShankar$ slcli vs list
+:..........:..........:.................:................:............:........:
+:    id    : hostname :    primary_ip   :   backend_ip   : datacenter : action :
+:..........:..........:.................:................:............:........:
+: 28570419 :  spark1  :  169.53.128.114 : 10.122.149.194 :   sjc01    :   -    :
+: 29023537 :  spark2  : 108.168.231.202 :  10.91.63.112  :   sjc01    :   -    :
+: 29023553 :  spark3  : 108.168.231.203 :  10.91.63.123  :   sjc01    :   -    :
+:..........:..........:.................:................:............:........:
+iMac:~ NatarajanShankar$
+
+
+
+
+
+iMac:~ NatarajanShankar$ slcli vs credentials 28570419
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : CVTfB8Hz :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 29023537
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : CpQxH688 :
+:..........:..........:
+iMac:~ NatarajanShankar$ slcli vs credentials 29023553
+:..........:..........:
+: username : password :
+:..........:..........:
+:   root   : J6GSwaxB :
+:..........:..........:
+iMac:~ NatarajanShankar$
+
+
+
+
+
+
+iMac:~ NatarajanShankar$ ssh root@169.53.128.114
+root@169.53.128.114's password: 
+Permission denied, please try again.
+root@169.53.128.114's password: 
+Last failed login: Sat Mar  4 09:29:28 CST 2017 from c-73-223-185-251.hsd1.ca.comcast.net on ssh:notty
+There were 93958 failed login attempts since the last successful login.
+Last login: Tue Feb 21 16:46:09 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# 
+[root@spark1 ~]# vi /etc/hosts
+[root@spark1 ~]# ping spark2
+PING spark2.shankar.net (10.91.63.112) 56(84) bytes of data.
+64 bytes from spark2.shankar.net (10.91.63.112): icmp_seq=1 ttl=61 time=0.867 ms
+64 bytes from spark2.shankar.net (10.91.63.112): icmp_seq=2 ttl=61 time=0.721 ms
+64 bytes from spark2.shankar.net (10.91.63.112): icmp_seq=3 ttl=61 time=0.660 ms
+64 bytes from spark2.shankar.net (10.91.63.112): icmp_seq=4 ttl=61 time=0.538 ms
+^C
+--- spark2.shankar.net ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3000ms
+rtt min/avg/max/mdev = 0.538/0.696/0.867/0.121 ms
+[root@spark1 ~]# ping spark3
+PING spark3.shankar.net (10.91.63.123) 56(84) bytes of data.
+64 bytes from spark3.shankar.net (10.91.63.123): icmp_seq=1 ttl=61 time=0.695 ms
+64 bytes from spark3.shankar.net (10.91.63.123): icmp_seq=2 ttl=61 time=0.454 ms
+64 bytes from spark3.shankar.net (10.91.63.123): icmp_seq=3 ttl=61 time=0.537 ms
+64 bytes from spark3.shankar.net (10.91.63.123): icmp_seq=4 ttl=61 time=0.551 ms
+64 bytes from spark3.shankar.net (10.91.63.123): icmp_seq=5 ttl=61 time=0.676 ms
+^C
+--- spark3.shankar.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4000ms
+rtt min/avg/max/mdev = 0.454/0.582/0.695/0.094 ms
+[root@spark1 ~]# ssh root@spark2
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+The ECDSA host key for spark2 has changed,
+and the key for the corresponding IP address 10.91.63.112
+is unknown. This could either mean that
+DNS SPOOFING is happening or the IP address for the host
+and its host key have changed at the same time.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ECDSA key sent by the remote host is
+33:8a:c5:a0:80:c5:a9:55:11:f3:c5:f6:59:0d:cb:6f.
+Please contact your system administrator.
+Add correct host key in /root/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /root/.ssh/known_hosts:1
+ECDSA host key for spark2 has changed and you have requested strict checking.
+Host key verification failed.
+[root@spark1 ~]# cd ~/.ssh
+[root@spark1 .ssh]# ls -la
+total 20
+drwxr-xr-x.  2 root root 4096 Feb 18 12:08 .
+dr-xr-x---. 11 root root 4096 Feb 19 16:43 ..
+-rw-------.  1 root root  504 Feb 18 12:03 authorized_keys
+-rwx------.  1 root root 1675 Feb 18 12:07 id_rsa
+-rw-r--r--.  1 root root  549 Feb 18 12:30 known_hosts
+[root@spark1 .ssh]# vi id_rsa
+[root@spark1 .ssh]# ssh root@spark2
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@       WARNING: POSSIBLE DNS SPOOFING DETECTED!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+The ECDSA host key for spark2 has changed,
+and the key for the corresponding IP address 10.91.63.112
+is unknown. This could either mean that
+DNS SPOOFING is happening or the IP address for the host
+and its host key have changed at the same time.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ECDSA key sent by the remote host is
+33:8a:c5:a0:80:c5:a9:55:11:f3:c5:f6:59:0d:cb:6f.
+Please contact your system administrator.
+Add correct host key in /root/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /root/.ssh/known_hosts:1
+ECDSA host key for spark2 has changed and you have requested strict checking.
+Host key verification failed.
+[root@spark1 .ssh]# vi /root/.ssh/known_hosts 
+[root@spark1 .ssh]# ssh root@spark2
+The authenticity of host 'spark2 (10.91.63.112)' can't be established.
+ECDSA key fingerprint is 33:8a:c5:a0:80:c5:a9:55:11:f3:c5:f6:59:0d:cb:6f.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'spark2,10.91.63.112' (ECDSA) to the list of known hosts.
+Last login: Sat Mar  4 09:29:54 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@spark2 ~]# exir
+-bash: exir: command not found
+[root@spark2 ~]# exit
+logout
+Connection to spark2 closed.
+[root@spark1 .ssh]# ssh root@spark3
+The authenticity of host 'spark3 (10.91.63.123)' can't be established.
+ECDSA key fingerprint is 99:30:6b:58:17:c2:fd:af:0f:c8:5c:ca:3c:74:07:ab.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'spark3,10.91.63.123' (ECDSA) to the list of known hosts.
+Last login: Sat Mar  4 09:30:41 2017 from c-73-223-185-251.hsd1.ca.comcast.net
+[root@spark3 ~]# exit
+logout
+Connection to spark3 closed.
+[root@spark1 .ssh]# echo export JAVA_HOME=\"$(readlink -f $(which java) | grep -oP '.*(?=/bin)')\" >> /root/.bash_profile
+[root@spark1 .ssh]# source /root/.bash_profile
+[root@spark1 .ssh]# $JAVA_HOME/bin/java -version
+openjdk version "1.8.0_121"
+OpenJDK Runtime Environment (build 1.8.0_121-b13)
+OpenJDK 64-Bit Server VM (build 25.121-b13, mixed mode)
+[root@spark1 .ssh]# curl http://www.gtlib.gatech.edu/pub/apache/spark/spark-1.6.2/spark-1.6.2-bin-hadoop2.6.tgz | tar -zx -C /usr/local --show-transformed --transform='s,/*[^/]*,spark,'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  265M  100  265M    0     0  16.8M      0  0:00:15  0:00:15 --:--:-- 17.6M
+[root@spark1 .ssh]# echo export SPARK_HOME=\"/usr/local/spark\" >> /root/.bash_profile
+[root@spark1 .ssh]# source /root/.bash_profile
+[root@spark1 .ssh]# vi $SPARK_HOME/conf/slaves
+[root@spark1 .ssh]# !!
+vi $SPARK_HOME/conf/slaves
+[root@spark1 .ssh]# $SPARK_HOME/sbin/start-master.sh
+starting org.apache.spark.deploy.master.Master, logging to /usr/local/spark/logs/spark-root-org.apache.spark.deploy.master.Master-1-spark1.shankar.net.out
+[root@spark1 .ssh]# $SPARK_HOME/sbin/start-slaves.sh
+spark1: Warning: Permanently added the ECDSA host key for IP address '10.122.149.194' to the list of known hosts.
+spark1: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark1.shankar.net.out
+spark3: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark3.shankar.net.out
+spark2: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark2.shankar.net.out
+[root@spark1 .ssh]# $SPARK_HOME/bin/run-example SparkPi
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+17/03/04 12:35:41 INFO SparkContext: Running Spark version 1.6.2
+17/03/04 12:35:41 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17/03/04 12:35:42 INFO SecurityManager: Changing view acls to: root
+17/03/04 12:35:42 INFO SecurityManager: Changing modify acls to: root
+17/03/04 12:35:42 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(root); users with modify permissions: Set(root)
+17/03/04 12:35:42 INFO Utils: Successfully started service 'sparkDriver' on port 46864.
+17/03/04 12:35:42 INFO Slf4jLogger: Slf4jLogger started
+17/03/04 12:35:42 INFO Remoting: Starting remoting
+17/03/04 12:35:43 INFO Utils: Successfully started service 'sparkDriverActorSystem' on port 40580.
+17/03/04 12:35:43 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@10.122.149.194:40580]
+17/03/04 12:35:43 INFO SparkEnv: Registering MapOutputTracker
+17/03/04 12:35:43 INFO SparkEnv: Registering BlockManagerMaster
+17/03/04 12:35:43 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-c679f0e2-302d-4f46-9ffb-2ce815c0c33c
+17/03/04 12:35:43 INFO MemoryStore: MemoryStore started with capacity 511.1 MB
+17/03/04 12:35:43 INFO SparkEnv: Registering OutputCommitCoordinator
+17/03/04 12:35:43 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+17/03/04 12:35:43 INFO SparkUI: Started SparkUI at http://10.122.149.194:4040
+17/03/04 12:35:43 INFO HttpFileServer: HTTP File server directory is /tmp/spark-c2621843-fd8d-44f4-95ef-b5e0b25a9e68/httpd-ee081c05-96a2-4800-87e4-1afcd856bc3d
+17/03/04 12:35:43 INFO HttpServer: Starting HTTP Server
+17/03/04 12:35:43 INFO Utils: Successfully started service 'HTTP file server' on port 40594.
+17/03/04 12:35:43 INFO SparkContext: Added JAR file:/usr/local/spark/lib/spark-examples-1.6.2-hadoop2.6.0.jar at http://10.122.149.194:40594/jars/spark-examples-1.6.2-hadoop2.6.0.jar with timestamp 1488652543724
+17/03/04 12:35:43 INFO Executor: Starting executor ID driver on host localhost
+17/03/04 12:35:43 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 38824.
+17/03/04 12:35:43 INFO NettyBlockTransferService: Server created on 38824
+17/03/04 12:35:43 INFO BlockManagerMaster: Trying to register BlockManager
+17/03/04 12:35:43 INFO BlockManagerMasterEndpoint: Registering block manager localhost:38824 with 511.1 MB RAM, BlockManagerId(driver, localhost, 38824)
+17/03/04 12:35:43 INFO BlockManagerMaster: Registered BlockManager
+17/03/04 12:35:44 INFO SparkContext: Starting job: reduce at SparkPi.scala:36
+17/03/04 12:35:44 INFO DAGScheduler: Got job 0 (reduce at SparkPi.scala:36) with 2 output partitions
+17/03/04 12:35:44 INFO DAGScheduler: Final stage: ResultStage 0 (reduce at SparkPi.scala:36)
+17/03/04 12:35:44 INFO DAGScheduler: Parents of final stage: List()
+17/03/04 12:35:44 INFO DAGScheduler: Missing parents: List()
+17/03/04 12:35:44 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[1] at map at SparkPi.scala:32), which has no missing parents
+17/03/04 12:35:44 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 1904.0 B, free 1904.0 B)
+17/03/04 12:35:44 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 1218.0 B, free 3.0 KB)
+17/03/04 12:35:44 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on localhost:38824 (size: 1218.0 B, free: 511.1 MB)
+17/03/04 12:35:44 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1006
+17/03/04 12:35:44 INFO DAGScheduler: Submitting 2 missing tasks from ResultStage 0 (MapPartitionsRDD[1] at map at SparkPi.scala:32)
+17/03/04 12:35:44 INFO TaskSchedulerImpl: Adding task set 0.0 with 2 tasks
+17/03/04 12:35:44 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, localhost, partition 0,PROCESS_LOCAL, 2157 bytes)
+17/03/04 12:35:44 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, localhost, partition 1,PROCESS_LOCAL, 2157 bytes)
+17/03/04 12:35:44 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+17/03/04 12:35:44 INFO Executor: Fetching http://10.122.149.194:40594/jars/spark-examples-1.6.2-hadoop2.6.0.jar with timestamp 1488652543724
+17/03/04 12:35:44 INFO Executor: Running task 1.0 in stage 0.0 (TID 1)
+17/03/04 12:35:44 INFO Utils: Fetching http://10.122.149.194:40594/jars/spark-examples-1.6.2-hadoop2.6.0.jar to /tmp/spark-c2621843-fd8d-44f4-95ef-b5e0b25a9e68/userFiles-b84b0866-b30a-4fb5-b05d-b4c7bad32890/fetchFileTemp8154235174042773592.tmp
+17/03/04 12:35:45 INFO Executor: Adding file:/tmp/spark-c2621843-fd8d-44f4-95ef-b5e0b25a9e68/userFiles-b84b0866-b30a-4fb5-b05d-b4c7bad32890/spark-examples-1.6.2-hadoop2.6.0.jar to class loader
+17/03/04 12:35:45 INFO Executor: Finished task 1.0 in stage 0.0 (TID 1). 1031 bytes result sent to driver
+17/03/04 12:35:45 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 1031 bytes result sent to driver
+17/03/04 12:35:45 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 546 ms on localhost (1/2)
+17/03/04 12:35:45 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 587 ms on localhost (2/2)
+17/03/04 12:35:45 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+17/03/04 12:35:45 INFO DAGScheduler: ResultStage 0 (reduce at SparkPi.scala:36) finished in 0.603 s
+17/03/04 12:35:45 INFO DAGScheduler: Job 0 finished: reduce at SparkPi.scala:36, took 0.865409 s
+Pi is roughly 3.14344
+17/03/04 12:35:45 INFO SparkUI: Stopped Spark web UI at http://10.122.149.194:4040
+17/03/04 12:35:45 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+17/03/04 12:35:45 INFO MemoryStore: MemoryStore cleared
+17/03/04 12:35:45 INFO BlockManager: BlockManager stopped
+17/03/04 12:35:45 INFO BlockManagerMaster: BlockManagerMaster stopped
+17/03/04 12:35:45 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+17/03/04 12:35:45 INFO RemoteActorRefProvider$RemotingTerminator: Shutting down remote daemon.
+17/03/04 12:35:45 INFO RemoteActorRefProvider$RemotingTerminator: Remote daemon shut down; proceeding with flushing remote transports.
+17/03/04 12:35:45 INFO SparkContext: Successfully stopped SparkContext
+17/03/04 12:35:45 INFO ShutdownHookManager: Shutdown hook called
+17/03/04 12:35:45 INFO ShutdownHookManager: Deleting directory /tmp/spark-c2621843-fd8d-44f4-95ef-b5e0b25a9e68/httpd-ee081c05-96a2-4800-87e4-1afcd856bc3d
+17/03/04 12:35:45 INFO RemoteActorRefProvider$RemotingTerminator: Remoting shut down.
+17/03/04 12:35:45 INFO ShutdownHookManager: Deleting directory /tmp/spark-c2621843-fd8d-44f4-95ef-b5e0b25a9e68
+[root@spark1 .ssh]# $SPARK_HOME/bin/spark-submit $SPARK_HOME/examples/src/main/python/pi.py
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+17/03/04 12:36:13 INFO SparkContext: Running Spark version 1.6.2
+17/03/04 12:36:13 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17/03/04 12:36:13 INFO SecurityManager: Changing view acls to: root
+17/03/04 12:36:13 INFO SecurityManager: Changing modify acls to: root
+17/03/04 12:36:13 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(root); users with modify permissions: Set(root)
+17/03/04 12:36:13 INFO Utils: Successfully started service 'sparkDriver' on port 44449.
+17/03/04 12:36:14 INFO Slf4jLogger: Slf4jLogger started
+17/03/04 12:36:14 INFO Remoting: Starting remoting
+17/03/04 12:36:14 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@10.122.149.194:42397]
+17/03/04 12:36:14 INFO Utils: Successfully started service 'sparkDriverActorSystem' on port 42397.
+17/03/04 12:36:14 INFO SparkEnv: Registering MapOutputTracker
+17/03/04 12:36:14 INFO SparkEnv: Registering BlockManagerMaster
+17/03/04 12:36:14 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-e30988b7-c89d-4a88-96eb-29b438ef31f3
+17/03/04 12:36:14 INFO MemoryStore: MemoryStore started with capacity 511.1 MB
+17/03/04 12:36:14 INFO SparkEnv: Registering OutputCommitCoordinator
+17/03/04 12:36:14 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+17/03/04 12:36:14 INFO SparkUI: Started SparkUI at http://10.122.149.194:4040
+17/03/04 12:36:14 INFO Utils: Copying /usr/local/spark/examples/src/main/python/pi.py to /tmp/spark-9e17038c-fb58-40ed-b486-b85e8dadfff6/userFiles-372a2208-ef5e-44aa-801d-019cabdf164b/pi.py
+17/03/04 12:36:14 INFO SparkContext: Added file file:/usr/local/spark/examples/src/main/python/pi.py at file:/usr/local/spark/examples/src/main/python/pi.py with timestamp 1488652574739
+17/03/04 12:36:14 INFO Executor: Starting executor ID driver on host localhost
+17/03/04 12:36:14 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 45375.
+17/03/04 12:36:14 INFO NettyBlockTransferService: Server created on 45375
+17/03/04 12:36:14 INFO BlockManagerMaster: Trying to register BlockManager
+17/03/04 12:36:14 INFO BlockManagerMasterEndpoint: Registering block manager localhost:45375 with 511.1 MB RAM, BlockManagerId(driver, localhost, 45375)
+17/03/04 12:36:14 INFO BlockManagerMaster: Registered BlockManager
+17/03/04 12:36:15 INFO SparkContext: Starting job: reduce at /usr/local/spark/examples/src/main/python/pi.py:39
+17/03/04 12:36:15 INFO DAGScheduler: Got job 0 (reduce at /usr/local/spark/examples/src/main/python/pi.py:39) with 2 output partitions
+17/03/04 12:36:15 INFO DAGScheduler: Final stage: ResultStage 0 (reduce at /usr/local/spark/examples/src/main/python/pi.py:39)
+17/03/04 12:36:15 INFO DAGScheduler: Parents of final stage: List()
+17/03/04 12:36:15 INFO DAGScheduler: Missing parents: List()
+17/03/04 12:36:15 INFO DAGScheduler: Submitting ResultStage 0 (PythonRDD[1] at reduce at /usr/local/spark/examples/src/main/python/pi.py:39), which has no missing parents
+17/03/04 12:36:15 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 4.0 KB, free 4.0 KB)
+17/03/04 12:36:15 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 2.7 KB, free 6.7 KB)
+17/03/04 12:36:15 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on localhost:45375 (size: 2.7 KB, free: 511.1 MB)
+17/03/04 12:36:15 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1006
+17/03/04 12:36:15 INFO DAGScheduler: Submitting 2 missing tasks from ResultStage 0 (PythonRDD[1] at reduce at /usr/local/spark/examples/src/main/python/pi.py:39)
+17/03/04 12:36:15 INFO TaskSchedulerImpl: Adding task set 0.0 with 2 tasks
+17/03/04 12:36:15 WARN TaskSetManager: Stage 0 contains a task of very large size (365 KB). The maximum recommended task size is 100 KB.
+17/03/04 12:36:15 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, localhost, partition 0,PROCESS_LOCAL, 374521 bytes)
+17/03/04 12:36:15 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, localhost, partition 1,PROCESS_LOCAL, 502324 bytes)
+17/03/04 12:36:15 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+17/03/04 12:36:15 INFO Executor: Fetching file:/usr/local/spark/examples/src/main/python/pi.py with timestamp 1488652574739
+17/03/04 12:36:15 INFO Executor: Running task 1.0 in stage 0.0 (TID 1)
+17/03/04 12:36:15 INFO Utils: /usr/local/spark/examples/src/main/python/pi.py has been previously copied to /tmp/spark-9e17038c-fb58-40ed-b486-b85e8dadfff6/userFiles-372a2208-ef5e-44aa-801d-019cabdf164b/pi.py
+17/03/04 12:36:16 INFO PythonRunner: Times: total = 300, boot = 174, init = 10, finish = 116
+17/03/04 12:36:16 INFO Executor: Finished task 1.0 in stage 0.0 (TID 1). 998 bytes result sent to driver
+17/03/04 12:36:16 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 412 ms on localhost (1/2)
+17/03/04 12:36:16 INFO PythonRunner: Times: total = 400, boot = 187, init = 27, finish = 186
+17/03/04 12:36:16 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 998 bytes result sent to driver
+17/03/04 12:36:16 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 523 ms on localhost (2/2)
+17/03/04 12:36:16 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+17/03/04 12:36:16 INFO DAGScheduler: ResultStage 0 (reduce at /usr/local/spark/examples/src/main/python/pi.py:39) finished in 0.538 s
+17/03/04 12:36:16 INFO DAGScheduler: Job 0 finished: reduce at /usr/local/spark/examples/src/main/python/pi.py:39, took 0.754579 s
+Pi is roughly 3.135760
+17/03/04 12:36:16 INFO SparkUI: Stopped Spark web UI at http://10.122.149.194:4040
+17/03/04 12:36:16 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+17/03/04 12:36:16 INFO MemoryStore: MemoryStore cleared
+17/03/04 12:36:16 INFO BlockManager: BlockManager stopped
+17/03/04 12:36:16 INFO BlockManagerMaster: BlockManagerMaster stopped
+17/03/04 12:36:16 INFO RemoteActorRefProvider$RemotingTerminator: Shutting down remote daemon.
+17/03/04 12:36:16 INFO RemoteActorRefProvider$RemotingTerminator: Remote daemon shut down; proceeding with flushing remote transports.
+17/03/04 12:36:16 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+17/03/04 12:36:16 INFO SparkContext: Successfully stopped SparkContext
+17/03/04 12:36:16 INFO RemoteActorRefProvider$RemotingTerminator: Remoting shut down.
+17/03/04 12:36:17 INFO ShutdownHookManager: Shutdown hook called
+17/03/04 12:36:17 INFO ShutdownHookManager: Deleting directory /tmp/spark-9e17038c-fb58-40ed-b486-b85e8dadfff6/pyspark-ee366ed1-e719-4012-9985-79464996a226
+17/03/04 12:36:17 INFO ShutdownHookManager: Deleting directory /tmp/spark-9e17038c-fb58-40ed-b486-b85e8dadfff6
+[root@spark1 .ssh]# $SPARK_HOME/bin/spark-shell
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+Using Spark's repl log4j profile: org/apache/spark/log4j-defaults-repl.properties
+To adjust logging level use sc.setLogLevel("INFO")
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 1.6.2
+      /_/
+
+Using Scala version 2.10.5 (OpenJDK 64-Bit Server VM, Java 1.8.0_121)
+Type in expressions to have them evaluated.
+Type :help for more information.
+Spark context available as sc.
+17/03/04 12:36:46 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/03/04 12:36:46 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/03/04 12:36:50 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+17/03/04 12:36:50 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+17/03/04 12:36:51 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/03/04 12:36:51 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/03/04 12:36:54 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+17/03/04 12:36:55 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+SQL context available as sqlContext.
+
+scala> val textFile = sc.textFile("README.md")
+textFile: org.apache.spark.rdd.RDD[String] = README.md MapPartitionsRDD[1] at textFile at <console>:27
+
+scala> textFile.count()
+org.apache.hadoop.mapred.InvalidInputException: Input path does not exist: file:/root/.ssh/README.md
+	at org.apache.hadoop.mapred.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:285)
+	at org.apache.hadoop.mapred.FileInputFormat.listStatus(FileInputFormat.java:228)
+	at org.apache.hadoop.mapred.FileInputFormat.getSplits(FileInputFormat.java:313)
+	at org.apache.spark.rdd.HadoopRDD.getPartitions(HadoopRDD.scala:199)
+	at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)
+	at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)
+	at scala.Option.getOrElse(Option.scala:120)
+	at org.apache.spark.rdd.RDD.partitions(RDD.scala:237)
+	at org.apache.spark.rdd.MapPartitionsRDD.getPartitions(MapPartitionsRDD.scala:35)
+	at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:239)
+	at org.apache.spark.rdd.RDD$$anonfun$partitions$2.apply(RDD.scala:237)
+	at scala.Option.getOrElse(Option.scala:120)
+	at org.apache.spark.rdd.RDD.partitions(RDD.scala:237)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:1929)
+	at org.apache.spark.rdd.RDD.count(RDD.scala:1157)
+	at $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.<init>(<console>:30)
+	at $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC.<init>(<console>:35)
+	at $iwC$$iwC$$iwC$$iwC$$iwC$$iwC.<init>(<console>:37)
+	at $iwC$$iwC$$iwC$$iwC$$iwC.<init>(<console>:39)
+	at $iwC$$iwC$$iwC$$iwC.<init>(<console>:41)
+	at $iwC$$iwC$$iwC.<init>(<console>:43)
+	at $iwC$$iwC.<init>(<console>:45)
+	at $iwC.<init>(<console>:47)
+	at <init>(<console>:49)
+	at .<init>(<console>:53)
+	at .<clinit>(<console>)
+	at .<init>(<console>:7)
+	at .<clinit>(<console>)
+	at $print(<console>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.spark.repl.SparkIMain$ReadEvalPrint.call(SparkIMain.scala:1065)
+	at org.apache.spark.repl.SparkIMain$Request.loadAndRun(SparkIMain.scala:1346)
+	at org.apache.spark.repl.SparkIMain.loadAndRunReq$1(SparkIMain.scala:840)
+	at org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:871)
+	at org.apache.spark.repl.SparkIMain.interpret(SparkIMain.scala:819)
+	at org.apache.spark.repl.SparkILoop.reallyInterpret$1(SparkILoop.scala:857)
+	at org.apache.spark.repl.SparkILoop.interpretStartingWith(SparkILoop.scala:902)
+	at org.apache.spark.repl.SparkILoop.command(SparkILoop.scala:814)
+	at org.apache.spark.repl.SparkILoop.processLine$1(SparkILoop.scala:657)
+	at org.apache.spark.repl.SparkILoop.innerLoop$1(SparkILoop.scala:665)
+	at org.apache.spark.repl.SparkILoop.org$apache$spark$repl$SparkILoop$$loop(SparkILoop.scala:670)
+	at org.apache.spark.repl.SparkILoop$$anonfun$org$apache$spark$repl$SparkILoop$$process$1.apply$mcZ$sp(SparkILoop.scala:997)
+	at org.apache.spark.repl.SparkILoop$$anonfun$org$apache$spark$repl$SparkILoop$$process$1.apply(SparkILoop.scala:945)
+	at org.apache.spark.repl.SparkILoop$$anonfun$org$apache$spark$repl$SparkILoop$$process$1.apply(SparkILoop.scala:945)
+	at scala.tools.nsc.util.ScalaClassLoader$.savingContextLoader(ScalaClassLoader.scala:135)
+	at org.apache.spark.repl.SparkILoop.org$apache$spark$repl$SparkILoop$$process(SparkILoop.scala:945)
+	at org.apache.spark.repl.SparkILoop.process(SparkILoop.scala:1059)
+	at org.apache.spark.repl.Main$.main(Main.scala:31)
+	at org.apache.spark.repl.Main.main(Main.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:731)
+	at org.apache.spark.deploy.SparkSubmit$.doRunMain$1(SparkSubmit.scala:181)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:206)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:121)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+
+
+scala> exit
+warning: there were 1 deprecation warning(s); re-run with -deprecation for details
+17/03/04 12:37:59 WARN QueuedThreadPool: 1 threads could not be stopped
+[root@spark1 .ssh]# cd $SPARK_HOME
+[root@spark1 spark]# $SPARK_HOME/bin/spark-shell
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.metrics2.lib.MutableMetricsFactory).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+Using Spark's repl log4j profile: org/apache/spark/log4j-defaults-repl.properties
+To adjust logging level use sc.setLogLevel("INFO")
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 1.6.2
+      /_/
+
+Using Scala version 2.10.5 (OpenJDK 64-Bit Server VM, Java 1.8.0_121)
+Type in expressions to have them evaluated.
+Type :help for more information.
+Spark context available as sc.
+17/03/04 12:38:20 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/03/04 12:38:20 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/03/04 12:38:24 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+17/03/04 12:38:24 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+17/03/04 12:38:25 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+17/03/04 12:38:26 WARN Connection: BoneCP specified but not present in CLASSPATH (or one of dependencies)
+SQL context available as sqlContext.
+
+scala> val textFile = sc.textFile("README.md")
+textFile: org.apache.spark.rdd.RDD[String] = README.md MapPartitionsRDD[1] at textFile at <console>:27
+
+scala> textFile.count()
+res0: Long = 95                                                                 
+
+scala> textFile.first()
+res1: String = # Apache Spark
+
+scala> val linesWithSpark = textFile.filter(line => line.contains("Spark"))
+linesWithSpark: org.apache.spark.rdd.RDD[String] = MapPartitionsRDD[2] at filter at <console>:29
+
+scala> linesWithSpark.count()
+res2: Long = 17
+
+scala> Stopping spark context.
+[root@spark1 spark]# 
+[root@spark1 spark]# 
+[root@spark1 spark]# vi SimpleApp.scala
+[root@spark1 spark]# vi build.sbt
+[root@spark1 spark]# sbt package
+[info] Set current project to Simple Project (in build file:/usr/local/spark/)
+[success] Total time: 2 s, completed Mar 4, 2017 12:40:47 PM
+[root@spark1 spark]# find target -iname "*.jar"
+target/scala-2.10/simple-project_2.10-1.0.jar
+[root@spark1 spark]# $SPARK_HOME/bin/spark-submit --class "SimpleApp" \
+> --master spark://spark1:7077 \
+> $(find target -iname "*.jar")
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+17/03/04 12:41:15 INFO SparkContext: Running Spark version 1.6.2
+17/03/04 12:41:15 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+17/03/04 12:41:15 INFO SecurityManager: Changing view acls to: root
+17/03/04 12:41:15 INFO SecurityManager: Changing modify acls to: root
+17/03/04 12:41:15 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(root); users with modify permissions: Set(root)
+17/03/04 12:41:16 INFO Utils: Successfully started service 'sparkDriver' on port 40721.
+17/03/04 12:41:16 INFO Slf4jLogger: Slf4jLogger started
+17/03/04 12:41:16 INFO Remoting: Starting remoting
+17/03/04 12:41:16 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@10.122.149.194:44226]
+17/03/04 12:41:16 INFO Utils: Successfully started service 'sparkDriverActorSystem' on port 44226.
+17/03/04 12:41:16 INFO SparkEnv: Registering MapOutputTracker
+17/03/04 12:41:16 INFO SparkEnv: Registering BlockManagerMaster
+17/03/04 12:41:16 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-52314c3a-4eb1-4bd1-a195-f74ac8177c19
+17/03/04 12:41:16 INFO MemoryStore: MemoryStore started with capacity 511.1 MB
+17/03/04 12:41:16 INFO SparkEnv: Registering OutputCommitCoordinator
+17/03/04 12:41:16 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+17/03/04 12:41:16 INFO SparkUI: Started SparkUI at http://10.122.149.194:4040
+17/03/04 12:41:16 INFO HttpFileServer: HTTP File server directory is /tmp/spark-67d9f230-fd2a-42af-92d1-34552905929d/httpd-cdf18ff6-6859-4da1-9aab-e8ceb4b7652b
+17/03/04 12:41:16 INFO HttpServer: Starting HTTP Server
+17/03/04 12:41:16 INFO Utils: Successfully started service 'HTTP file server' on port 35783.
+17/03/04 12:41:16 INFO SparkContext: Added JAR file:/usr/local/spark/target/scala-2.10/simple-project_2.10-1.0.jar at http://10.122.149.194:35783/jars/simple-project_2.10-1.0.jar with timestamp 1488652876982
+17/03/04 12:41:17 INFO AppClient$ClientEndpoint: Connecting to master spark://spark1:7077...
+17/03/04 12:41:17 INFO SparkDeploySchedulerBackend: Connected to Spark cluster with app ID app-20170304124117-0000
+17/03/04 12:41:17 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 33794.
+17/03/04 12:41:17 INFO NettyBlockTransferService: Server created on 33794
+17/03/04 12:41:17 INFO BlockManagerMaster: Trying to register BlockManager
+17/03/04 12:41:17 INFO BlockManagerMasterEndpoint: Registering block manager 10.122.149.194:33794 with 511.1 MB RAM, BlockManagerId(driver, 10.122.149.194, 33794)
+17/03/04 12:41:17 INFO AppClient$ClientEndpoint: Executor added: app-20170304124117-0000/0 on worker-20170304123513-10.122.149.194-45297 (10.122.149.194:45297) with 2 cores
+17/03/04 12:41:17 INFO SparkDeploySchedulerBackend: Granted executor ID app-20170304124117-0000/0 on hostPort 10.122.149.194:45297 with 2 cores, 1024.0 MB RAM
+17/03/04 12:41:17 INFO AppClient$ClientEndpoint: Executor added: app-20170304124117-0000/1 on worker-20170304123427-10.91.63.112-39485 (10.91.63.112:39485) with 2 cores
+17/03/04 12:41:17 INFO SparkDeploySchedulerBackend: Granted executor ID app-20170304124117-0000/1 on hostPort 10.91.63.112:39485 with 2 cores, 1024.0 MB RAM
+17/03/04 12:41:17 INFO AppClient$ClientEndpoint: Executor added: app-20170304124117-0000/2 on worker-20170304123426-10.91.63.123-40547 (10.91.63.123:40547) with 2 cores
+17/03/04 12:41:17 INFO SparkDeploySchedulerBackend: Granted executor ID app-20170304124117-0000/2 on hostPort 10.91.63.123:40547 with 2 cores, 1024.0 MB RAM
+17/03/04 12:41:17 INFO BlockManagerMaster: Registered BlockManager
+17/03/04 12:41:17 INFO AppClient$ClientEndpoint: Executor updated: app-20170304124117-0000/2 is now RUNNING
+17/03/04 12:41:17 INFO AppClient$ClientEndpoint: Executor updated: app-20170304124117-0000/1 is now RUNNING
+17/03/04 12:41:17 INFO SparkDeploySchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+17/03/04 12:41:17 INFO AppClient$ClientEndpoint: Executor updated: app-20170304124117-0000/0 is now RUNNING
+17/03/04 12:41:18 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 127.4 KB, free 127.4 KB)
+17/03/04 12:41:18 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 13.9 KB, free 141.3 KB)
+17/03/04 12:41:18 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on 10.122.149.194:33794 (size: 13.9 KB, free: 511.1 MB)
+17/03/04 12:41:18 INFO SparkContext: Created broadcast 0 from textFile at SimpleApp.scala:11
+17/03/04 12:41:18 INFO FileInputFormat: Total input paths to process : 1
+17/03/04 12:41:18 INFO SparkContext: Starting job: count at SimpleApp.scala:12
+17/03/04 12:41:18 INFO DAGScheduler: Got job 0 (count at SimpleApp.scala:12) with 2 output partitions
+17/03/04 12:41:18 INFO DAGScheduler: Final stage: ResultStage 0 (count at SimpleApp.scala:12)
+17/03/04 12:41:18 INFO DAGScheduler: Parents of final stage: List()
+17/03/04 12:41:19 INFO DAGScheduler: Missing parents: List()
+17/03/04 12:41:19 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[2] at filter at SimpleApp.scala:12), which has no missing parents
+17/03/04 12:41:19 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 3.1 KB, free 144.5 KB)
+17/03/04 12:41:19 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 1888.0 B, free 146.3 KB)
+17/03/04 12:41:19 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on 10.122.149.194:33794 (size: 1888.0 B, free: 511.1 MB)
+17/03/04 12:41:19 INFO SparkContext: Created broadcast 1 from broadcast at DAGScheduler.scala:1006
+17/03/04 12:41:19 INFO DAGScheduler: Submitting 2 missing tasks from ResultStage 0 (MapPartitionsRDD[2] at filter at SimpleApp.scala:12)
+17/03/04 12:41:19 INFO TaskSchedulerImpl: Adding task set 0.0 with 2 tasks
+17/03/04 12:41:19 INFO SparkDeploySchedulerBackend: Registered executor NettyRpcEndpointRef(null) (spark3.shankar.net:44314) with ID 2
+17/03/04 12:41:19 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, spark3.shankar.net, partition 0,PROCESS_LOCAL, 2203 bytes)
+17/03/04 12:41:19 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, spark3.shankar.net, partition 1,PROCESS_LOCAL, 2203 bytes)
+17/03/04 12:41:19 INFO SparkDeploySchedulerBackend: Registered executor NettyRpcEndpointRef(null) (spark2.shankar.net:50354) with ID 1
+17/03/04 12:41:19 INFO BlockManagerMasterEndpoint: Registering block manager spark3.shankar.net:36233 with 511.1 MB RAM, BlockManagerId(2, spark3.shankar.net, 36233)
+17/03/04 12:41:19 INFO BlockManagerMasterEndpoint: Registering block manager spark2.shankar.net:38535 with 511.1 MB RAM, BlockManagerId(1, spark2.shankar.net, 38535)
+17/03/04 12:41:20 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on spark3.shankar.net:36233 (size: 1888.0 B, free: 511.1 MB)
+17/03/04 12:41:20 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on spark3.shankar.net:36233 (size: 13.9 KB, free: 511.1 MB)
+17/03/04 12:41:20 INFO BlockManagerInfo: Added rdd_1_1 in memory on spark3.shankar.net:36233 (size: 4.7 KB, free: 511.1 MB)
+17/03/04 12:41:20 INFO BlockManagerInfo: Added rdd_1_0 in memory on spark3.shankar.net:36233 (size: 5.4 KB, free: 511.1 MB)
+17/03/04 12:41:20 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 1037 ms on spark3.shankar.net (1/2)
+17/03/04 12:41:20 INFO DAGScheduler: ResultStage 0 (count at SimpleApp.scala:12) finished in 1.615 s
+17/03/04 12:41:20 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 1085 ms on spark3.shankar.net (2/2)
+17/03/04 12:41:20 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+17/03/04 12:41:20 INFO DAGScheduler: Job 0 finished: count at SimpleApp.scala:12, took 1.828379 s
+17/03/04 12:41:20 INFO SparkContext: Starting job: count at SimpleApp.scala:13
+17/03/04 12:41:20 INFO DAGScheduler: Got job 1 (count at SimpleApp.scala:13) with 2 output partitions
+17/03/04 12:41:20 INFO DAGScheduler: Final stage: ResultStage 1 (count at SimpleApp.scala:13)
+17/03/04 12:41:20 INFO DAGScheduler: Parents of final stage: List()
+17/03/04 12:41:20 INFO DAGScheduler: Missing parents: List()
+17/03/04 12:41:20 INFO DAGScheduler: Submitting ResultStage 1 (MapPartitionsRDD[3] at filter at SimpleApp.scala:13), which has no missing parents
+17/03/04 12:41:20 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 3.1 KB, free 149.4 KB)
+17/03/04 12:41:20 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 1890.0 B, free 151.3 KB)
+17/03/04 12:41:20 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on 10.122.149.194:33794 (size: 1890.0 B, free: 511.1 MB)
+17/03/04 12:41:20 INFO SparkContext: Created broadcast 2 from broadcast at DAGScheduler.scala:1006
+17/03/04 12:41:20 INFO DAGScheduler: Submitting 2 missing tasks from ResultStage 1 (MapPartitionsRDD[3] at filter at SimpleApp.scala:13)
+17/03/04 12:41:20 INFO TaskSchedulerImpl: Adding task set 1.0 with 2 tasks
+17/03/04 12:41:20 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 2, spark3.shankar.net, partition 0,PROCESS_LOCAL, 2203 bytes)
+17/03/04 12:41:20 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 3, spark3.shankar.net, partition 1,PROCESS_LOCAL, 2203 bytes)
+17/03/04 12:41:20 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on spark3.shankar.net:36233 (size: 1890.0 B, free: 511.1 MB)
+17/03/04 12:41:20 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 3) in 133 ms on spark3.shankar.net (1/2)
+17/03/04 12:41:20 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 2) in 139 ms on spark3.shankar.net (2/2)
+17/03/04 12:41:20 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+17/03/04 12:41:20 INFO DAGScheduler: ResultStage 1 (count at SimpleApp.scala:13) finished in 0.140 s
+17/03/04 12:41:20 INFO DAGScheduler: Job 1 finished: count at SimpleApp.scala:13, took 0.160780 s
++++++++++++ Lines with a: 58, Lines with b: 26 ++++++++++
+17/03/04 12:41:20 INFO SparkContext: Invoking stop() from shutdown hook
+17/03/04 12:41:21 INFO SparkDeploySchedulerBackend: Registered executor NettyRpcEndpointRef(null) (spark1.shankar.net:54308) with ID 0
+17/03/04 12:41:21 INFO SparkUI: Stopped Spark web UI at http://10.122.149.194:4040
+17/03/04 12:41:21 INFO SparkDeploySchedulerBackend: Shutting down all executors
+17/03/04 12:41:21 INFO SparkDeploySchedulerBackend: Asking each executor to shut down
+17/03/04 12:41:21 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+17/03/04 12:41:21 INFO MemoryStore: MemoryStore cleared
+17/03/04 12:41:21 INFO BlockManager: BlockManager stopped
+17/03/04 12:41:21 INFO BlockManagerMaster: BlockManagerMaster stopped
+17/03/04 12:41:21 INFO RemoteActorRefProvider$RemotingTerminator: Shutting down remote daemon.
+17/03/04 12:41:21 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+17/03/04 12:41:21 INFO SparkContext: Successfully stopped SparkContext
+17/03/04 12:41:21 INFO ShutdownHookManager: Shutdown hook called
+17/03/04 12:41:21 INFO ShutdownHookManager: Deleting directory /tmp/spark-67d9f230-fd2a-42af-92d1-34552905929d/httpd-cdf18ff6-6859-4da1-9aab-e8ceb4b7652b
+17/03/04 12:41:21 INFO ShutdownHookManager: Deleting directory /tmp/spark-67d9f230-fd2a-42af-92d1-34552905929d
+17/03/04 12:41:21 INFO RemoteActorRefProvider$RemotingTerminator: Remote daemon shut down; proceeding with flushing remote transports.
+[root@spark1 spark]# 
+
+
